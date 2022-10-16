@@ -1,31 +1,29 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    redirect: "/main",
+    path: '/',
+    redirect: '/main'
   },
   {
-    path: "/main",
-    name: "main",
-    component: () =>
-      import(/* webpackChunkName: "main" */ "@/views/main/index.vue"),
+    path: '/main',
+    name: 'main',
+    component: () => import(/* webpackChunkName: "main" */ '@/views/main/index.vue')
   },
   {
-    path: "/login",
-    name: "login",
-    component: () =>
-      import(/* webpackChunkName: "login" */ "@/views/login/index.vue"),
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
   },
   {
-    path: "/:pathMatch(.*)",
-    name: "404",
-    component: () => import("@/views/404.vue"),
-  },
+    path: '/:pathMatch(.*)',
+    name: '404',
+    component: () => import('@/views/404.vue')
+  }
 ];
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 });
 
 // router.beforeEach((to) => {
