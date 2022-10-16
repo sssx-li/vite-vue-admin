@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
-<template>Vite + Vue</template>
+<template><router-view></router-view></template>
 
 <style scoped></style>
