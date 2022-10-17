@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
   showFooter: true,
   destroyOnClose: true
 });
-const emits = defineEmits(['update:visible', 'onSubmit', 'onClose']);
+const emit = defineEmits(['update:visible', 'onSubmit', 'onClose']);
 const defVisible = ref(false);
 const defTitle = ref(props.title);
 watch(
@@ -31,8 +31,8 @@ watch(
 );
 const afterVisibleChange = (bool: boolean) => {
   if (!bool) {
-    emits('update:visible', false);
-    emits('onClose');
+    emit('update:visible', false);
+    emit('onClose');
   }
 };
 const loadingText = computed(() => {
@@ -62,7 +62,7 @@ defineExpose({
       </div>
       <div class="floor-container" v-if="showFooter">
         <a-button :disabled="loading" block @click="onClose"> 取消 </a-button>
-        <a-button :loading="loading" type="primary" block @click="emits('onSubmit')">
+        <a-button :loading="loading" type="primary" block @click="emit('onSubmit')">
           {{ loadingText }}
         </a-button>
       </div>
