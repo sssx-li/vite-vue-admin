@@ -3,7 +3,7 @@ import Mock from 'mockjs';
 
 import { User } from '@/service/api';
 import { ILoginResult } from 'service/types/user';
-import { IDataModel } from 'service/types/response';
+import { IDataModel } from 'service/types/axios';
 
 const loginRes: IDataModel<ILoginResult> = {
   code: 0,

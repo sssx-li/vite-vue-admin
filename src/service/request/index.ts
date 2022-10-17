@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 import type { RequestConfig, RequestInterceptors } from 'service/types/axios';
-import { IDataModel } from 'service/types/response';
+import { IDataModel } from 'service/types/axios';
 
 class IRequest {
   instance: AxiosInstance;

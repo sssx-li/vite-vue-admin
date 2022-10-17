@@ -1,7 +1,7 @@
 import Request from '@/service';
 import { tokenKey } from '@/common';
 import localCache from '@/utils/localCache';
-import { IDataModel } from 'service/types/response';
+import { IDataModel } from 'service/types/axios';
 import { IAccount, ILoginResult } from 'service/types/user';
 import { User } from '.';
 

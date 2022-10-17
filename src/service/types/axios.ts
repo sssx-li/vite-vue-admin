@@ -10,3 +10,9 @@ export interface RequestInterceptors<T = AxiosResponse> {
 export interface RequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
   interceptors?: RequestInterceptors<T>;
 }
+
+export interface IDataModel<T = any> {
+  code: number;
+  message: string;
+  data: T;
+}
