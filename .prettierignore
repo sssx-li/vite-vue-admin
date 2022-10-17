@@ -9,4 +9,4 @@ dist
 node_modules
 public
 src/assets
-.yaml
+pnpm-lock.yaml

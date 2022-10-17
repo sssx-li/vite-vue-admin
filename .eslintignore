@@ -6,3 +6,4 @@ out
 gen
 dist
 *.d.ts
+pnpm-lock.yaml
