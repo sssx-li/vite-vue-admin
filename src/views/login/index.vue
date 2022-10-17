@@ -1,5 +1,7 @@
 <template>
   <div class="login-container">login</div>
+  <i-sy-vue />
+  <i-clarity-accessibility-1-solid />
 </template>
 
 <script setup lang="ts">

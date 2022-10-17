@@ -16,5 +16,4 @@ class LocalCache {
   }
 }
 
-const localCache = new LocalCache();
-export default localCache;
+export default new LocalCache();

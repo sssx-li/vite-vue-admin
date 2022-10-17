@@ -1,8 +1,12 @@
 import path from 'path';
-
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { viteMockServe } from 'vite-plugin-mock';
+
+import UnpluginVueComponents from 'unplugin-vue-components/vite';
+import Icons from 'unplugin-icons/vite';
+import IconsResolver from 'unplugin-icons/resolver';
+import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
@@ -13,6 +17,22 @@ export default defineConfig(({ command }) => {
         mockPath: 'mock',
         localEnabled: command === 'serve', // 开发环境启用
         watchFiles: true
+      }),
+      UnpluginVueComponents({
+        dts: true,
+        resolvers: [
+          IconsResolver({
+            customCollections: ['sy']
+          })
+        ]
+      }),
+      Icons({
+        compiler: 'vue3',
+        customCollections: {
+          sy: FileSystemIconLoader('src/assets/svgs', (svg) =>
+            svg.replace(/^<svg /, '<svg fill="currentColor" ')
+          )
+        }
       })
     ],
     resolve: {
