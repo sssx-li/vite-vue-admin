@@ -12,7 +12,7 @@ interface Props {
   okType?: string;
   width?: string | number;
   formConfig: IForm;
-  row?: object;
+  row?: object | any;
 }
 const props = withDefaults(defineProps<Props>(), {
   row: () => ({})

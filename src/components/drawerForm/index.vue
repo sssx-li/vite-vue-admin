@@ -7,7 +7,7 @@ interface Props {
   visible?: boolean;
   show?: boolean;
   formConfig: IForm;
-  row?: object;
+  row?: object | any;
 }
 const props = withDefaults(defineProps<Props>(), { row: () => ({}) });
 const emit = defineEmits(['update:visible', 'update:show', 'onSubmit', 'onClose']);

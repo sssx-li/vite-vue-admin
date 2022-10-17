@@ -9,7 +9,7 @@ interface Props {
   pageSizeOptions?: string[];
   bordered?: boolean;
   scroll?: object;
-  rowClassName?: Function;
+  rowClassName?: any;
   size?: string;
 }
 withDefaults(defineProps<Props>(), {
@@ -22,7 +22,6 @@ withDefaults(defineProps<Props>(), {
   pageSizeOptions: () => ['5', '10', '20', '30', '40', '50'],
   bordered: false,
   scroll: () => ({ x: 600 }),
-  rowClassName: Function,
   size: 'middle'
 });
 const emit = defineEmits(['handleSizeChange']);
