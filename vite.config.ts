@@ -8,6 +8,9 @@ import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 
+import AutoImport from 'unplugin-auto-import/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   return {
@@ -18,12 +21,17 @@ export default defineConfig(({ command }) => {
         localEnabled: command === 'serve', // 开发环境启用
         watchFiles: true
       }),
+      AutoImport({
+        dts: false,
+        resolvers: [AntDesignVueResolver()]
+      }),
       UnpluginVueComponents({
         dts: false,
         resolvers: [
           IconsResolver({
             customCollections: ['sy']
-          })
+          }),
+          AntDesignVueResolver()
         ]
       }),
       Icons({
