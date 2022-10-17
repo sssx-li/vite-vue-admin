@@ -3,12 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { userStore } from 'store/user';
-
-const store = userStore();
-const { userInfo } = storeToRefs(store);
-console.log(userInfo.value);
+import { login } from '@/service/api/user';
+login({ username: 'admin', password: 'admin' });
 </script>
 
 <style lang="scss" scoped></style>
