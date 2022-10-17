@@ -19,7 +19,7 @@ export default defineConfig(({ command }) => {
         watchFiles: true
       }),
       UnpluginVueComponents({
-        dts: true,
+        dts: false,
         resolvers: [
           IconsResolver({
             customCollections: ['sy']
