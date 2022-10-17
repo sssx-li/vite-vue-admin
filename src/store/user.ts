@@ -4,12 +4,14 @@ import { login } from '@/service/api/user';
 import { IAccount } from '@/service/types/user';
 import localCache from '@/utils/localCache';
 import router from '@/router';
+import { PropType } from 'vue';
 
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
       token: '',
-      userInfo: { name: 'admin', avatar: '' }
+      userInfo: { username: 'admin', avatar: '' },
+      userMenus: [] as PropType<any[]>
     };
   },
   actions: {

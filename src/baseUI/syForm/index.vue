@@ -1,50 +1,29 @@
 <script setup lang="ts">
-import { reactive, ref, PropType, watch, toRaw } from 'vue';
+import { reactive, ref, PropType, watch, toRaw, Prop } from 'vue';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { useFormValidate } from '@/hooks/useFormValidate';
 import { IFormItem } from './types';
 const dateType = ['datepicker', 'monthpicker', 'rangepicker', 'weekpicker'];
-
-const props = defineProps({
-  layout: {
-    type: String,
-    default: ''
-  },
-  autocomplete: {
-    type: String,
-    default: ''
-  },
-  formItems: {
-    type: Array as PropType<IFormItem[]>,
-    default: () => []
-  },
-  modelValue: {
-    type: Object,
-    default: () => {}
-  },
-  wrapperCol: {
-    type: Object,
-    default: () => ({
-      style: { width: '180px', margin: '0 0 15px' }
-    })
-  },
-  labelCol: {
-    type: Object,
-    default: () => ({ style: { width: '100px' } })
-  },
-  footerWrapperCol: {
-    type: Object,
-    default: () => ({ span: 14, offset: 4 })
-  },
-  size: {
-    type: String,
-    default: 'default'
-  },
-  showFormFooter: {
-    type: Boolean,
-    default: true
-  }
+interface Props {
+  layout?: string;
+  autocomplete?: string;
+  formItems: IFormItem[];
+  modelValue: object;
+  wrapperCol?: object;
+  labelCol?: object;
+  footerWrapperCol?: object;
+  size?: string;
+  showFormFooter?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  layout: 'horizontal',
+  autocomplete: 'off',
+  wrapperCol: () => ({ width: '180px', margin: '0 0 15px' }),
+  labelCol: () => ({ style: { width: '100px' } }),
+  footerWrapperCol: () => ({ span: 14, offset: 4 }),
+  size: 'default',
+  showFormFooter: true
 });
 const emit = defineEmits(['update:modelValue', 'onSubmit', 'onCancel']);
 const formData = ref();
@@ -52,7 +31,7 @@ const formRef = ref();
 const dateValues = reactive<any>({});
 watch(
   () => props.modelValue,
-  (val) => {
+  (val: any) => {
     formData.value = toRaw(val);
     // 对日期格式做处理
     for (let index = 0; index < props.formItems.length; index++) {

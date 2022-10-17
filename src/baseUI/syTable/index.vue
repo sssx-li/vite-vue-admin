@@ -1,45 +1,29 @@
 <script setup lang="ts">
-const props = defineProps({
-  dataSource: {
-    type: Array,
-    required: true
-  },
-  columns: {
-    type: Array,
-    required: true
-  },
-  showFooter: {
-    type: Boolean,
-    default: false
-  },
-  page: {
-    type: Object,
-    default: () => ({
-      pageNo: 1,
-      pageSize: 10
-    })
-  },
-  total: {
-    type: Number,
-    default: 0
-  },
-  pageSizeOptions: {
-    type: Array,
-    default: () => ['5', '10', '20', '30', '40', '50']
-  },
-  bordered: {
-    type: Boolean,
-    default: false
-  },
-  scroll: {
-    type: Object,
-    default: () => ({ x: 600 })
-  },
+import { IColumnsConfig } from './types';
+interface Props {
+  dataSource: any[];
+  columns: IColumnsConfig[] | any[];
+  showFooter?: boolean;
+  page?: { pageNo: number; pageSize: number };
+  total?: number;
+  pageSizeOptions?: string[];
+  bordered?: boolean;
+  scroll?: object;
+  rowClassName?: Function;
+  size?: string;
+}
+withDefaults(defineProps<Props>(), {
+  showFooter: false,
+  page: () => ({
+    pageNo: 1,
+    pageSize: 10
+  }),
+  total: 0,
+  pageSizeOptions: () => ['5', '10', '20', '30', '40', '50'],
+  bordered: false,
+  scroll: () => ({ x: 600 }),
   rowClassName: Function,
-  size: {
-    type: String,
-    default: 'middle'
-  }
+  size: 'middle'
 });
 const emit = defineEmits(['handleSizeChange']);
 const handleSizeChange = (pageNo: number, pageSize: number) => {

@@ -2,19 +2,14 @@
 import { ref, onMounted, watchEffect, PropType } from 'vue';
 import { EChartsOption } from 'echarts';
 import { useEcharts } from '@/hooks/useEcharts';
-
-const props = defineProps({
-  options: {
-    type: Object as PropType<EChartsOption>
-  },
-  width: {
-    type: String,
-    default: '100%'
-  },
-  height: {
-    type: String,
-    default: '350px'
-  }
+interface Props {
+  options: EChartsOption;
+  width?: string;
+  height?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  width: '100%',
+  height: '350px'
 });
 const echartDivRef = ref<HTMLElement>();
 onMounted(() => {

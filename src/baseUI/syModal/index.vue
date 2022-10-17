@@ -1,33 +1,26 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-
-const props = defineProps({
-  title: String,
-  visible: Boolean,
-  footer: [String, Object],
-  okType: {
-    type: String,
-    default: 'primary'
-  },
-  okText: {
-    type: String,
-    default: '确定'
-  },
-  width: {
-    type: [String, Number],
-    default: '520px'
-  },
-  destroyOnClose: {
-    type: Boolean,
-    default: true
-  }
+interface Props {
+  title?: string;
+  visible?: boolean;
+  footer?: string | object;
+  okType?: string;
+  okText: string;
+  width: string | number;
+  destroyOnClose: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  okType: 'primary',
+  okText: '确定',
+  width: '520px',
+  destroyOnClose: true
 });
 const emit = defineEmits(['update:visible', 'onClose', 'onSubmit']);
 const defVisible = ref(false);
 watch(
   () => props.visible,
   (val) => {
-    defVisible.value = val;
+    defVisible.value = val as boolean;
   },
   {
     immediate: true

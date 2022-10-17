@@ -1,10 +1,9 @@
 import { ref, reactive, watch } from 'vue';
-import Request from '@/service';
 import { message } from 'ant-design-vue';
-
+import Request from '@/service';
 import { IConfirm, useConfirm } from './useConfirm';
-
-import { IDataModel, ITableList } from '@/service/api/types';
+import { IDataModel } from 'service/types/axios';
+import { ITableList } from 'service/types/table';
 import { ITableConfig } from '@/baseUI/syTable/types';
 
 /**

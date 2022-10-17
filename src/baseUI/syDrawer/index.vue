@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 interface Props {
-  title: string;
-  drawerWidth: string;
-  loading: boolean;
-  visible: boolean;
-  showFooter: boolean;
-  destroyOnClose: boolean;
+  title?: string;
+  drawerWidth?: string;
+  loading?: boolean;
+  visible?: boolean;
+  showFooter?: boolean;
+  destroyOnClose?: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
   title: '',

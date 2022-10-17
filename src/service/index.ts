@@ -21,8 +21,4 @@ const Request = new IRequest({
   }
 });
 
-// if (process.env.VUE_APP_ENV === 'mock') {
-//   mock(Request.instance);
-// }
-
 export default Request;

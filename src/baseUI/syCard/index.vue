@@ -1,7 +1,7 @@
 <script setup lang="ts" name="">
 interface Props {
-  title: string;
-  styles: object;
+  title?: string;
+  styles?: object;
 }
 withDefaults(defineProps<Props>(), {
   name: '',
