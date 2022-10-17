@@ -1,14 +1,16 @@
 <template>
-  <div class="login-container">login</div>
-  <i-sy-vue />
-  <i-clarity-accessibility-1-solid />
+  <div class="login-container">
+    <button @click="handleLogin">login</button>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { login } from '@/service/api/user';
-login({ username: 'admin', password: 'admin' }).then((res) => {
-  console.log(res);
-});
+import { useUserStore } from 'store/user';
+const store = useUserStore();
+
+const handleLogin = async () => {
+  await store.loginAction({ username: 'admin', password: 'admin' });
+};
 </script>
 
 <style lang="scss" scoped></style>

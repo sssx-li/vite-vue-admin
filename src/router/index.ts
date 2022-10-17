@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { tokenKey } from '@/common';
+import localCache from '@/utils/localCache';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,17 +28,14 @@ const router = createRouter({
   routes
 });
 
-// router.beforeEach((to) => {
-//   const token = localCache.getCache(tokenKey);
-//   const isToLogin = to.path === "/login";
-//   if (token) {
-//     isToLogin && router.push("/");
-//   } else {
-//     !isToLogin && router.push("/login");
-//   }
-//   if (to.path === "/main") {
-//     return firstMenuPath;
-//   }
-// });
+router.beforeEach((to) => {
+  const token = localCache.getCache(tokenKey);
+  const isToLogin = to.path === '/login';
+  if (token) {
+    isToLogin && router.push('/');
+  } else {
+    !isToLogin && router.push('/login');
+  }
+});
 
 export default router;
