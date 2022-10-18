@@ -1,60 +1,52 @@
 <template>
-  <a-layout class="main-container">
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="logo-box">
-        <img :src="logo" alt="log" :class="[collapsed ? 'small-logo' : 'logo']" />
-        <h2 class="title" v-show="!collapsed">后台管理系统</h2>
-      </div>
-      <LayoutMenu />
-    </a-layout-sider>
-    <a-layout>
-      <a-layout-header class="header">
-        <LayoutHeader v-model:collapsed="collapsed" />
-      </a-layout-header>
-      <a-layout-content>
-        <router-view></router-view>
-      </a-layout-content>
-    </a-layout>
-  </a-layout>
+  <a-button @click="handleOpenkDialog('modal')"> Modal弹窗 </a-button>
+  <a-button @click="handleOpenkDialog('drawer')">Drawer弹窗</a-button>
+  <SyCard title="这是一个弹窗">痰喘内容</SyCard>
+  <SyModal
+    v-model:visible="modalParams.visible"
+    :title="modalParams.title"
+    @onSubmit="onSubmitFromModal"
+    ref="syModalRef"
+  >
+    这是一个Modal弹窗
+  </SyModal>
+  <SyDrawer
+    v-model:visible="drawerParams.visible"
+    :title="drawerParams.title"
+    @onSubmit="onSubmitFromDrawer"
+    ref="syDrawerRef"
+  >
+    这是一个Drawer弹窗
+  </SyDrawer>
+  <a-button>sdfsdf</a-button>
 </template>
 
-<script setup lang="ts" name="mainView">
-import LayoutHeader from '@/components/layout/header/index.vue';
-import LayoutMenu from '@/components/layout/menu/index.vue';
-import logo from '@/assets/images/logo.png';
-const collapsed = ref(false);
+<script setup lang="ts">
+import { SyCard, SyModal, SyDrawer } from '@/baseUI';
+import { reactive, ref } from 'vue';
+const syModalRef = ref();
+const syDrawerRef = ref();
+const modalParams = reactive({
+  visible: false,
+  title: '这是一个modal弹窗'
+});
+const drawerParams = reactive({
+  visible: false,
+  title: '这是一个drawer弹窗'
+});
+const handleOpenkDialog = (type: string) => {
+  if (type === 'modal') {
+    modalParams.visible = true;
+  } else {
+    drawerParams.visible = true;
+  }
+};
+const onSubmitFromModal = () => {
+  syModalRef.value.onClose();
+};
+const onSubmitFromDrawer = () => {
+  syDrawerRef.value.onClose();
+};
 </script>
 
-<style lang="less" scoped>
-.main-container {
-  height: 100%;
-  .header {
-    height: 50px;
-    background: #fff;
-    box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
-    transition: all 0.3s;
-    padding: 0 16px;
-  }
-  .logo-box {
-    margin: 14px auto 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .logo {
-      height: 50px;
-    }
-    .small-logo {
-      height: 30px;
-    }
-    .title {
-      margin: 14px 0 20px;
-      font-size: 18px;
-      color: #fff !important;
-    }
-  }
-  .ant-layout-content {
-    padding: 20px;
-    overflow-y: auto;
-  }
-}
-</style>
+<style lang="less" scoped></style>

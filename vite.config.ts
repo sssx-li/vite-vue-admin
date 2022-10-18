@@ -27,12 +27,7 @@ export default defineConfig(({ command }) => {
       AutoImport({
         dts: false,
         imports: ['vue', 'vue-router'],
-        resolvers: [AntDesignVueResolver()],
-        eslintrc: {
-          enabled: false,
-          filepath: './.eslintrc-auto-import.json',
-          globalsPropValue: true
-        }
+        resolvers: [AntDesignVueResolver()]
       }),
       UnpluginVueComponents({
         dts: false,

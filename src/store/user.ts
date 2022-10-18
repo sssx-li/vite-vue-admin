@@ -13,7 +13,8 @@ export const useUserStore = defineStore('user', {
     return {
       token: '',
       userInfo: { username: 'admin', avatar: '' },
-      userMenus: [] as PropType<RouteRecord[]>
+      userMenus: [] as PropType<RouteRecord[]>,
+      firstMenuPath: ''
     };
   },
   actions: {

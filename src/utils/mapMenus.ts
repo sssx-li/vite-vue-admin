@@ -1,13 +1,13 @@
 import mainStaticRoute from '@/router/modules';
+import { useUserStore } from '@/store/user';
 
 import { RouteRecord } from 'vue-router';
 
-let firstMenuPath = '';
 export async function mapMenusToRoutes(userMenus: any[]): Promise<RouteRecord[]> {
   const routes: any[] = [];
   // 加载所有菜单路由
   const allRoutes: RouteRecord[] = [];
-  const routeFiles = await import.meta.glob('../router/modules/main/*.ts');
+  const routeFiles = import.meta.glob('../router/modules/main/*.ts');
   for (let key in routeFiles) {
     const route: any = await routeFiles[key]();
     allRoutes.push(...route.default);
@@ -34,9 +34,8 @@ export async function mapMenusToRoutes(userMenus: any[]): Promise<RouteRecord[]>
   Object.assign(routes, [...mainStaticRoute, ...permissionRoutes]);
   routes.sort((a, b) => a.meta.sort - b.meta.sort);
   if (routes && routes.length > 0) {
-    firstMenuPath = routes[0].redirect ?? routes[0].path;
+    const store = useUserStore();
+    store.firstMenuPath = routes[0].redirect ?? routes[0].path;
   }
   return routes;
 }
-
-export { firstMenuPath };

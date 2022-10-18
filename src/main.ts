@@ -1,18 +1,25 @@
-import 'ant-design-vue/dist/antd.css';
+import { createApp } from 'vue';
 import 'normalize.css';
+import 'ant-design-vue/dist/antd.css';
 import './assets/styles/style.css';
-import store from './store';
+import App from './App.vue';
 import router from './router';
+import store from './store';
 import { setupMock } from './mock';
 import { globalRegister } from './registers';
 import { isMock } from './utils/env';
-// import { useUserStore } from './store/user';
-// const userStore = useUserStore();
+import { useUserStore } from './store/user';
 
-import App from './App.vue';
+const app = createApp(App);
 
 if (isMock()) {
   setupMock();
 }
-// userStore.loadLocalLogin();
-createApp(App).use(router).use(store).use(globalRegister).mount('#app');
+
+app.use(store);
+const userStore = useUserStore();
+await userStore.loadLocalLogin();
+app.use(globalRegister);
+app.use(router);
+
+app.mount('#app');

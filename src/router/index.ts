@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteMeta, RouteRecordRaw } from 'vue-router';
 import { tokenKey } from '@/common';
 import localCache from '@/utils/localCache';
-import { firstMenuPath } from '@/utils/mapMenus';
+import { useUserStore } from '@/store/user';
 
 import dashboardRoute from './modules';
 
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/main',
     name: 'main',
-    component: () => import(/* webpackChunkName: "main" */ '@/views/main/dashboard/index.vue'),
+    component: () => import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
     children: [...dashboardRoute]
   },
   {
@@ -53,8 +53,10 @@ router.beforeEach((to) => {
   } else {
     !isToLogin && router.push('/login');
   }
+
   if (to.path === '/main') {
-    return firstMenuPath;
+    const store = useUserStore();
+    return store.firstMenuPath;
   }
 });
 
