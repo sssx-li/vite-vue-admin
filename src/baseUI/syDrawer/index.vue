@@ -70,7 +70,7 @@ defineExpose({
   </a-drawer>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .drawer-body {
   height: calc(100% - 50px);
   .content {

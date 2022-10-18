@@ -113,7 +113,7 @@ defineExpose({
   </SyCard>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .page-content-head {
   display: flex;
   justify-content: space-between;

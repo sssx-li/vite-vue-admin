@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <button @click="handleLogin">login</button>
+    <a-button @click="handleLogin">login</a-button>
   </div>
 </template>
 
@@ -13,4 +13,4 @@ const handleLogin = async () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>

@@ -111,7 +111,7 @@ const handleReset = () => {
   </a-popover>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .icon {
   font-size: 1.2rem;
   color: rgba(0, 0, 0, 0.75);

@@ -7,7 +7,7 @@
 
 <script setup lang="ts"></script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .no-found {
   padding-top: 100px;
   text-align: center;

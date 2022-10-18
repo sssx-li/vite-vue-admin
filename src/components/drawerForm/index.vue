@@ -76,4 +76,4 @@ defineExpose({
   </SyDrawer>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>

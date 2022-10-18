@@ -293,7 +293,7 @@ defineExpose({
   </a-form>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .ant-form-horizontal {
   max-width: 600px;
 }

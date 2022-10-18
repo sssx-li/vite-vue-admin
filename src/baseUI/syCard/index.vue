@@ -25,7 +25,7 @@ withDefaults(defineProps<Props>(), {
   </a-card>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .ant-card {
   margin-bottom: 20px;
 }

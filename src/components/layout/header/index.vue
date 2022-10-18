@@ -27,7 +27,7 @@ const changeCollapsed = () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .header-container {
   display: flex;
   height: 48px;

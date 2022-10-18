@@ -41,7 +41,7 @@ const onClick = (obj: any) => {
   </a-dropdown>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .avatar {
   cursor: pointer;
   padding: 0px 10px;

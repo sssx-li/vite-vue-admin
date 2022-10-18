@@ -88,7 +88,7 @@ const handleSizeChange = (pageNo: number, pageSize: number) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .sy-table {
   .table-footer {
     margin-top: 20px;

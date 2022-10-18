@@ -1,4 +1,4 @@
-import { ContentApis } from 'service/api';
+import { ContentApis } from '@/service/api';
 import { ITableConfig, IColumnsConfig } from '@/baseUI/syTable/types';
 
 export const contentTableConfig: ITableConfig<IColumnsConfig> = {

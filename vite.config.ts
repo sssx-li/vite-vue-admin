@@ -28,10 +28,10 @@ export default defineConfig(({ command }) => {
       UnpluginVueComponents({
         dts: false,
         resolvers: [
+          AntDesignVueResolver(),
           IconsResolver({
             customCollections: ['sy']
-          }),
-          AntDesignVueResolver()
+          })
         ]
       }),
       Icons({
@@ -47,9 +47,6 @@ export default defineConfig(({ command }) => {
       alias: {
         '@': path.resolve(__dirname, 'src')
       }
-    },
-    optimizeDeps: {
-      include: ['@vue/runtime-core']
     }
   };
 });

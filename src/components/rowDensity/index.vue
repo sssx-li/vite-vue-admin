@@ -57,7 +57,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .icon {
   font-size: 1.21rem;
   outline: medium;

@@ -271,7 +271,7 @@ const handleSearch = async () => {
   ></DrawerForm>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .message-content {
   .ant-btn {
     margin-right: 10px;
