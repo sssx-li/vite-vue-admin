@@ -1,6 +1,22 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, RouteMeta, RouteRecordRaw } from 'vue-router';
 import { tokenKey } from '@/common';
 import localCache from '@/utils/localCache';
+import { firstMenuPath } from '@/utils/mapMenus';
+
+import dashboardRoute from './modules';
+
+interface IMeta extends RouteMeta {
+  isHidden: boolean;
+}
+
+export interface RouterItem {
+  path?: string;
+  component?: any;
+  meta?: IMeta;
+  name?: string;
+  redirect?: string;
+  children?: RouterItem[];
+}
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,7 +26,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/main',
     name: 'main',
-    component: () => import(/* webpackChunkName: "main" */ '@/views/main/index.vue')
+    component: () => import(/* webpackChunkName: "main" */ '@/views/main/dashboard/index.vue'),
+    children: [...dashboardRoute]
   },
   {
     path: '/login',
@@ -35,6 +52,9 @@ router.beforeEach((to) => {
     isToLogin && router.push('/');
   } else {
     !isToLogin && router.push('/login');
+  }
+  if (to.path === '/main') {
+    return firstMenuPath;
   }
 });
 

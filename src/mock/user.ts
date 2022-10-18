@@ -23,6 +23,25 @@ const userInfo = {
   }
 };
 
+const useMenuData = [
+  {
+    id: 1,
+    path: '/main/about'
+  },
+  {
+    id: 2,
+    path: '/main/about/first'
+  },
+  {
+    id: 3,
+    path: '/main/about/secound'
+  },
+  {
+    id: 4,
+    path: '/main/config'
+  }
+];
+
 export default [
   {
     url: `/api${User.LOGIN}`,
@@ -34,9 +53,16 @@ export default [
   },
   {
     url: `/api${User.USER}`,
-    method: 'post',
+    method: 'get',
     response: () => {
       return userInfo;
+    }
+  },
+  {
+    url: `/api${User.USEMENU}`,
+    method: 'get',
+    response: () => {
+      return useMenuData;
     }
   }
 ] as MockMethod[];
