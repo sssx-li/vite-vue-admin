@@ -15,13 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "store/*": ["./src/store/*"],
-      "hooks/*": ["./src/hooks/*"],
-      "views/*": ["./src/views/*"],
-      "components/*": ["./src/components/*"],
-      "utils/*": ["./src/utils/*"],
-      "service/*": ["./src/service/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

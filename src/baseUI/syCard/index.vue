@@ -1,4 +1,4 @@
-<script setup lang="ts" name="">
+<script setup lang="ts">
 interface Props {
   title?: string;
   styles?: object;

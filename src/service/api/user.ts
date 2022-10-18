@@ -1,8 +1,8 @@
 import Request from '@/service';
 import { tokenKey } from '@/common';
 import localCache from '@/utils/localCache';
-import { IDataModel } from 'service/types/axios';
-import { IAccount, ILoginResult } from 'service/types/user';
+import { IDataModel } from '@/service/types/axios';
+import { IAccount, ILoginResult } from '@/service/types/user';
 import { User } from '.';
 
 // 登录
@@ -12,7 +12,7 @@ export function login(data: IAccount) {
     method: 'POST',
     data,
     interceptors: {
-      responseInterceptor: (res) => {
+      responseInterceptor: (res: IDataModel) => {
         const {
           code,
           data: { token }
