@@ -1,143 +1,3 @@
-<script setup lang="ts">
-import { reactive, ref, PropType, watch, toRaw, Prop } from 'vue';
-import dayjs from 'dayjs';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import { useFormValidate } from '@/hooks/useFormValidate';
-import { IFormItem } from './types';
-const dateType = ['datepicker', 'monthpicker', 'rangepicker', 'weekpicker'];
-interface Props {
-  layout?: string;
-  autocomplete?: string;
-  formItems: IFormItem[];
-  modelValue: object;
-  wrapperCol?: object;
-  labelCol?: object;
-  footerWrapperCol?: object;
-  size?: string;
-  showFormFooter?: boolean;
-}
-const props = withDefaults(defineProps<Props>(), {
-  layout: 'horizontal',
-  autocomplete: 'off',
-  wrapperCol: () => ({ width: '180px', margin: '0 0 15px' }),
-  labelCol: () => ({ style: { width: '100px' } }),
-  footerWrapperCol: () => ({ span: 14, offset: 4 }),
-  size: 'default',
-  showFormFooter: true
-});
-const emit = defineEmits(['update:modelValue', 'onSubmit', 'onCancel']);
-const formData = ref();
-const formRef = ref();
-const dateValues = reactive<any>({});
-watch(
-  () => props.modelValue,
-  (val: any) => {
-    formData.value = toRaw(val);
-    // 对日期格式做处理
-    for (let index = 0; index < props.formItems.length; index++) {
-      const { type, field, dateFormat = 'YYYY-MM-DD', showTime } = props.formItems[index];
-      if (!dateType.includes(type)) continue;
-      const dateValue: any = val[field];
-      if (dateValue) {
-        let startTime = '';
-        let endTime = '';
-        let week = null;
-        let formatValue: any = null;
-        switch (type) {
-          case 'datepicker':
-            formatValue = dayjs(dateValue, dateFormat);
-            break;
-          case 'monthpicker':
-            formatValue = dayjs(dateValue);
-            break;
-          case 'rangepicker':
-            if (dateValue.length !== 2) break;
-            startTime = `${dateValue[0]}${!showTime && '00:00:00'}`;
-            endTime = `${dateValue[1]}${!showTime && '59:59:59'}`;
-            formatValue = [dayjs(startTime, dateFormat), dayjs(endTime, dateFormat)];
-            break;
-          case 'weekpicker':
-            dayjs.extend(weekOfYear);
-            week = parseInt(dateValue.split('-')[1]);
-            formatValue = dayjs(dateValue.split('-')[0]).week(week);
-            break;
-        }
-        dateValues[field] = formatValue;
-      }
-    }
-  },
-  {
-    immediate: true,
-    deep: true
-  }
-);
-// 获取校验规则及参数默认值
-const rulesList = {};
-props.formItems.forEach((item) => {
-  const { rules, field } = item;
-  const hsaValue = (formData.value as any)[field] || (formData.value as any)[field] === 0;
-  if (item.defaultValue !== undefined && !hsaValue) {
-    (formData.value as any)[field] = item.defaultValue;
-  } else {
-    (formData.value as any)[field] = hsaValue ? (formData.value as any)[field] : '';
-  }
-  if (rules && rules.length > 0) {
-    (rulesList as any)[field] = rules;
-  }
-});
-// 赋默认值时 更新 modelValue
-emit('update:modelValue', formData.value);
-const { validate, validateInfos } = useFormValidate(
-  formData,
-  reactive({
-    ...rulesList
-  })
-);
-const onSubmit = () => {
-  validate()
-    .then(() => {
-      emit('onSubmit');
-    })
-    .catch(() => {});
-};
-const onCancel = () => {
-  emit('update:modelValue', {});
-  emit('onCancel');
-};
-const handleValueChange = (event: any, item: any, other?: any) => {
-  const { field, type } = item;
-  let value: any = '';
-  switch (type) {
-    case 'input':
-    case 'password':
-    case 'textarea':
-      value = event.target.value;
-      break;
-    case 'datepicker':
-    case 'monthpicker':
-    case 'rangepicker':
-    case 'weekpicker':
-      value = other;
-      break;
-    case 'select':
-    case 'cascader':
-    case 'switch':
-      value = event;
-      break;
-    default:
-      value = event.target.value;
-  }
-  emit('update:modelValue', {
-    ...props.modelValue,
-    [field]: value
-  });
-};
-
-defineExpose({
-  validate
-});
-</script>
-
 <template>
   <a-form
     :layout="layout"
@@ -292,6 +152,145 @@ defineExpose({
     </a-form-item>
   </a-form>
 </template>
+<script setup lang="ts" name="syForm">
+import dayjs from 'dayjs';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import { useFormValidate } from '@/hooks/useFormValidate';
+import { IFormItem } from './types';
+
+const dateType = ['datepicker', 'monthpicker', 'rangepicker', 'weekpicker'];
+interface Props {
+  layout?: string;
+  autocomplete?: string;
+  formItems: IFormItem[];
+  modelValue: object;
+  wrapperCol?: object;
+  labelCol?: object;
+  footerWrapperCol?: object;
+  size?: string;
+  showFormFooter?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  layout: 'horizontal',
+  autocomplete: 'off',
+  wrapperCol: () => ({ width: '180px', margin: '0 0 15px' }),
+  labelCol: () => ({ style: { width: '100px' } }),
+  footerWrapperCol: () => ({ span: 14, offset: 4 }),
+  size: 'default',
+  showFormFooter: true
+});
+const emit = defineEmits(['update:modelValue', 'onSubmit', 'onCancel']);
+const formData = ref();
+const formRef = ref();
+const dateValues = reactive<any>({});
+watch(
+  () => props.modelValue,
+  (val: any) => {
+    formData.value = toRaw(val);
+    // 对日期格式做处理
+    for (let index = 0; index < props.formItems.length; index++) {
+      const { type, field, dateFormat = 'YYYY-MM-DD', showTime } = props.formItems[index];
+      if (!dateType.includes(type)) continue;
+      const dateValue: any = val[field];
+      if (dateValue) {
+        let startTime = '';
+        let endTime = '';
+        let week = null;
+        let formatValue: any = null;
+        switch (type) {
+          case 'datepicker':
+            formatValue = dayjs(dateValue, dateFormat);
+            break;
+          case 'monthpicker':
+            formatValue = dayjs(dateValue);
+            break;
+          case 'rangepicker':
+            if (dateValue.length !== 2) break;
+            startTime = `${dateValue[0]}${!showTime && '00:00:00'}`;
+            endTime = `${dateValue[1]}${!showTime && '59:59:59'}`;
+            formatValue = [dayjs(startTime, dateFormat), dayjs(endTime, dateFormat)];
+            break;
+          case 'weekpicker':
+            dayjs.extend(weekOfYear);
+            week = parseInt(dateValue.split('-')[1]);
+            formatValue = dayjs(dateValue.split('-')[0]).week(week);
+            break;
+        }
+        dateValues[field] = formatValue;
+      }
+    }
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+);
+// 获取校验规则及参数默认值
+const rulesList = {};
+props.formItems.forEach((item) => {
+  const { rules, field } = item;
+  const hsaValue = (formData.value as any)[field] || (formData.value as any)[field] === 0;
+  if (item.defaultValue !== undefined && !hsaValue) {
+    (formData.value as any)[field] = item.defaultValue;
+  } else {
+    (formData.value as any)[field] = hsaValue ? (formData.value as any)[field] : '';
+  }
+  if (rules && rules.length > 0) {
+    (rulesList as any)[field] = rules;
+  }
+});
+// 赋默认值时 更新 modelValue
+emit('update:modelValue', formData.value);
+const { validate, validateInfos } = useFormValidate(
+  formData,
+  reactive({
+    ...rulesList
+  })
+);
+const onSubmit = () => {
+  validate()
+    .then(() => {
+      emit('onSubmit');
+    })
+    .catch(() => {});
+};
+const onCancel = () => {
+  emit('update:modelValue', {});
+  emit('onCancel');
+};
+const handleValueChange = (event: any, item: any, other?: any) => {
+  const { field, type } = item;
+  let value: any = '';
+  switch (type) {
+    case 'input':
+    case 'password':
+    case 'textarea':
+      value = event.target.value;
+      break;
+    case 'datepicker':
+    case 'monthpicker':
+    case 'rangepicker':
+    case 'weekpicker':
+      value = other;
+      break;
+    case 'select':
+    case 'cascader':
+    case 'switch':
+      value = event;
+      break;
+    default:
+      value = event.target.value;
+  }
+  emit('update:modelValue', {
+    ...props.modelValue,
+    [field]: value
+  });
+};
+
+defineExpose({
+  validate
+});
+</script>
 
 <style lang="less" scoped>
 .ant-form-horizontal {

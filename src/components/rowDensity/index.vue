@@ -15,48 +15,30 @@
     </template>
   </a-dropdown>
 </template>
-<script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from 'vue';
 
-export default defineComponent({
-  name: 'rowDensity',
-  props: {
-    columns: {
-      type: Array,
-      default: () => []
-    }
+<script setup lang="ts" name="rowDensity">
+const emit = defineEmits(['change']);
+const selectedKeys = ref(['middle']);
+const sizes = ref([
+  {
+    name: '默认',
+    size: 'default'
   },
-  setup(props, { emit }) {
-    const state = reactive({
-      selectedKeys: ['middle']
-    });
-    const sizes = ref([
-      {
-        name: '默认',
-        size: 'default'
-      },
-      {
-        name: '中等',
-        size: 'middle'
-      },
-      {
-        name: '紧凑',
-        size: 'small'
-      }
-    ]);
-
-    const clickItem = (size: string) => {
-      state.selectedKeys[0] = size;
-      emit('change', size);
-    };
-    return {
-      sizes,
-      ...toRefs(state),
-      clickItem
-    };
+  {
+    name: '中等',
+    size: 'middle'
+  },
+  {
+    name: '紧凑',
+    size: 'small'
   }
-});
+]);
+const clickItem = (size: string) => {
+  selectedKeys.value[0] = size;
+  emit('change', size);
+};
 </script>
+
 <style lang="less" scoped>
 .icon {
   font-size: 1.21rem;

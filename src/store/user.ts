@@ -1,4 +1,4 @@
-import { PropType } from 'vue';
+import type { PropType } from 'vue';
 import { defineStore } from 'pinia';
 import { tokenKey } from '@/common';
 import { login } from '@/service/api/user';

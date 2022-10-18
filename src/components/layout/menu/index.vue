@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useUserStore } from 'store/user';
+import { useUserStore } from '@/store/user';
 import { useRoute, useRouter } from 'vue-router';
 import SubMenu from './subMenu.vue';
-
 const route = useRoute();
 const router = useRouter();
 const store = useUserStore();

@@ -1,8 +1,6 @@
 import type { AxiosRequestConfig } from 'axios';
 import IRequest from './request';
 import localCache from '@/utils/localCache';
-// import mock from './mock';
-
 import { tokenKey } from '@/common';
 
 const TIMEOUT = 5000;

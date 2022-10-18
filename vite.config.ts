@@ -11,11 +11,14 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import AutoImport from 'unplugin-auto-import/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
+import VueSetupExtend from 'vite-plugin-vue-setup-extend';
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   return {
     plugins: [
       vue(),
+      VueSetupExtend(),
       viteMockServe({
         mockPath: 'mock',
         localEnabled: command === 'serve', // 开发环境启用
@@ -23,7 +26,13 @@ export default defineConfig(({ command }) => {
       }),
       AutoImport({
         dts: false,
-        resolvers: [AntDesignVueResolver()]
+        imports: ['vue', 'vue-router'],
+        resolvers: [AntDesignVueResolver()],
+        eslintrc: {
+          enabled: false,
+          filepath: './.eslintrc-auto-import.json',
+          globalsPropValue: true
+        }
       }),
       UnpluginVueComponents({
         dts: false,

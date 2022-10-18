@@ -1,7 +1,32 @@
-<script setup lang="ts">
-import { ref } from 'vue';
+<template>
+  <SyDrawer
+    v-model:visible="defVisible"
+    :title="title"
+    :loading="loading"
+    @onClose="onClose"
+    @onSubmit="onSubmit"
+    ref="syDrawerRef"
+  >
+    <SyForm ref="syFormRef" v-bind="formConfig" v-model="formState" :showFormFooter="false">
+      <template #footer>
+        <slot />
+      </template>
+      <!-- other 类型插槽,主要用于文本、图片类型渲染，不涉及交互 -->
+      <template
+        v-for="item in otherSloteNameList"
+        :key="item.field"
+        #[`other-${item.field}`]="scope"
+      >
+        <slot :name="`other-${item.field}`" :content="scope.content"></slot>
+      </template>
+    </SyForm>
+  </SyDrawer>
+</template>
+
+<script setup lang="ts" name="drawerForm">
 import { SyDrawer, SyForm } from '@/baseUI';
 import { IForm } from '@/baseUI/syForm/types';
+
 interface Props {
   title?: string;
   visible?: boolean;
@@ -50,30 +75,5 @@ defineExpose({
   loading
 });
 </script>
-
-<template>
-  <SyDrawer
-    v-model:visible="defVisible"
-    :title="title"
-    :loading="loading"
-    @onClose="onClose"
-    @onSubmit="onSubmit"
-    ref="syDrawerRef"
-  >
-    <SyForm ref="syFormRef" v-bind="formConfig" v-model="formState" :showFormFooter="false">
-      <template #footer>
-        <slot />
-      </template>
-      <!-- other 类型插槽 -->
-      <template
-        v-for="item in otherSloteNameList"
-        :key="item.field"
-        #[`other-${item.field}`]="scope"
-      >
-        <slot :name="`other-${item.field}`" :content="scope.content"></slot>
-      </template>
-    </SyForm>
-  </SyDrawer>
-</template>
 
 <style lang="less" scoped></style>

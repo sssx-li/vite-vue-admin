@@ -1,5 +1,10 @@
-<script setup lang="ts">
-import { ref, onMounted, watchEffect, PropType } from 'vue';
+<template>
+  <div class="base-echart">
+    <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
+  </div>
+</template>
+
+<script setup lang="ts" name="syEchart">
 import { EChartsOption } from 'echarts';
 import { useEcharts } from '@/hooks/useEcharts';
 interface Props {
@@ -19,11 +24,5 @@ onMounted(() => {
   });
 });
 </script>
-
-<template>
-  <div class="base-echart">
-    <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
-  </div>
-</template>
 
 <style lang="less" scoped></style>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { SyForm, SyTable, SyModal, SyDrawer, SyCard } from '@/baseUI';
 import DrawerForm from '@/components/drawerForm/index.vue';

@@ -1,8 +1,18 @@
-<script setup lang="ts">
-import { ref, watch } from 'vue';
+<template>
+  <div class="header-container">
+    <component
+      :is="isCollapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'"
+      @click="changeCollapsed"
+    />
+    <Info />
+  </div>
+</template>
+
+<script setup lang="ts" name="layoutHeader">
 import Info from './info.vue';
-const props = withDefaults(defineProps<{ collapsed: boolean }>(), {
-  collapsed: false
+
+const props = defineProps({
+  collapsed: Boolean
 });
 const emit = defineEmits(['update:collapsed']);
 const isCollapsed = ref(props.collapsed);
@@ -16,16 +26,6 @@ const changeCollapsed = () => {
   emit('update:collapsed', !isCollapsed.value);
 };
 </script>
-
-<template>
-  <div class="header-container">
-    <component
-      :is="isCollapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'"
-      @click="changeCollapsed"
-    />
-    <Info />
-  </div>
-</template>
 
 <style lang="less" scoped>
 .header-container {

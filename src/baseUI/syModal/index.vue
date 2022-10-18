@@ -1,13 +1,30 @@
-<script setup lang="ts">
-import { ref, watch } from 'vue';
+<template>
+  <a-modal
+    v-model:visible="defVisible"
+    :title="title"
+    :okType="okType"
+    :okText="okText"
+    :width="width"
+    :footer="footer"
+    :destroyOnClose="destroyOnClose"
+    :afterClose="afterClose"
+    @ok="handleOk"
+  >
+    <div class="modal-content">
+      <slot />
+    </div>
+  </a-modal>
+</template>
+
+<script setup lang="ts" name="syModal">
 interface Props {
   title?: string;
   visible?: boolean;
   footer?: string | object;
   okType?: string;
-  okText: string;
-  width: string | number;
-  destroyOnClose: boolean;
+  okText?: string;
+  width?: string | number;
+  destroyOnClose?: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
   okType: 'primary',
@@ -44,23 +61,5 @@ defineExpose({
   onClose
 });
 </script>
-
-<template>
-  <a-modal
-    v-model:visible="defVisible"
-    :title="title"
-    :okType="okType"
-    :okText="okText"
-    :width="width"
-    :footer="footer"
-    :destroyOnClose="destroyOnClose"
-    :afterClose="afterClose"
-    @ok="handleOk"
-  >
-    <div class="modal-content">
-      <slot />
-    </div>
-  </a-modal>
-</template>
 
 <style lang="less" scoped></style>

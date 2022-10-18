@@ -1,35 +1,3 @@
-<script setup lang="ts">
-import { IColumnsConfig } from './types';
-interface Props {
-  dataSource: any[];
-  columns: IColumnsConfig[] | any[];
-  showFooter?: boolean;
-  page?: { pageNo: number; pageSize: number };
-  total?: number;
-  pageSizeOptions?: string[];
-  bordered?: boolean;
-  scroll?: object;
-  rowClassName?: any;
-  size?: string;
-}
-withDefaults(defineProps<Props>(), {
-  showFooter: false,
-  page: () => ({
-    pageNo: 1,
-    pageSize: 10
-  }),
-  total: 0,
-  pageSizeOptions: () => ['5', '10', '20', '30', '40', '50'],
-  bordered: false,
-  scroll: () => ({ x: 600 }),
-  size: 'middle'
-});
-const emit = defineEmits(['handleSizeChange']);
-const handleSizeChange = (pageNo: number, pageSize: number) => {
-  emit('handleSizeChange', { pageNo, pageSize });
-};
-</script>
-
 <template>
   <div class="sy-table">
     <a-table
@@ -87,6 +55,38 @@ const handleSizeChange = (pageNo: number, pageSize: number) => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts" name="syTable">
+import { IColumnsConfig } from './types';
+interface Props {
+  dataSource: any[];
+  columns: IColumnsConfig[] | any[];
+  showFooter?: boolean;
+  page?: { pageNo: number; pageSize: number };
+  total?: number;
+  pageSizeOptions?: string[];
+  bordered?: boolean;
+  scroll?: object;
+  rowClassName?: any;
+  size?: string;
+}
+withDefaults(defineProps<Props>(), {
+  showFooter: false,
+  page: () => ({
+    pageNo: 1,
+    pageSize: 10
+  }),
+  total: 0,
+  pageSizeOptions: () => ['5', '10', '20', '30', '40', '50'],
+  bordered: false,
+  scroll: () => ({ x: 600 }),
+  size: 'middle'
+});
+const emit = defineEmits(['handleSizeChange']);
+const handleSizeChange = (pageNo: number, pageSize: number) => {
+  emit('handleSizeChange', { pageNo, pageSize });
+};
+</script>
 
 <style lang="less" scoped>
 .sy-table {

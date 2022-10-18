@@ -1,17 +1,3 @@
-<script setup lang="ts">
-interface Props {
-  title?: string;
-  styles?: object;
-}
-withDefaults(defineProps<Props>(), {
-  name: '',
-  styles: () => ({
-    'border-radius': '6px',
-    'box-shadow': '0 1px 4px rgba(0, 21, 41, 0.08)'
-  })
-});
-</script>
-
 <template>
   <a-card :bordered="false" :style="styles">
     <div class="card-titile">
@@ -24,6 +10,20 @@ withDefaults(defineProps<Props>(), {
     </div>
   </a-card>
 </template>
+
+<script setup lang="ts" name="syCard">
+interface Props {
+  title?: string;
+  styles?: object;
+}
+withDefaults(defineProps<Props>(), {
+  name: '',
+  styles: () => ({
+    'border-radius': '6px',
+    'box-shadow': '0 1px 4px rgba(0, 21, 41, 0.08)'
+  })
+});
+</script>
 
 <style lang="less" scoped>
 .ant-card {

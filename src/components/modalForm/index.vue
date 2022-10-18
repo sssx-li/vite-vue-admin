@@ -1,7 +1,36 @@
-<script setup lang="ts">
-import { ref } from 'vue';
+<template>
+  <SyModal
+    v-model:visible="defVisible"
+    :title="title"
+    :destroyOnClose="destroyOnClose"
+    :footer="footer"
+    :okText="okText"
+    :okType="okType"
+    :width="width"
+    @onSubmit="onSubmit"
+    @onClose="onClose"
+    ref="syModalRef"
+  >
+    <SyForm ref="syFormRef" v-bind="formConfig" v-model="formState" :showFormFooter="false">
+      <template #footer>
+        <slot />
+      </template>
+      <!-- other 类型插槽 -->
+      <template
+        v-for="item in otherSloteNameList"
+        :key="item.field"
+        #[`other-${item.field}`]="scope"
+      >
+        <slot :name="`other-${item.field}`" :content="scope.content"></slot>
+      </template>
+    </SyForm>
+  </SyModal>
+</template>
+
+<script setup lang="ts" name="modalForm">
 import { SyModal, SyForm } from '@/baseUI';
 import { IForm } from '@/baseUI/syForm/types';
+
 interface Props {
   visible?: boolean;
   show?: boolean;
@@ -57,34 +86,5 @@ defineExpose({
   onCloseDialog
 });
 </script>
-
-<template>
-  <SyModal
-    v-model:visible="defVisible"
-    :title="title"
-    :destroyOnClose="destroyOnClose"
-    :footer="footer"
-    :okText="okText"
-    :okType="okType"
-    :width="width"
-    @onSubmit="onSubmit"
-    @onClose="onClose"
-    ref="syModalRef"
-  >
-    <SyForm ref="syFormRef" v-bind="formConfig" v-model="formState" :showFormFooter="false">
-      <template #footer>
-        <slot />
-      </template>
-      <!-- other 类型插槽 -->
-      <template
-        v-for="item in otherSloteNameList"
-        :key="item.field"
-        #[`other-${item.field}`]="scope"
-      >
-        <slot :name="`other-${item.field}`" :content="scope.content"></slot>
-      </template>
-    </SyForm>
-  </SyModal>
-</template>
 
 <style lang="less" scoped></style>

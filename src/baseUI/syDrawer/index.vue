@@ -1,5 +1,27 @@
-<script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+<template>
+  <a-drawer
+    v-model:visible="defVisible"
+    :title="defTitle"
+    :width="drawerWidth"
+    :destroyOnClose="destroyOnClose"
+    @after-visible-change="afterVisibleChange"
+    placement="right"
+  >
+    <div class="drawer-body">
+      <div class="content">
+        <slot />
+      </div>
+      <div class="floor-container" v-if="showFooter">
+        <a-button :disabled="loading" block @click="onClose"> 取消 </a-button>
+        <a-button :loading="loading" type="primary" block @click="emit('onSubmit')">
+          确定
+        </a-button>
+      </div>
+    </div>
+  </a-drawer>
+</template>
+
+<script setup lang="ts" name="syDrawer">
 interface Props {
   title?: string;
   drawerWidth?: string;
@@ -35,9 +57,6 @@ const afterVisibleChange = (bool: boolean) => {
     emit('onClose');
   }
 };
-const loadingText = computed(() => {
-  return props.loading ? '提交中...' : '提交';
-});
 const onClose = () => {
   defVisible.value = false;
 };
@@ -46,29 +65,6 @@ defineExpose({
   onClose
 });
 </script>
-
-<template>
-  <a-drawer
-    v-model:visible="defVisible"
-    :title="defTitle"
-    :width="drawerWidth"
-    :destroyOnClose="destroyOnClose"
-    @after-visible-change="afterVisibleChange"
-    placement="right"
-  >
-    <div class="drawer-body">
-      <div class="content">
-        <slot />
-      </div>
-      <div class="floor-container" v-if="showFooter">
-        <a-button :disabled="loading" block @click="onClose"> 取消 </a-button>
-        <a-button :loading="loading" type="primary" block @click="emit('onSubmit')">
-          {{ loadingText }}
-        </a-button>
-      </div>
-    </div>
-  </a-drawer>
-</template>
 
 <style lang="less" scoped>
 .drawer-body {

@@ -1,28 +1,3 @@
-<script setup lang="ts">
-import { computed } from 'vue';
-import { message } from 'ant-design-vue';
-
-import localCache from 'utils/localCache';
-import { useConfirm } from '@/hooks/useConfirm';
-import { useUserStore } from 'store/user';
-const store = useUserStore();
-const confirm = useConfirm();
-const userInfo = computed(() => store.userInfo);
-const onClick = (obj: any) => {
-  const { key } = obj;
-  if (key === 'logout') {
-    confirm({ content: '确定要退出登录吗' })
-      .then(() => {
-        localCache.clearCache();
-        window.location.reload();
-      })
-      .catch(() => {});
-  } else if (key === 'userInfo') {
-    message.info('个人信息');
-  }
-};
-</script>
-
 <template>
   <a-dropdown class="info-container" :overlayStyle="{ width: '150px' }">
     <span class="avatar" @click.prevent>
@@ -40,6 +15,30 @@ const onClick = (obj: any) => {
     </template>
   </a-dropdown>
 </template>
+
+<script setup lang="ts">
+import { message } from 'ant-design-vue';
+import localCache from '@/utils/localCache';
+import { useConfirm } from '@/hooks/useConfirm';
+import { useUserStore } from '@/store/user';
+
+const store = useUserStore();
+const confirm = useConfirm();
+const userInfo = computed(() => store.userInfo);
+const onClick = (obj: any) => {
+  const { key } = obj;
+  if (key === 'logout') {
+    confirm({ content: '确定要退出登录吗' })
+      .then(() => {
+        localCache.clearCache();
+        window.location.reload();
+      })
+      .catch(() => {});
+  } else if (key === 'userInfo') {
+    message.info('个人信息');
+  }
+};
+</script>
 
 <style lang="less" scoped>
 .avatar {

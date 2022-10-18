@@ -1,8 +1,49 @@
-<script setup lang="ts">
-import { toRaw, reactive, ref } from 'vue';
-const props = withDefaults(defineProps<{ columns: any[] }>(), {
-  columns: () => []
-});
+<template>
+  <a-popover
+    class="field-container"
+    v-model:visible="visible"
+    placement="bottomRight"
+    trigger="click"
+  >
+    <template #title>
+      <p class="top">
+        <a-checkbox @change="clickCheckedAll" v-model:checked="allChecked">列展示</a-checkbox>
+        <a-button class="reset-btn" type="link" @click="handleReset">重置</a-button>
+      </p>
+    </template>
+    <template #content>
+      <ul class="field-list">
+        <li
+          v-for="(item, index) in state.copyColumns"
+          draggable="true"
+          @dragstart="dragStart($event, index)"
+          @dragenter="dragenter($event, index)"
+          @dragover.prevent="dragover($event)"
+          @dragend="dragend($event, index)"
+          :class="{
+            status: state.dropStatus && state.dropIndex === index
+          }"
+          :key="item.dataIndex"
+        >
+          <a-checkbox @change="changeChecked" v-model:checked="item.isChecked">{{
+            item.title
+          }}</a-checkbox>
+        </li>
+      </ul>
+    </template>
+    <a-tooltip placement="top">
+      <template #title>
+        <span>列表设置</span>
+      </template>
+      <SettingOutlined class="icon" />
+    </a-tooltip>
+  </a-popover>
+</template>
+
+<script setup lang="ts" name="fieldOrder">
+import { SettingOutlined } from '@ant-design/icons-vue';
+
+const props = defineProps<{ columns: any[] }>();
 const emit = defineEmits(['changeColumns']);
 const allChecked = ref(true);
 const visible = ref(false);
@@ -68,48 +109,6 @@ const handleReset = () => {
   clickCheckedAll();
 };
 </script>
-
-<template>
-  <a-popover
-    class="field-container"
-    v-model:visible="visible"
-    placement="bottomRight"
-    trigger="click"
-  >
-    <template #title>
-      <p class="top">
-        <a-checkbox @change="clickCheckedAll" v-model:checked="allChecked">列展示</a-checkbox>
-        <a-button class="reset-btn" type="link" @click="handleReset">重置</a-button>
-      </p>
-    </template>
-    <template #content>
-      <ul class="field-list">
-        <li
-          v-for="(item, index) in state.copyColumns"
-          draggable="true"
-          @dragstart="dragStart($event, index)"
-          @dragenter="dragenter($event, index)"
-          @dragover.prevent="dragover($event)"
-          @dragend="dragend($event, index)"
-          :class="{
-            status: state.dropStatus && state.dropIndex === index
-          }"
-          :key="item.dataIndex"
-        >
-          <a-checkbox @change="changeChecked" v-model:checked="item.isChecked">{{
-            item.title
-          }}</a-checkbox>
-        </li>
-      </ul>
-    </template>
-    <a-tooltip placement="top">
-      <template #title>
-        <span>列表设置</span>
-      </template>
-      <SettingOutlined class="icon" />
-    </a-tooltip>
-  </a-popover>
-</template>
 
 <style lang="less" scoped>
 .icon {
