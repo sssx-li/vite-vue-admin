@@ -1,5 +1,5 @@
 export function isMock() {
-  return import.meta.env.MODE === 'mock';
+  return import.meta.env.VITE_USE_MOCK === 'true';
 }
 
 export function isDev() {

@@ -1,17 +1,16 @@
 import { createApp } from 'vue';
+import 'ant-design-vue/dist/antd.css';
 import 'normalize.css';
 import './assets/styles/style.css';
 import store from './store';
 import router from './router';
 import { setupMock } from './mock';
 import { globalRegister } from './registers';
+import { isMock } from './utils/env';
 
 import App from './App.vue';
-import { isProd } from './utils/env';
 
-if (!isProd) {
-  console.log('-------mock------');
-  import('ant-design-vue/dist/antd.css');
+if (isMock()) {
   setupMock();
 }
 
