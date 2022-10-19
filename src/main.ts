@@ -1,4 +1,3 @@
-import { createApp } from 'vue';
 import 'normalize.css';
 import 'ant-design-vue/dist/antd.css';
 import './assets/styles/style.css';

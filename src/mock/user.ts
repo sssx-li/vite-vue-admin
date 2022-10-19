@@ -3,24 +3,16 @@ import Mock from 'mockjs';
 
 import { User } from '@/service/api';
 import { ILoginResult } from '@/service/types/user';
-import { IDataModel } from '@/service/types/axios';
 
-const loginRes: IDataModel<ILoginResult> = {
-  code: 0,
-  data: Mock.mock({
-    'token|64': /[a-zA-Z0-9]/,
-    'id|12': /[0-9]/,
-    username: 'admin'
-  }),
-  message: 'success'
-};
+const loginRes: ILoginResult = Mock.mock({
+  'token|64': /[a-zA-Z0-9]/,
+  'id|12': /[0-9]/,
+  username: 'admin'
+});
 
 const userInfo = {
-  code: 0,
-  data: {
-    username: 'admin',
-    avatar: ''
-  }
+  username: 'admin',
+  avatar: ''
 };
 
 const useMenuData = [
@@ -48,21 +40,33 @@ export default [
     method: 'post',
     response: ({ body }: any) => {
       console.log('params', body);
-      return loginRes;
+      return {
+        code: 0,
+        data: loginRes,
+        message: 'success'
+      };
     }
   },
   {
     url: `/api${User.USER}`,
     method: 'get',
     response: () => {
-      return userInfo;
+      return {
+        code: 0,
+        data: userInfo,
+        message: 'success'
+      };
     }
   },
   {
     url: `/api${User.USEMENU}`,
     method: 'get',
     response: () => {
-      return useMenuData;
+      return {
+        code: 0,
+        data: useMenuData,
+        message: 'success'
+      };
     }
   }
 ] as MockMethod[];
