@@ -77,10 +77,8 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
   const handleEdit = async (data: any, id: string | number, curUrl?: string) => {
     try {
       await Request.put<IDataModel>({
-        url: curUrl || `${url}/${id}`,
-        data: {
-          ...data
-        }
+        url: curUrl || `${url}?id=${id}`,
+        data
       });
       message.success('操作成功');
       refresh();
@@ -105,16 +103,15 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
 
   // 删除
   const handleDelete = (row: any, contentTip?: string) => {
-    const confirmParams: IConfirm = {
+    confirm({
       title: '删除',
       content: contentTip || '删除之后无法恢复哦，确定删除吗?',
       okType: 'danger'
-    };
-    confirm(confirmParams)
+    })
       .then(async () => {
         try {
           await Request.delete({
-            url: `${url}/${row.id}`
+            url: `${url}?id=${row.id}`
           });
           message.success('删除成功');
         } catch (error) {

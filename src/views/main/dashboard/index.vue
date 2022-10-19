@@ -24,7 +24,7 @@
       <template #body-dateTime="scope">{{ $filters.formatTime(scope.row.dateTime) }}</template>
       <template #body-updateTime="scope">{{ $filters.formatTime(scope.row.updateTime) }}</template>
       <template #body-handler="scope">
-        <a-button type="link" @click="handleEdit(scope.row)">编辑</a-button>
+        <a-button type="link" @click="handleEdit(scope.row, false)">编辑</a-button>
         <a-button type="link" danger @click="handleDelete(scope.row)">删除</a-button>
       </template>
     </SyTable>
@@ -42,7 +42,6 @@
       <a-button @click="handleSearch">搜索</a-button>
     </SyCard>
     <PageContent
-      title="这是一个标题"
       :contentTableConfig="contentTableConfig"
       @onHandleEdit="handleEdit"
       :pageQuery="pageQuery"
@@ -108,11 +107,13 @@ import PageContent from '@/components/pageContent/index.vue';
 import { useConfirm } from '@/hooks/useConfirm';
 import { formConfig, searchFormConfig } from './config/config.form';
 import { contentTableConfig } from './config/config.content';
+import Request from '@/service';
 interface IDialogForm {
   show: boolean;
   visible: boolean;
   title: string;
   row: null | object;
+  type: string;
 }
 const handleMessage = () => {
   message.success('这是一条成功的消息');
@@ -154,13 +155,15 @@ const modalFormParams = reactive<IDialogForm>({
   show: false,
   visible: false,
   row: null,
-  title: '表单弹窗modalForm'
+  title: '表单弹窗modalForm',
+  type: ''
 });
 const drawerFormParams = reactive<IDialogForm>({
   show: false,
   visible: false,
   row: null,
-  title: '表单弹窗drawerForm'
+  title: '表单弹窗drawerForm',
+  type: ''
 });
 const handleOpenkDialogForm = (type: string) => {
   dialogType.value = type;
@@ -168,7 +171,7 @@ const handleOpenkDialogForm = (type: string) => {
     name: '小王',
     age: 20,
     sex: 1,
-    dateTime: '2022-02-15 11:31:23'
+    dateTime: '2022-10-15 11:31:23'
   };
   if (type === 'modal') {
     modalFormParams.row = row;
@@ -185,20 +188,24 @@ const onCloseDialogForm = () => {
   modalFormParams.row = null;
 };
 const onSubmitDialogForm = async (data: any) => {
-  console.log('data', data);
-  if (isPageContent.value) {
+  if (drawerFormParams.type === 'create') {
     // 新增
     await pageContentRef.value.handleCreate(data);
     message.success('添加成功');
     drawerFormRef.value.onCloseDialog();
     return;
-  }
-  // 这里发送请求...
-  message.success('操作成功');
-  if (dialogType.value === 'modal') {
-    modalFormRef.value.onCloseDialog();
-  } else {
+  } else if (drawerFormParams.type === 'edit') {
+    await pageContentRef.value.handleEdit(toRaw(data), data.id);
+    await pageContentRef.value.getPageData();
     drawerFormRef.value.onCloseDialog();
+  } else {
+    // 这里发送请求...
+    message.success('操作成功');
+    if (dialogType.value === 'modal') {
+      modalFormRef.value.onCloseDialog();
+    } else {
+      drawerFormRef.value.onCloseDialog();
+    }
   }
 };
 // 3. 基础表单
@@ -216,14 +223,14 @@ const dataSource = reactive<any[]>([
     name: '小强',
     sex: 1,
     age: 18,
-    dateTime: '2022-02-15 11:31:23'
+    dateTime: '2022-10-15 11:31:23'
   },
   {
     id: 2,
     name: '小红',
     sex: 0,
     age: 18,
-    dateTime: '2022-02-15 11:31:23'
+    dateTime: '2022-10-15 11:31:23'
   }
 ]);
 const pageInfo = reactive({
@@ -236,7 +243,10 @@ const handleSizeChange = (val: any) => {
   pageInfo.pageNo = pageNo;
   pageInfo.pageSize = pageSize;
 };
-const handleEdit = (row: any) => {
+const handleEdit = (row: any, canApi: boolean) => {
+  if (canApi !== false) {
+    drawerFormParams.type = 'edit';
+  }
   dialogType.value = 'drawer';
   drawerFormParams.row = row;
   drawerFormParams.show = true;
@@ -255,10 +265,9 @@ const queryFormRef = ref();
 const querForm = ref({});
 const pageQuery = ref({});
 const pageContentRef = ref();
-const isPageContent = ref(false);
 // 新增
 const handleCreate = () => {
-  isPageContent.value = true;
+  drawerFormParams.type = 'create';
   drawerFormParams.row = {};
   drawerFormParams.show = true;
   drawerFormParams.visible = true;

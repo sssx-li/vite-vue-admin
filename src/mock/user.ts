@@ -39,7 +39,7 @@ export default [
     url: `/api${User.LOGIN}`,
     method: 'post',
     response: ({ body }: any) => {
-      console.log('params', body);
+      console.log(`POST::${User.LOGIN}`, body);
       return {
         code: 0,
         data: loginRes,
@@ -51,6 +51,7 @@ export default [
     url: `/api${User.USER}`,
     method: 'get',
     response: () => {
+      console.log(`GET::${User.USER}`);
       return {
         code: 0,
         data: userInfo,
@@ -62,6 +63,7 @@ export default [
     url: `/api${User.USEMENU}`,
     method: 'get',
     response: () => {
+      console.log(`GET::${User.USEMENU}`);
       return {
         code: 0,
         data: useMenuData,
