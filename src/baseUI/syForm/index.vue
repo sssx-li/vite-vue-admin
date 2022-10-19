@@ -255,7 +255,6 @@ const onSubmit = () => {
     .catch(() => {});
 };
 const onCancel = () => {
-  emit('update:modelValue', {});
   emit('onCancel');
 };
 const handleValueChange = (event: any, item: any, other?: any) => {
