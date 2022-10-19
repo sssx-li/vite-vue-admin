@@ -29,7 +29,7 @@ export default defineConfig(({ command }) => {
         imports: ['vue', 'vue-router'],
         resolvers: [AntDesignVueResolver()],
         eslintrc: {
-          enabled: true,
+          enabled: false,
           filepath: './.eslintrc-auto-import.json'
         }
       }),
