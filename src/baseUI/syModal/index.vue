@@ -8,11 +8,14 @@
     :footer="footer"
     :destroyOnClose="destroyOnClose"
     :afterClose="afterClose"
-    @ok="handleOk"
   >
     <div class="modal-content">
       <slot />
     </div>
+    <template #footer>
+      <a-button key="back" @click="onClose" :disabled="loading">取消</a-button>
+      <a-button key="submit" type="primary" :loading="loading" @click="handleOk">确定</a-button>
+    </template>
   </a-modal>
 </template>
 
@@ -34,6 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits(['update:visible', 'onClose', 'onSubmit']);
 const defVisible = ref(false);
+const loading = ref(false);
 watch(
   () => props.visible,
   (val) => {
@@ -54,6 +58,7 @@ const onClose = () => {
 };
 
 const handleOk = () => {
+  loading.value = true;
   emit('onSubmit');
 };
 

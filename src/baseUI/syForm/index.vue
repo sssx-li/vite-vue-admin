@@ -213,7 +213,8 @@ watch(
           case 'weekpicker':
             dayjs.extend(weekOfYear);
             week = parseInt(dateValue.split('-')[1]);
-            formatValue = dayjs(dateValue.split('-')[0]).week(week);
+            // 这里年份转换的时候需要+1
+            formatValue = dayjs((parseInt(dateValue.split('-')[0]) + 1).toString()).week(week);
             break;
         }
         dateValues[field] = formatValue;

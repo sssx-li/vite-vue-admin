@@ -4,7 +4,7 @@ const tableRoute: RouteRecordRaw[] = [
     path: '/main/table',
     name: 'table',
     meta: {
-      title: '表单',
+      title: '表格',
       icon: 'TableOutlined',
       sort: 3
     },
