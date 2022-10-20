@@ -7,9 +7,10 @@ import {
   FolderOutlined,
   SnippetsOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  FileOutlined,
+  TableOutlined
 } from '@ant-design/icons-vue';
-
 const components = [
   LoginOutlined,
   UserOutlined,
@@ -18,7 +19,9 @@ const components = [
   FolderOutlined,
   SnippetsOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  FileOutlined,
+  TableOutlined
 ];
 
 export default function (app: App): void {

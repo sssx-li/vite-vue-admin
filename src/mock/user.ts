@@ -31,6 +31,14 @@ const useMenuData = [
   {
     id: 4,
     path: '/main/config'
+  },
+  {
+    id: 5,
+    path: '/main/form'
+  },
+  {
+    id: 5,
+    path: '/main/table'
   }
 ];
 
