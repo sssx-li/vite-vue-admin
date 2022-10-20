@@ -1,7 +1,6 @@
 import { IForm } from '@/baseUI/syForm/types';
 
 export const formConfig: IForm = {
-  name: 'device',
   labelCol: { span: 4 },
   wrapperCol: { span: 14 },
   formItems: [
