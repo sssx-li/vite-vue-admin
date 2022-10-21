@@ -54,6 +54,7 @@ const afterClose = () => {
 };
 
 const onClose = () => {
+  loading.value = false;
   defVisible.value = false;
 };
 
