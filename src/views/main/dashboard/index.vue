@@ -1,5 +1,5 @@
 <template>
-  <SyCard title="弹窗">
+  <SyCard title="弹窗" class="message-content">
     <a-button @click="handleMessage">点我提示消息</a-button>
     <a-button @click="handleConfirm">点我触发Confirm弹窗</a-button>
     <a-button @click="handleOpenkDialog('modal')"> Modal弹窗 </a-button>
