@@ -7,7 +7,6 @@
   >
     <a-tab-pane v-for="item in tabList" :key="item.id" :tab="item.name">
       <SyTree
-        :key="item.id"
         :data="data"
         v-model:resourceIds="defResourceIds"
         :tree-data="treeData"
@@ -60,7 +59,7 @@ watch(
   },
   { deep: true }
 );
-// 切换应用
+// 切换tab
 const tabClick = (targetKey: string) => {
   emit('update:activeKey', targetKey);
 };
