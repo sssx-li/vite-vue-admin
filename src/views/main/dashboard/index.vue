@@ -1,10 +1,10 @@
 <template>
-  <section class="message-content">
+  <SyCard title="弹窗">
     <a-button @click="handleMessage">点我提示消息</a-button>
     <a-button @click="handleConfirm">点我触发Confirm弹窗</a-button>
     <a-button @click="handleOpenkDialog('modal')"> Modal弹窗 </a-button>
     <a-button @click="handleOpenkDialog('drawer')">Drawer弹窗</a-button>
-  </section>
+  </SyCard>
   <!-- 基础弹窗 -->
   <SyModal
     v-model:visible="modalParams.visible"
@@ -26,20 +26,8 @@
 
 <script setup lang="ts">
 import { message } from 'ant-design-vue';
-import { SyForm, SyTable, SyModal, SyDrawer, SyCard } from '@/baseUI';
-import DrawerForm from '@/components/drawerForm/index.vue';
-import ModalForm from '@/components/modalForm/index.vue';
-import PageContent from '@/components/pageContent/index.vue';
+import { SyModal, SyDrawer, SyCard } from '@/baseUI';
 import { useConfirm } from '@/hooks/useConfirm';
-import { formConfig, searchFormConfig } from './config/config.form';
-import { contentTableConfig } from './config/config.content';
-interface IDialogForm {
-  show: boolean;
-  visible: boolean;
-  title: string;
-  row: null | object;
-  type: string;
-}
 const handleMessage = () => {
   message.success('这是一条成功的消息');
 };
@@ -48,7 +36,6 @@ const handleConfirm = async () => {
   await confirm();
   message.success('成功');
 };
-// 1. 弹窗
 const syModalRef = ref();
 const syDrawerRef = ref();
 const modalParams = reactive({

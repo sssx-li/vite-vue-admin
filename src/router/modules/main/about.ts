@@ -9,7 +9,7 @@ const aboutRoutes: RouteRecordRaw[] = [
       title: '关于',
       icon: 'FolderOutlined',
       url: '/main/about',
-      sort: 4
+      sort: 5
     },
     children: [
       {

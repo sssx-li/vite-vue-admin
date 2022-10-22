@@ -9,7 +9,8 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   FileOutlined,
-  TableOutlined
+  TableOutlined,
+  UnorderedListOutlined
 } from '@ant-design/icons-vue';
 const components = [
   LoginOutlined,
@@ -21,7 +22,8 @@ const components = [
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   FileOutlined,
-  TableOutlined
+  TableOutlined,
+  UnorderedListOutlined
 ];
 
 export default function (app: App): void {

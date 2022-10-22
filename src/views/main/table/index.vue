@@ -1,6 +1,5 @@
 <template>
-  <div class="table-container">
-    <h2>基础表格</h2>
+  <SyCard title="基础表格">
     <SyTable
       v-bind="contentTableConfig"
       :dataSource="dataSource"
@@ -10,38 +9,30 @@
     >
       <template #body-sex="scope">{{ scope.row.sex === 0 ? '女' : '男' }}</template>
       <template #body-dateTime="scope">{{ $filters.formatTime(scope.row.dateTime) }}</template>
-      <template #body-updateTime="scope">{{ $filters.formatTime(scope.row.updateTime) }}</template>
       <template #body-handler="scope">
         <a-button type="link" @click="handleEdit(scope.row, false)">编辑</a-button>
         <a-button type="link" danger @click="handleDelete(scope.row)">删除</a-button>
       </template>
     </SyTable>
-    <h2>内容组件: 增删改查</h2>
-    <SyCard title="查询" class="query-card">
-      <SyForm
-        v-bind="searchFormConfig"
-        :showFormFooter="false"
-        v-model="querForm"
-        ref="queryFormRef"
-      >
-      </SyForm>
-      <a-button @click="handleSearch">搜索</a-button>
-    </SyCard>
-    <PageContent
-      :contentTableConfig="contentTableConfig"
-      @onHandleEdit="handleEdit"
-      :pageQuery="pageQuery"
-      ref="pageContentRef"
-    >
-      <template #cardHeader>
-        <div class="title">内容组件的使用</div>
-        <a-button @click="handleCreate">新建</a-button>
-      </template>
-      <template #body-sex="scope">{{ scope.row.sex === 0 ? '女' : '男' }}</template>
-      <template #body-dateTime="scope">{{ $filters.formatTime(scope.row.dateTime) }}</template>
-      <template #body-updateTime="scope">{{ $filters.formatTime(scope.row.updateTime) }}</template>
-    </PageContent>
-  </div>
+  </SyCard>
+  <SyCard title="查询" class="query-card">
+    <SyForm v-bind="searchFormConfig" :showFormFooter="false" v-model="querForm" ref="queryFormRef">
+    </SyForm>
+    <a-button @click="handleSearch">搜索</a-button>
+  </SyCard>
+  <PageContent
+    :contentTableConfig="contentTableConfig"
+    @onHandleEdit="handleEdit"
+    :pageQuery="pageQuery"
+    ref="pageContentRef"
+  >
+    <template #cardHeader>
+      <div class="title">内容组件的使用</div>
+      <a-button @click="handleCreate">新建</a-button>
+    </template>
+    <template #body-sex="scope">{{ scope.row.sex === 0 ? '女' : '男' }}</template>
+    <template #body-dateTime="scope">{{ $filters.formatTime(scope.row.dateTime) }}</template>
+  </PageContent>
   <DrawerForm
     v-if="drawerFormParams.show"
     v-model:show="drawerFormParams.show"
@@ -163,8 +154,8 @@ const handleSearch = async () => {
 </script>
 
 <style lang="less" scoped>
-:deep(.query-card) {
-  .card-content {
+.query-card {
+  :deep(.card-content) {
     display: flex;
   }
 }

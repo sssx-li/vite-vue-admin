@@ -4,5 +4,6 @@ import SyEchart from './syEchart/index.vue';
 import SyForm from './syForm/index.vue';
 import SyTable from './syTable/index.vue';
 import SyModal from './syModal/index.vue';
+import SyTree from './syTree/index.vue';
 
-export { SyCard, SyDrawer, SyEchart, SyForm, SyTable, SyModal };
+export { SyCard, SyDrawer, SyEchart, SyForm, SyTable, SyModal, SyTree };

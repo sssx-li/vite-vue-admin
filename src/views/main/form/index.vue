@@ -1,14 +1,15 @@
 <template>
-  <h2>基础表单:</h2>
-  <SyForm v-bind="formConfig" v-model="formState" @onSubmit="onSubmit" ref="syFormRef">
-    <template #other-otherType="scope"> {{ scope.content.otherType }} </template>
-  </SyForm>
-
-  <h2>表单弹窗:</h2>
-  <a-button @click="handleOpenkDialogForm('modal')"> Modal表单弹窗 </a-button>
-  <a-button @click="handleOpenkDialogForm('drawer')" style="margin-left: 14px">
-    Drawer表单弹窗
-  </a-button>
+  <SyCard title="基础表单">
+    <SyForm v-bind="formConfig" v-model="formState" @onSubmit="onSubmit" ref="syFormRef">
+      <template #other-otherType="scope"> {{ scope.content.otherType }} </template>
+    </SyForm>
+  </SyCard>
+  <SyCard title="表单弹窗">
+    <a-button @click="handleOpenkDialogForm('modal')"> Modal表单弹窗 </a-button>
+    <a-button @click="handleOpenkDialogForm('drawer')" style="margin-left: 14px">
+      Drawer表单弹窗
+    </a-button>
+  </SyCard>
   <ModalForm
     v-if="modalFormParams.show"
     v-model:show="modalFormParams.show"
@@ -35,7 +36,7 @@
 
 <script setup lang="ts" name="formExample">
 import { message } from 'ant-design-vue';
-import { SyForm } from '@/baseUI';
+import { SyForm, SyCard } from '@/baseUI';
 import ModalForm from '@/components/modalForm/index.vue';
 import DrawerForm from '@/components/drawerForm/index.vue';
 import { formConfig } from './config/config.form';
