@@ -11,6 +11,9 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import AutoImport from 'unplugin-auto-import/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
+import Unocss from 'unocss/vite';
+import { presetAttributify, presetUno } from 'unocss';
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   return {
@@ -22,10 +25,10 @@ export default defineConfig(({ command }) => {
         watchFiles: true
       }),
       AutoImport({
-        dts: true,
+        dts: false,
         imports: ['vue', 'vue-router'],
         eslintrc: {
-          enabled: true,
+          enabled: false,
           filepath: './.eslintrc-auto-import.json'
         },
         resolvers: [ElementPlusResolver()]
@@ -33,7 +36,9 @@ export default defineConfig(({ command }) => {
       Components({
         dts: false,
         resolvers: [
-          ElementPlusResolver(),
+          ElementPlusResolver({
+            importStyle: 'sass'
+          }),
           IconsResolver({
             customCollections: ['sy']
           })
@@ -46,6 +51,29 @@ export default defineConfig(({ command }) => {
             svg.replace(/^<svg /, '<svg fill="currentColor" ')
           )
         }
+      }),
+      Unocss({
+        presets: [presetUno(), presetAttributify()],
+        rules: [
+          ['fl', { display: 'flex' }],
+          ['fl-center', { display: 'flex', 'justify-content': 'center', 'align-items': 'center' }],
+          ['fl-column', { display: 'flex', 'flex-direction': 'column' }],
+          ['tac', { 'text-align': 'center' }],
+          ['tar', { 'text-align': 'right' }],
+          ['tal', { 'text-align': 'left' }],
+          [/^h-(\d+)$/, ([, d]) => ({ height: `${d}px` })],
+          [/^w-(\d+)$/, ([, d]) => ({ width: `${d}px` })],
+          [/^mt-(\d+)$/, ([, d]) => ({ 'margin-top': `${d}px` })],
+          [/^mr-(\d+)$/, ([, d]) => ({ 'margin-right': `${d}px` })],
+          [/^mb-(\d+)$/, ([, d]) => ({ 'margin-bottom': `${d}px` })],
+          [/^ml-(\d+)$/, ([, d]) => ({ 'margin-left': `${d}px` })],
+          [/^p-(\d+)$/, ([, d]) => ({ padding: `${d}px` })],
+          [/^pt-(\d+)$/, ([, d]) => ({ 'padding-top': `${d}px` })],
+          [/^pr-(\d+)$/, ([, d]) => ({ 'padding-right': `${d}px` })],
+          [/^pb-(\d+)$/, ([, d]) => ({ 'padding-bottom': `${d}px` })],
+          [/^pl-(\d+)$/, ([, d]) => ({ 'padding-left': `${d}px` })],
+          [/^fz-(\d+)$/, ([, d]) => ({ 'font-size': `${d}px` })]
+        ]
       })
     ],
     resolve: {

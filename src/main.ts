@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import 'normalize.css';
+import 'uno.css';
 
 import './assets/styles/style.css';
 import store from './store';
