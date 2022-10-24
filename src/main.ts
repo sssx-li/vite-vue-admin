@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import 'normalize.css';
 
 import './assets/styles/style.css';
+import 'uno.css';
 import store from './store';
 import router from './router';
 import { setupMock } from './mock';
