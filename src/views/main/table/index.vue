@@ -47,12 +47,11 @@
 </template>
 
 <script setup lang="ts" name="tableExample">
-import { message } from 'ant-design-vue';
 import { SyTable, SyForm, SyCard } from '@/baseUI';
 import PageContent from '@/components/pageContent/index.vue';
-import { useConfirm } from '@/hooks/useConfirm';
 import { contentTableConfig } from './config/config.content';
 import { formConfig, searchFormConfig } from './config/config.form';
+
 interface IDialogForm {
   show: boolean;
   visible: boolean;
@@ -60,7 +59,7 @@ interface IDialogForm {
   row: null | object;
   type: string;
 }
-
+const { success } = useMessage();
 const confirm = useConfirm();
 const drawerFormRef = ref();
 // 基础表格
@@ -112,7 +111,7 @@ const handleDelete = async (row: any) => {
     okType: 'danger'
   });
   // 发送请求...
-  message.success('删除成功');
+  success('删除成功');
 };
 const onCloseDialogForm = () => {
   drawerFormParams.row = null;
@@ -121,7 +120,7 @@ const onSubmitDialogForm = async (data: any) => {
   if (drawerFormParams.type === 'create') {
     // 新增
     await pageContentRef.value.handleCreate(data);
-    message.success('添加成功');
+    success('添加成功');
     drawerFormRef.value.onCloseDialog();
     return;
   } else if (drawerFormParams.type === 'edit') {
@@ -130,7 +129,7 @@ const onSubmitDialogForm = async (data: any) => {
     drawerFormRef.value.onCloseDialog();
   } else {
     // 这里发送请求...
-    message.success('操作成功');
+    success('操作成功');
     drawerFormRef.value.onCloseDialog();
   }
 };

@@ -155,7 +155,6 @@
 <script setup lang="ts" name="syForm">
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-import { useFormValidate } from '@/hooks/useFormValidate';
 import { IFormItem } from './types';
 
 const dateType = ['datepicker', 'monthpicker', 'rangepicker', 'weekpicker'];

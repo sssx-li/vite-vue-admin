@@ -17,11 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import { message } from 'ant-design-vue';
 import localCache from '@/utils/localCache';
-import { useConfirm } from '@/hooks/useConfirm';
 import { useUserStore } from '@/store/user';
 
+const { info } = useMessage();
 const store = useUserStore();
 const confirm = useConfirm();
 const userInfo = computed(() => store.userInfo);
@@ -35,7 +34,7 @@ const onClick = (obj: any) => {
       })
       .catch(() => {});
   } else if (key === 'userInfo') {
-    message.info('个人信息');
+    info('个人信息');
   }
 };
 </script>

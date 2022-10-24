@@ -1,6 +1,4 @@
-import { message } from 'ant-design-vue';
 import Request from '@/service';
-import { IConfirm, useConfirm } from './useConfirm';
 import { IDataModel } from '@/service/types/axios';
 import { ITableList } from '@/service/types/table';
 import { ITableConfig } from '@/baseUI/syTable/types';
@@ -14,9 +12,10 @@ import { ITableConfig } from '@/baseUI/syTable/types';
  * @param pageQuery 当前页面请求参数
  *
  */
-function usePageContent(config: ITableConfig, pageQuery: any = {}) {
+export default function usePageContent(config: ITableConfig, pageQuery: any = {}) {
   const { url, columns, showFooter } = config;
   const confirm = useConfirm();
+  const { success, error } = useMessage();
 
   const pageInfo = reactive({ pageNo: 1, pageSize: 10 });
   const dataSource = ref<any[]>([]);
@@ -68,8 +67,8 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
       } = res;
       dataSource.value = list;
       total.value = page.count;
-    } catch (error) {
-      message.error('获取数据失败，请刷新重试');
+    } catch (err) {
+      error('获取数据失败，请刷新重试');
     }
   };
 
@@ -80,10 +79,10 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
         url: curUrl || `${url}?id=${id}`,
         data
       });
-      message.success('操作成功');
+      success('操作成功');
       refresh();
-    } catch (error) {
-      message.error('操作失败，请稍后再试');
+    } catch (err) {
+      error('操作失败，请稍后再试');
     }
   };
 
@@ -94,10 +93,10 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
         url,
         data
       });
-      message.success('添加成功');
+      success('添加成功');
       refresh();
-    } catch (error) {
-      message.error('添加失败，请稍后再试');
+    } catch (err) {
+      error('添加失败，请稍后再试');
     }
   };
 
@@ -113,9 +112,9 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
           await Request.delete({
             url: `${url}?id=${row.id}`
           });
-          message.success('删除成功');
-        } catch (error) {
-          message.error('删除失败，请稍后再试');
+          success('删除成功');
+        } catch (err) {
+          error('删除失败，请稍后再试');
         }
         refresh();
       })
@@ -141,5 +140,3 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
     handleEdit
   };
 }
-
-export { usePageContent };

@@ -26,7 +26,19 @@ export default defineConfig(({ command }) => {
       }),
       AutoImport({
         dts: false,
-        imports: ['vue', 'vue-router'],
+        imports: [
+          'vue',
+          'vue-router',
+          {
+            '/src/hooks': [
+              'useMessage',
+              'useConfirm',
+              'useEcharts',
+              'useFormValidate',
+              'usePageContent'
+            ]
+          }
+        ],
         resolvers: [AntDesignVueResolver()],
         eslintrc: {
           enabled: false,

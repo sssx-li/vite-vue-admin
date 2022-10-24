@@ -25,16 +25,16 @@
 </template>
 
 <script setup lang="ts">
-import { message } from 'ant-design-vue';
 import { SyModal, SyDrawer, SyCard } from '@/baseUI';
-import { useConfirm } from '@/hooks/useConfirm';
+
+const { success } = useMessage();
 const handleMessage = () => {
-  message.success('这是一条成功的消息');
+  success('这是一条成功的消息');
 };
 const confirm = useConfirm();
 const handleConfirm = async () => {
   await confirm();
-  message.success('成功');
+  success('成功');
 };
 const syModalRef = ref();
 const syDrawerRef = ref();

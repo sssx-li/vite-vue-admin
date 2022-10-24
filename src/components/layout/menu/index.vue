@@ -23,8 +23,8 @@
 
 <script setup lang="ts">
 import { useUserStore } from '@/store/user';
-import { useRoute, useRouter } from 'vue-router';
 import SubMenu from './subMenu.vue';
+
 const route = useRoute();
 const router = useRouter();
 const store = useUserStore();

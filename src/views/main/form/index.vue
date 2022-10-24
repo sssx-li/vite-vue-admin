@@ -35,17 +35,18 @@
 </template>
 
 <script setup lang="ts" name="formExample">
-import { message } from 'ant-design-vue';
 import { SyForm, SyCard } from '@/baseUI';
 import ModalForm from '@/components/modalForm/index.vue';
 import DrawerForm from '@/components/drawerForm/index.vue';
 import { formConfig } from './config/config.form';
+
+const { success } = useMessage();
 // 基础表单
 const formState = ref<any>({});
 const syFormRef = ref();
 const onSubmit = async () => {
   await syFormRef.value?.validate();
-  message.success('提交成功');
+  success('提交成功');
   console.log('formState', formState.value);
 };
 
@@ -105,7 +106,7 @@ const onSubmitDialogForm = async (data: any) => {
   const params = { ...data };
   console.log('params', params);
   // 这里发送请求...
-  message.success('操作成功');
+  success('操作成功');
   if (dialogType.value === 'modal') {
     modalFormRef.value.onCloseDialog();
   } else {

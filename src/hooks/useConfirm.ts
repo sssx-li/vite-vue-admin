@@ -13,7 +13,7 @@ export interface IConfirm {
   okType?: ButtonType;
 }
 
-const useConfirm = function (): (obj?: IConfirm) => Promise<any> {
+export default function useConfirm(): (obj?: IConfirm) => Promise<any> {
   return (params = {}) => {
     const {
       title = '提示',
@@ -37,6 +37,4 @@ const useConfirm = function (): (obj?: IConfirm) => Promise<any> {
       });
     });
   };
-};
-
-export { useConfirm };
+}
