@@ -1,6 +1,6 @@
 import 'normalize.css';
 import 'ant-design-vue/dist/antd.css';
-import 'unocss';
+import 'uno.css';
 
 import './assets/styles/style.css';
 import App from './App.vue';

@@ -52,9 +52,7 @@ export default defineConfig(({ command }) => {
       Components({
         dts: false,
         resolvers: [
-          AntDesignVueResolver({
-            importStyle: 'less'
-          }),
+          AntDesignVueResolver(),
           IconsResolver({
             customCollections: ['sy']
           })
