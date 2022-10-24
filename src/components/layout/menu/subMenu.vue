@@ -25,4 +25,4 @@ import { RouterItem } from '@/router';
 defineProps<{ route: RouterItem }>();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>
