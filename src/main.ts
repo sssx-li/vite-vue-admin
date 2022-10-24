@@ -1,5 +1,7 @@
 import 'normalize.css';
 import 'ant-design-vue/dist/antd.css';
+import 'unocss';
+
 import './assets/styles/style.css';
 import App from './App.vue';
 import router from './router';
