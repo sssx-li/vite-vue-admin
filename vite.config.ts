@@ -8,6 +8,8 @@ import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 
+import AutoImport from 'unplugin-auto-import/vite';
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   return {
@@ -17,6 +19,14 @@ export default defineConfig(({ command }) => {
         mockPath: 'mock',
         localEnabled: command === 'serve', // 开发环境启用
         watchFiles: true
+      }),
+      AutoImport({
+        dts: true,
+        imports: ['vue', 'vue-router'],
+        eslintrc: {
+          enabled: true,
+          filepath: './.eslintrc-auto-import.json'
+        }
       }),
       UnpluginVueComponents({
         dts: false,
@@ -37,13 +47,7 @@ export default defineConfig(({ command }) => {
     ],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
-        hooks: path.resolve(__dirname, 'src/hooks'),
-        store: path.resolve(__dirname, 'src/store'),
-        views: path.resolve(__dirname, 'src/views'),
-        components: path.resolve(__dirname, 'src/components'),
-        utils: path.resolve(__dirname, 'src/utils'),
-        service: path.resolve(__dirname, 'src/service')
+        '@': path.resolve(__dirname, 'src')
       }
     }
   };

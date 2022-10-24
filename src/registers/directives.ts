@@ -1,5 +1,5 @@
-import { focus } from '@/directives';
 import type { App } from 'vue';
+import { focus } from '@/directives';
 
 const directiveList = [
   {

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from 'store/user';
+import { useUserStore } from '@/store/user';
 const store = useUserStore();
 
 const handleLogin = async () => {

@@ -1,7 +1,6 @@
 import type { AxiosRequestConfig } from 'axios';
 import IRequest from './request';
-import localCache from 'utils/localCache';
-// import mock from './mock';
+import localCache from '@/utils/localCache';
 
 import { tokenKey } from '@/common';
 
@@ -20,9 +19,5 @@ const Request = new IRequest({
     }
   }
 });
-
-// if (process.env.VUE_APP_ENV === 'mock') {
-//   mock(Request.instance);
-// }
 
 export default Request;
