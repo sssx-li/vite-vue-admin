@@ -1,4 +1,5 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import 'ant-design-vue/es/modal/style/css';
 
 import { Modal } from 'ant-design-vue';
 import { createVNode } from 'vue';

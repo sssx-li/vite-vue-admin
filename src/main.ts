@@ -1,5 +1,4 @@
 import 'normalize.css';
-import 'ant-design-vue/dist/antd.css';
 import 'uno.css';
 
 import './assets/styles/style.css';
