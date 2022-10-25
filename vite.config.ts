@@ -11,8 +11,6 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import AutoImport from 'unplugin-auto-import/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
-import VueSetupExtend from 'vite-plugin-vue-setup-extend';
-
 import Unocss from 'unocss/vite';
 import { presetAttributify, presetUno } from 'unocss';
 
@@ -21,14 +19,13 @@ export default defineConfig(({ command }) => {
   return {
     plugins: [
       vue(),
-      VueSetupExtend(),
       viteMockServe({
         mockPath: 'mock',
         localEnabled: command === 'serve', // 开发环境启用
         watchFiles: true
       }),
       AutoImport({
-        // dts: './src/types/auto-import.d.ts',
+        // dts: './src/types/auto-imports.d.ts',
         dts: false,
         imports: [
           'vue',
