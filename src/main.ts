@@ -9,7 +9,7 @@ import { setupMock } from './mock';
 
 import App from './App.vue';
 
-if (import.meta.env.MODE === 'mock') {
+if (import.meta.env.VITE_USE_MOCK === 'true') {
   setupMock();
 }
 
