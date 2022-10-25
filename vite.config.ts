@@ -27,7 +27,7 @@ export default defineConfig(({ command }) => {
         dts: false,
         imports: ['vue', 'vue-router'],
         eslintrc: {
-          enabled: true,
+          enabled: false,
           filepath: './.eslintrc-auto-import.json'
         }
       }),
