@@ -3,13 +3,12 @@ import {
   Avatar,
   CircleClose,
   HomeFilled,
-  Menu,
-  Tools,
-  Promotion,
-  UserFilled
+  UserFilled,
+  Folder,
+  Setting
 } from '@element-plus/icons-vue';
 
-const components = [Avatar, CircleClose, HomeFilled, Menu, Tools, Promotion, UserFilled];
+const components = [Avatar, CircleClose, HomeFilled, UserFilled, Folder, Setting];
 
 export default function (app: App): void {
   for (const icon of components) {

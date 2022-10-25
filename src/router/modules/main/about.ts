@@ -7,7 +7,7 @@ const aboutRoutes: RouteRecordRaw[] = [
     redirect: '/main/about/first',
     meta: {
       title: '关于',
-      icon: 'FolderOutlined',
+      icon: 'Folder',
       url: '/main/about',
       sort: 5
     },
@@ -18,7 +18,6 @@ const aboutRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/main/about/first.vue'),
         meta: {
           title: '关于1-1',
-          icon: 'SnippetsOutlined',
           url: '/main/about/first',
           isHidden: true
         }
@@ -29,7 +28,6 @@ const aboutRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/main/about/secound.vue'),
         meta: {
           title: '关于1-2',
-          icon: 'SnippetsOutlined',
           url: '/main/about/secound'
         }
       }

@@ -5,7 +5,7 @@ const configRoute: RouteRecordRaw[] = [
     name: 'config',
     meta: {
       title: '配置',
-      icon: 'SettingOutlined',
+      icon: 'Setting',
       sort: 6
     },
     component: () => import('@/views/main/config/index.vue')
