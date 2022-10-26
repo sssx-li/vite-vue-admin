@@ -51,11 +51,17 @@ export default defineConfig(({ command }) => {
         presets: [presetUno(), presetAttributify()],
         rules: [
           ['fl', { display: 'flex' }],
-          ['fl-center', { display: 'flex', 'justify-content': 'center', 'align-items': 'center' }],
-          ['fl-column', { display: 'flex', 'flex-direction': 'column' }],
+          ['fl-center', { 'justify-content': 'center', 'align-items': 'center' }],
+          ['fl-column', { 'flex-direction': 'column' }],
+          [/^fl-(\d+)$/, ([, d]) => ({ flex: d })],
+          [/^flw-(\S+)$/, ([, str]) => ({ 'flex-wrap': str })],
+          [/^fla-(\S+)$/, ([, str]) => ({ 'align-items': str })],
           ['tac', { 'text-align': 'center' }],
           ['tar', { 'text-align': 'right' }],
           ['tal', { 'text-align': 'left' }],
+          ['fw-bold', { 'font-weight': 'bold' }],
+          [/^c-(\S+)$/, ([, color]) => ({ color })],
+          [/^fw-(\d+)$/, ([, d]) => ({ 'font-weight': d })],
           [/^h-(\d+)$/, ([, d]) => ({ height: `${d}px` })],
           [/^w-(\d+)$/, ([, d]) => ({ width: `${d}px` })],
           [/^mt-(\d+)$/, ([, d]) => ({ 'margin-top': `${d}px` })],
@@ -67,7 +73,9 @@ export default defineConfig(({ command }) => {
           [/^pr-(\d+)$/, ([, d]) => ({ 'padding-right': `${d}px` })],
           [/^pb-(\d+)$/, ([, d]) => ({ 'padding-bottom': `${d}px` })],
           [/^pl-(\d+)$/, ([, d]) => ({ 'padding-left': `${d}px` })],
-          [/^fz-(\d+)$/, ([, d]) => ({ 'font-size': `${d}px` })]
+          [/^fz-(\d+)$/, ([, d]) => ({ 'font-size': `${d}px` })],
+          [/^lg-(\d+)$/, ([, d]) => ({ 'line-height': `${d}px` })],
+          ['cursor', { cursor: 'pointer' }]
         ]
       })
     ],
