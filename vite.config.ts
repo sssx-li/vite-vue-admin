@@ -25,10 +25,16 @@ export default defineConfig(({ command }) => {
         watchFiles: true
       }),
       AutoImport({
-        dts: false,
-        imports: ['vue', 'vue-router'],
+        dts: './src/types/auto-imports.d.ts',
+        imports: [
+          'vue',
+          'vue-router',
+          {
+            '/src/hooks': ['useMessage']
+          }
+        ],
         eslintrc: {
-          enabled: false,
+          enabled: true,
           filepath: './.eslintrc-auto-import.json'
         },
         resolvers: [ElementPlusResolver()]
