@@ -61,12 +61,10 @@ const loginForm = ref<IAccount>({
 });
 const loginRuleFormRef = ref<FormInstance>();
 const handleLogin = async () => {
-  await loginRuleFormRef.value?.validate((valid) => {
-    if (!valid) return;
-    loading.value = true;
-    store.loginAction(loginForm.value);
-    loading.value = false;
-  });
+  await loginRuleFormRef.value?.validate();
+  loading.value = true;
+  await store.loginAction(loginForm.value);
+  loading.value = false;
 };
 </script>
 
