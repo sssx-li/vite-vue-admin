@@ -3,9 +3,15 @@
     active-text-color="#0a60bd"
     background-color="#001529"
     class="menu-container"
+    :collapse="isCollapse"
     :default-active="defaultActive"
     text-color="#b7bdc3"
   >
+    <div class="fl fl-center fl-column tac p-10">
+      <el-icon :size="isCollapse ? 30 : 40">
+        <i-sy-vue />
+      </el-icon>
+    </div>
     <template v-for="menu in menuList" :key="menu.path">
       <el-menu-item
         :index="menu.path"
@@ -26,6 +32,8 @@
 import SubMenu from './subMenu.vue';
 import { useUserStore } from '@/store/user';
 
+defineProps<{ isCollapse: boolean }>();
+
 const store = useUserStore();
 const route = useRoute();
 const router = useRouter();
@@ -39,7 +47,10 @@ const handleClickMenu = (menu: any) => {
 <style lang="scss" scoped>
 .menu-container {
   height: 100%;
-  width: 100%;
+  &:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
   .el-sub-menu {
     background-color: #001529 !important;
     // 二级菜单 ( 默认背景 )

@@ -1,15 +1,14 @@
 <template>
-  <div class="layout-header-container">
-    <div class="left-icon">
-      <el-icon :size="30">
-        <icon-sy-logo />
+  <div class="layout-header-container fl h-50 lh-50 c-#000">
+    <div class="left-icon fl fla-center cursor">
+      <el-icon size="20px">
+        <component @click="changeCollapse" :is="isCollapse ? `Expand` : 'Fold'" />
       </el-icon>
-      <span class="system-name">后台管理系统</span>
     </div>
-    <el-dropdown class="right-action-info" @command="handleCommand">
-      <span class="el-dropdown-link">
+    <el-dropdown class="right-action-info fl fla-center" @command="handleCommand">
+      <span class="el-dropdown-link fl fla-center cursor">
         <el-avatar icon="UserFilled" :size="34" />
-        <span class="user-name">超级管理员</span>
+        <span class="ml-10 c-#000">超级管理员</span>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -23,6 +22,10 @@
 
 <script setup lang="ts">
 import localCache from '@/utils/localCache';
+
+const props = defineProps<{ isCollapse: boolean }>();
+const emit = defineEmits(['update:isCollapse']);
+
 const router = useRouter();
 const handleCommand = (key: string) => {
   if (key === 'logout') {
@@ -30,40 +33,19 @@ const handleCommand = (key: string) => {
     router.push({ path: '/login', replace: true });
   }
 };
+const changeCollapse = () => {
+  emit('update:isCollapse', !props.isCollapse);
+};
 </script>
 
 <style lang="scss" scoped>
 .layout-header-container {
-  display: flex;
   justify-content: space-between;
-  height: 50px;
-  line-height: 50px;
-  color: #000;
   .left-icon {
-    width: 160px;
-    flex: 0 0 160px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    .system-name {
-      margin: 0 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
+    flex: 0 0 20px;
   }
   .right-action-info {
     flex: 0 0 120px;
-    display: flex;
-    align-items: center;
-    .el-dropdown-link {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      .user-name {
-        margin: 0 0 0 10px;
-        color: #000;
-      }
-    }
   }
 }
 </style>
