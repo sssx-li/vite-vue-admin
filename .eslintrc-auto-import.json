@@ -46,6 +46,7 @@
     "triggerRef": true,
     "unref": true,
     "useAttrs": true,
+    "useConfirm": true,
     "useCssModule": true,
     "useCssVars": true,
     "useLink": true,

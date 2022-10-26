@@ -1,3 +1,4 @@
+import useConfirm from './useConfirm';
 import useMessage from './useMessage';
 
-export { useMessage };
+export { useConfirm, useMessage };
