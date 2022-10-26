@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container fl-center">
+  <div class="login-container fl fl-center">
     <div class="login-content w-500 p-40 fl-column">
       <h2 class="mb-30 tac">后台管理系统</h2>
       <el-form
@@ -16,7 +16,13 @@
           <el-input v-model="loginForm.password" show-password />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="login-btn" size="large" @click="handleLogin">
+          <el-button
+            type="primary"
+            :loading="loading"
+            class="login-btn"
+            size="large"
+            @click="handleLogin"
+          >
             立即登录
           </el-button>
         </el-form-item>
@@ -48,6 +54,7 @@ const rules = reactive<FormRules>({
   ]
 });
 const store = useUserStore();
+const loading = ref(false);
 const loginForm = ref<IAccount>({
   username: '',
   password: ''
@@ -56,7 +63,9 @@ const loginRuleFormRef = ref<FormInstance>();
 const handleLogin = async () => {
   await loginRuleFormRef.value?.validate((valid) => {
     if (!valid) return;
+    loading.value = true;
     store.loginAction(loginForm.value);
+    loading.value = false;
   });
 };
 </script>

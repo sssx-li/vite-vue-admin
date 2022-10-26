@@ -80,6 +80,7 @@ export default defineConfig(({ command }) => {
           [/^pl-(\d+)$/, ([, d]) => ({ 'padding-left': `${d}px` })],
           [/^fz-(\d+)$/, ([, d]) => ({ 'font-size': `${d}px` })],
           [/^lg-(\d+)$/, ([, d]) => ({ 'line-height': `${d}px` })],
+          [/^br-(\d+)$/, ([, d]) => ({ 'border-radius': `${d}px` })],
           ['cursor', { cursor: 'pointer' }]
         ]
       })
