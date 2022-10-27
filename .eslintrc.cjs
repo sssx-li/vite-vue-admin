@@ -27,5 +27,9 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     'linebreak-style': [0, 'error', 'windows'],
     '@typescript-eslint/no-non-null-assertion': 'off'
+  },
+  globals: {
+    useMessage: true,
+    useConfirm: true
   }
 };
