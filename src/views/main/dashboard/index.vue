@@ -5,11 +5,15 @@
 </template>
 
 <script setup lang="ts" name="dashboard">
+import { useConfirm, useMessage } from '@/hooks';
+
 const confirm = useConfirm();
-const openMessage = () => {
-  confirm({
+const { success } = useMessage();
+const openMessage = async () => {
+  await confirm({
     title: '提示'
   });
+  success('成功的提示');
 };
 </script>
 
