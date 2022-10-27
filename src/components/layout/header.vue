@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-header-container fl h-50 lh-50 c-#000">
+  <div class="layout-header-container fl h-50 lh-50 c-000">
     <div class="left-icon fl fla-center cursor">
       <el-icon size="20px">
         <component @click="changeCollapse" :is="isCollapse ? `Expand` : 'Fold'" />
@@ -8,7 +8,7 @@
     <el-dropdown class="right-action-info fl fla-center" @command="handleCommand">
       <span class="el-dropdown-link fl fla-center cursor">
         <el-avatar icon="UserFilled" :size="34" />
-        <span class="ml-10 c-#000">超级管理员</span>
+        <span class="ml-10 c-000">超级管理员</span>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -21,14 +21,21 @@
 </template>
 
 <script setup lang="ts">
+import { useConfirm } from '@/hooks';
 import localCache from '@/utils/localCache';
 
 const props = defineProps<{ isCollapse: boolean }>();
 const emit = defineEmits(['update:isCollapse']);
 
 const router = useRouter();
-const handleCommand = (key: string) => {
+const confirm = useConfirm();
+const handleCommand = async (key: string) => {
   if (key === 'logout') {
+    await confirm({
+      title: '提示',
+      type: 'warning',
+      content: '确定要退出登录吗？'
+    });
     localCache.clearCache();
     router.push({ path: '/login', replace: true });
   }

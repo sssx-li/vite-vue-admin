@@ -1,7 +1,6 @@
 <template>
-  <div class="dashboard-container">
-    <el-button @click="openMessage">确认弹窗</el-button>
-  </div>
+  dashboard <br />
+  <el-button @click="openMessage">确认弹窗</el-button>
 </template>
 
 <script setup lang="ts" name="dashboard">

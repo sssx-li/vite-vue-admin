@@ -66,7 +66,7 @@ export default defineConfig(({ command }) => {
           ['tar', { 'text-align': 'right' }],
           ['tal', { 'text-align': 'left' }],
           ['fw-bold', { 'font-weight': 'bold' }],
-          [/^c-(\S+)$/, ([, color]) => ({ color })],
+          [/^c-(\S+)$/, ([, color]) => ({ color: `#${color}` })],
           [/^fw-(\d+)$/, ([, d]) => ({ 'font-weight': d })],
           [/^h-(\d+)$/, ([, d]) => ({ height: `${d}px` })],
           [/^w-(\d+)$/, ([, d]) => ({ width: `${d}px` })],

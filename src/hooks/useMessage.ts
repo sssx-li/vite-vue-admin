@@ -16,7 +16,7 @@ export default function useMessage(
   offset = 20,
   showClose = false,
   center = false,
-  appendTo: string | HTMLElement = 'document.body'
+  appendTo: string | HTMLElement = document.body
 ) {
   const success = (message: string, duration?: number, grouping = false) => {
     return ElMessage.success({
