@@ -1,22 +1,22 @@
 <template>
-  <el-sub-menu :index="menuInfo.path" v-if="!menuInfo.meta?.isHidden">
+  <el-sub-menu :index="menuInfo.path" v-if="!menuInfo.meta.isHidden">
     <template #title>
-      <el-icon :size="20" v-if="menuInfo.meta?.icon">
+      <el-icon :size="20" v-if="menuInfo.meta.icon">
         <component :is="menuInfo.meta.icon"></component>
       </el-icon>
-      <span>{{ menuInfo.meta?.title }}</span>
+      <span>{{ menuInfo.meta.title }}</span>
     </template>
     <!-- 遍历item -->
     <template v-for="menu in menuInfo.children" :key="menu.path">
       <el-menu-item
         :index="menu.path"
         @click="handleMenuItemClick(menu)"
-        v-if="!menu.meta?.isHidden && (!menu.children || menu.children.length === 0)"
+        v-if="!menu.meta.isHidden && (!menu.children || menu.children.length === 0)"
       >
-        <el-icon :size="20" v-if="menu.meta?.icon">
+        <el-icon :size="20" v-if="menu.meta.icon">
           <component :is="menu.meta.icon"></component>
         </el-icon>
-        <span>{{ menu.meta?.title }}</span>
+        <span>{{ menu.meta.title }}</span>
       </el-menu-item>
       <sub-menu :menuInfo="menu" v-else />
     </template>

@@ -10,9 +10,9 @@ interface IMeta extends RouteMeta {
 }
 
 export interface RouterItem {
-  path?: string;
-  component?: any;
-  meta?: IMeta;
+  path: string;
+  component: any;
+  meta: IMeta;
   name?: string;
   redirect?: string;
   children?: RouterItem[];

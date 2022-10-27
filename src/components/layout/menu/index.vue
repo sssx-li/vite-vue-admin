@@ -15,7 +15,7 @@
     <template v-for="menu in menuList" :key="menu.path">
       <el-menu-item
         :index="menu.path"
-        v-if="!menu.meta?.isHidden && (!menu.children || menu.children.length === 0)"
+        v-if="!menu.meta.isHidden && (!menu.children || menu.children.length === 0)"
         @click="handleClickMenu(menu)"
       >
         <el-icon v-if="menu.meta.icon">
@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import SubMenu from './subMenu.vue';
 import { useUserStore } from '@/store/user';
+import type { RouteRecord } from 'vue-router';
 
 defineProps<{ isCollapse: boolean }>();
 
@@ -39,7 +40,7 @@ const route = useRoute();
 const router = useRouter();
 const defaultActive = computed(() => route.path);
 const menuList: any = computed(() => store.userMenus);
-const handleClickMenu = (menu: any) => {
+const handleClickMenu = (menu: RouteRecord) => {
   router.push({ path: menu.path });
 };
 </script>
