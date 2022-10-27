@@ -44,7 +44,6 @@ export const useUserStore = defineStore('user', {
           routes.forEach((route: any) => {
             router.addRoute('main', route);
           });
-        console.log('router', router);
       } catch (error) {
         return error;
       }
