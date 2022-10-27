@@ -2,12 +2,12 @@
   <el-menu
     active-text-color="#0a60bd"
     background-color="#001529"
-    class="menu-container"
+    class="menu-container h-100%"
     :collapse="isCollapse"
     :default-active="defaultActive"
     text-color="#b7bdc3"
   >
-    <div class="fl fl-center fl-column tac p-10">
+    <div class="flex justify-center flex-col text-center p-10px">
       <el-icon :size="isCollapse ? 30 : 40">
         <i-sy-vue />
       </el-icon>
@@ -47,7 +47,6 @@ const handleClickMenu = (menu: RouteRecord) => {
 
 <style lang="scss" scoped>
 .menu-container {
-  height: 100%;
   &:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;

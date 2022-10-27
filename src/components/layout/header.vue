@@ -1,14 +1,14 @@
 <template>
-  <div class="layout-header-container fl h-50 lh-50 c-000">
-    <div class="left-icon fl fla-center cursor">
+  <div class="flex justify-between h-50px lh-50px c-#000">
+    <div class="flex items-center cursor left-icon">
       <el-icon size="20px">
         <component @click="changeCollapse" :is="isCollapse ? `Expand` : 'Fold'" />
       </el-icon>
     </div>
-    <el-dropdown class="right-action-info fl fla-center" @command="handleCommand">
-      <span class="el-dropdown-link fl fla-center cursor">
+    <el-dropdown class="flex items-center right-action-info" @command="handleCommand">
+      <span class="flex items-center cursor">
         <el-avatar icon="UserFilled" :size="34" />
-        <span class="ml-10 c-000">超级管理员</span>
+        <span class="ml-10px c-#000">超级管理员</span>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -46,13 +46,10 @@ const changeCollapse = () => {
 </script>
 
 <style lang="scss" scoped>
-.layout-header-container {
-  justify-content: space-between;
-  .left-icon {
-    flex: 0 0 20px;
-  }
-  .right-action-info {
-    flex: 0 0 120px;
-  }
+.left {
+  flex: 0 0 20px;
+}
+.right-action-info {
+  flex: 0 0 120px;
 }
 </style>

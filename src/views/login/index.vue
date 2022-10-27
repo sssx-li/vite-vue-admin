@@ -1,14 +1,8 @@
 <template>
-  <div class="login-container fl fl-center">
-    <div class="login-content w-500 p-40 fl-column">
-      <h2 class="mb-30 tac">后台管理系统</h2>
-      <el-form
-        :model="loginForm"
-        :rules="rules"
-        size="large"
-        class="login-account"
-        ref="loginRuleFormRef"
-      >
+  <div class="h-100% flex items-center justify-center">
+    <div class="b-1px b-#ccc b-rd-14px box-border w-500px p-40px flex-col">
+      <h2 class="mb-30px text-center">后台管理系统</h2>
+      <el-form :model="loginForm" :rules="rules" size="large" ref="loginRuleFormRef">
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" />
         </el-form-item>
@@ -19,7 +13,7 @@
           <el-button
             type="primary"
             :loading="loading"
-            class="login-btn"
+            class="w-100%"
             size="large"
             @click="handleLogin"
           >
@@ -68,16 +62,4 @@ const handleLogin = async () => {
 };
 </script>
 
-<style lang="scss" scoped>
-.login-container {
-  height: 100%;
-}
-.login-content {
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 14px;
-  .login-btn {
-    width: 100%;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
