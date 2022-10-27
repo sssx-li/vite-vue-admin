@@ -74,7 +74,8 @@ export default defineConfig(({ command }) => {
           [/^pb-(\d+)$/, ([, d]) => ({ 'padding-bottom': `${d}px` })],
           [/^pl-(\d+)$/, ([, d]) => ({ 'padding-left': `${d}px` })],
           [/^fz-(\d+)$/, ([, d]) => ({ 'font-size': `${d}px` })],
-          [/^lg-(\d+)$/, ([, d]) => ({ 'line-height': `${d}px` })],
+          [/^lh-(\d+)$/, ([, d]) => ({ 'line-height': `${d}px` })],
+          [/^br-(\d+)$/, ([, d]) => ({ 'border-radius': `${d}px` })],
           ['cursor', { cursor: 'pointer' }]
         ]
       })
