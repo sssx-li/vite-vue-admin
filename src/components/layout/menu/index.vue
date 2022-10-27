@@ -7,7 +7,7 @@
     :default-active="defaultActive"
     text-color="#b7bdc3"
   >
-    <div class="flex justify-center flex-col text-center p-10px">
+    <div class="flex justify-center text-center p-10px text-center">
       <el-icon :size="isCollapse ? 30 : 40">
         <i-sy-vue />
       </el-icon>
