@@ -11,7 +11,7 @@
     <template #footer v-if="showFooter">
       <div class="flex justify-between">
         <el-button :disabled="loading" @click="onClose" class="flex-1">取消</el-button>
-        <el-button :loading="loading" type="primary" @click="onConfirm" class="flex-1">
+        <el-button :loading="loading" type="primary" @click="emit('onConfirm')" class="flex-1">
           确定
         </el-button>
       </div>
@@ -35,13 +35,9 @@ const props = withDefaults(defineProps<IProps>(), {
   }),
   showFooter: true
 });
-const emit = defineEmits(['update:modelValue', 'update:loading', 'onConfirm']);
+const emit = defineEmits(['update:modelValue', 'onConfirm']);
 const onClose = () => {
   emit('update:modelValue', !props.modelValue);
-};
-const onConfirm = () => {
-  emit('update:loading', true);
-  emit('onConfirm');
 };
 
 defineExpose({

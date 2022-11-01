@@ -12,13 +12,13 @@
     <template #footer v-if="showFooter">
       <span class="dialog-footer">
         <el-button :disabled="loading" @click="onClose">取消</el-button>
-        <el-button :loading="loading" type="primary" @click="onConfirm">确定</el-button>
+        <el-button :loading="loading" type="primary" @click="emit('onConfirm')">确定</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
-<script setup lang="ts" name="demo">
+<script setup lang="ts" name="syDialog">
 import { IOptions } from './types';
 interface IProps {
   modelValue: boolean; // 是否显示 Dialog
@@ -34,13 +34,9 @@ const props = withDefaults(defineProps<IProps>(), {
   showFooter: true
 });
 
-const emit = defineEmits(['update:modelValue', 'update:loading', 'onConfirm']);
+const emit = defineEmits(['update:modelValue', 'onConfirm']);
 const onClose = () => {
   emit('update:modelValue', !props.modelValue);
-};
-const onConfirm = () => {
-  emit('update:loading', true);
-  emit('onConfirm');
 };
 
 defineExpose({

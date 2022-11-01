@@ -6,7 +6,7 @@
     title="这是一个drawer标题"
     :options="{ direction: 'ltr' }"
     v-model="showDrawer"
-    v-model:loading="loading"
+    :loading="loading"
     @on-confirm="onConfirm"
     ref="syDrawer"
   >
@@ -15,7 +15,7 @@
   <SyDialog
     title="这是一个dialog标题"
     v-model="showDialog"
-    v-model:loading="loading"
+    :loading="loading"
     @on-confirm="onConfirm"
     ref="syDialog"
   >
@@ -44,6 +44,7 @@ const showDialog = ref(false);
 const syDialog = ref();
 
 const onConfirm = () => {
+  loading.value = true;
   if (showDrawer.value) {
     syDrawer.value.onClose();
   } else {
