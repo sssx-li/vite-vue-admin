@@ -31,14 +31,7 @@ interface IProps {
 }
 const props = withDefaults(defineProps<IProps>(), {
   options: () => ({
-    direction: 'rtl',
-    lockScroll: true,
-    closeOnClickModal: true,
-    closeOnPressEscape: true,
-    openDelay: 0,
-    closeDelay: 0,
-    size: 520,
-    modal: true
+    size: 520
   }),
   showFooter: true
 });
