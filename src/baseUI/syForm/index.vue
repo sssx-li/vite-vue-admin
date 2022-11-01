@@ -141,16 +141,7 @@ interface IPoros {
 }
 const props = withDefaults(defineProps<IPoros>(), {
   formOptions: () => ({
-    labelPosition: 'right',
-    labelWidth: '80px',
-    inline: false,
-    hideRequiredAsterisk: false,
-    requireAsteriskPosition: 'left',
-    showMessage: true,
-    inlineMessage: false,
-    statusIcon: false,
-    validateOnRuleChange: true,
-    size: 'default'
+    labelWidth: '80px'
   }),
   footerOptions: () => ({
     show: true,
@@ -166,12 +157,16 @@ onMounted(() => {
   // 给参数附初值
   const originForm: any = {};
   props.formItems.forEach((item) => {
-    const { field } = item;
+    const { field, type } = item;
     const hsaValue = originForm[field] || originForm[field] === 0;
     if (item.defaultValue !== undefined && !hsaValue) {
       originForm[field] = item.defaultValue;
     } else {
-      originForm[field] = props.modelValue[field] ?? '';
+      if (['number'].includes(type)) {
+        originForm[field] = props.modelValue[field] ?? null;
+      } else {
+        originForm[field] = props.modelValue[field] ?? '';
+      }
     }
   });
   emit('update:modelValue', Object.assign(props.modelValue, originForm));

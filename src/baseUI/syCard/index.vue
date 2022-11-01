@@ -15,11 +15,7 @@
 </template>
 
 <script setup lang="ts" name="syCard">
-type TShadow = 'always' | 'hover' | 'never';
-withDefaults(defineProps<{ title?: string; shadow?: TShadow; bodyStyle?: object }>(), {
-  shadow: 'always',
-  bodyStyle: () => ({ padding: '20px' })
-});
+defineProps<{ title?: string; shadow?: 'always' | 'hover' | 'never'; bodyStyle?: object }>();
 </script>
 
 <style lang="scss" scoped></style>

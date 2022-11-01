@@ -16,7 +16,6 @@ import { SyCard, SyForm } from '@/baseUI';
 import { useMessage } from '@/hooks';
 import { formConfig } from './config/config.form';
 const { success } = useMessage();
-
 formConfig.formItems.find((item) => item.field === formConfig.customProps)!.options = [
   { label: '普通用户', value: 'custom' },
   { label: '管理员', value: 'admin' },
