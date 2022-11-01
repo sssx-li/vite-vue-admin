@@ -104,6 +104,16 @@ export const formConfig: IFormConfig = {
       label: '性别',
       type: 'custom',
       field: 'sex'
+    },
+    {
+      label: '时间',
+      type: 'timepicker',
+      field: 'time',
+      defaultValue: new Date(2016, 9, 10, 18, 30),
+      otherOptions: {
+        format: 'HH:mm',
+        clearable: true
+      }
     }
   ],
   customProps: 'role'

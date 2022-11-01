@@ -63,6 +63,18 @@
           >
           </el-date-picker>
         </template>
+        <template v-if="item.type === 'timepicker'">
+          <el-time-picker
+            :placeholder="item.placeholder"
+            :style="item.style"
+            :disabled="item.disabled"
+            :readonly="item.readonly"
+            v-bind="item.otherOptions"
+            :model-value="modelValue[`${item.field}`]"
+            @update:modelValue="handleValueChange($event, item.field)"
+          >
+          </el-time-picker>
+        </template>
         <template v-if="item.type === 'cascader'">
           <el-cascader
             :placeholder="item.placeholder"
