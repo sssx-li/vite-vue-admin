@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import 'normalize.css';
 import 'uno.css';
+import 'default-passive-events';
 
 import './assets/styles/style.css';
 import 'uno.css';

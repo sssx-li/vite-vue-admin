@@ -153,7 +153,8 @@ const props = withDefaults(defineProps<IPoros>(), {
 const emit = defineEmits(['update:modelValue', 'onSubmit', 'onCancel']);
 const loading = ref(false);
 const formRef = ref();
-onMounted(() => {
+
+onBeforeMount(() => {
   // 给参数附初值
   const originForm: any = {};
   props.formItems.forEach((item) => {

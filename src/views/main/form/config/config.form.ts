@@ -26,7 +26,7 @@ export const formConfig: IFormConfig = {
       label: '数量',
       type: 'number',
       field: 'count',
-      placeholder: '请输入数量',
+      placeholder: '请输入',
       otherOptions: {
         min: 2,
         max: 99

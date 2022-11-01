@@ -31,7 +31,8 @@ interface IProps {
 }
 const props = withDefaults(defineProps<IProps>(), {
   options: () => ({
-    size: 520
+    size: 520,
+    destroyOnClose: true
   }),
   showFooter: true
 });
