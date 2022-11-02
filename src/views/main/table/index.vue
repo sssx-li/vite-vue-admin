@@ -28,7 +28,7 @@
     class="mt-14px"
     @handleEdit="handleEdit"
   >
-    <template #column-sex="scope">
+    <template #sex="scope">
       {{ scope.row.sex === 1 ? '男' : '女' }}
     </template>
   </PageContent>

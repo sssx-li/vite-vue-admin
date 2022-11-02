@@ -25,7 +25,7 @@
       </template>
       <!-- column 插槽 -->
       <template v-for="item in otherPropSlots" :key="item.prop" #[item.prop]="scope">
-        <slot :name="`column-${item.prop}`" :row="scope.row"></slot>
+        <slot :name="item.prop" :row="scope.row"></slot>
       </template>
     </SyTable>
   </SyCard>
