@@ -56,8 +56,9 @@
     </SyForm>
   </SyDrawer>
 
-  <SyCard title="drawerForm">
+  <SyCard title="dialogForm/drawerForm组件">
     <el-button @click="changeDrawerForm">drawerForm</el-button>
+    <el-button @click="changeDialogForm">drawerForm</el-button>
   </SyCard>
   <DrawerForm
     v-model="showDrawerForm"
@@ -66,12 +67,35 @@
     :row="editForm"
     @on-submit="onDrawerFormSubmit"
     ref="drawerFormRef"
-  ></DrawerForm>
+  >
+    <template #sex="scope">
+      <el-radio-group v-model="(formState as any)[scope.row.field]">
+        <el-radio :label="0">女</el-radio>
+        <el-radio :label="1">男</el-radio>
+      </el-radio-group>
+    </template>
+  </DrawerForm>
+  <DialogForm
+    v-model="showDialogForm"
+    :formConfig="formConfig"
+    title="drawerForm"
+    :row="editForm"
+    @on-submit="onDialogFormSubmit"
+    ref="dialogFormRef"
+  >
+    <template #sex="scope">
+      <el-radio-group v-model="(formState as any)[scope.row.field]">
+        <el-radio :label="0">女</el-radio>
+        <el-radio :label="1">男</el-radio>
+      </el-radio-group>
+    </template>
+  </DialogForm>
 </template>
 
 <script setup lang="ts" name="form">
 import { SyCard, SyForm, SyDialog, SyDrawer } from '@/baseUI';
 import DrawerForm from '@/components/drawerForm/index.vue';
+import DialogForm from '@/components/dialogForm/index.vue';
 import { useMessage } from '@/hooks';
 import { formConfig } from './config/config.form';
 const { success } = useMessage();
@@ -135,6 +159,20 @@ const onDrawerFormSubmit = (val: any) => {
   setTimeout(() => {
     drawerFormRef.value.loading = false;
     drawerFormRef.value.visible = false;
+  }, 300);
+};
+const showDialogForm = ref(false);
+const dialogFormRef = ref();
+const changeDialogForm = () => {
+  showDialogForm.value = true;
+  editForm.value = { name: '张三', password: '123456', canUse: 0, city: 'gy', sex: 1 };
+};
+const onDialogFormSubmit = (val: any) => {
+  dialogFormRef.value.loading = true;
+  // 这里发送请求
+  setTimeout(() => {
+    dialogFormRef.value.loading = false;
+    dialogFormRef.value.visible = false;
   }, 300);
 };
 </script>

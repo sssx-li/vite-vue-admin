@@ -1,11 +1,11 @@
 <template>
-  <SyDrawer
-    v-model="defVisible"
+  <SyDialog
+    v-model="visible"
     :title="title"
     :loading="loading"
     @on-confirm="onSubmit"
     @on-close="onClose"
-    ref="syDrawerRef"
+    ref="syDialogRef"
   >
     <SyForm
       v-bind="formConfig"
@@ -13,16 +13,22 @@
       :footerOptions="{ show: false }"
       ref="syFormRef"
     >
+      <template #footer>
+        <slot name="footer" />
+      </template>
+      <template v-for="item in customSlotes" :key="item.field" #[item.field]="scope">
+        <slot :name="item.field" :row="scope.row"></slot>
+      </template>
     </SyForm>
-  </SyDrawer>
+  </SyDialog>
 </template>
 
 <script setup lang="ts" name="drawerForm">
-import { SyDrawer, SyForm } from '@/baseUI';
+import { SyDialog, SyForm } from '@/baseUI';
 import { IFormConfig } from '@/baseUI/syForm/types';
 
 interface Props {
-  visible: boolean;
+  modelValue: boolean;
   formConfig: IFormConfig;
   title?: string;
   row?: object;
@@ -31,14 +37,23 @@ const props = defineProps<Props>();
 const emit = defineEmits(['update:modelValue', 'onSubmit']);
 
 const loading = ref(false);
-const defVisible = ref(props.visible);
-const syDrawerRef = ref();
+const visible = ref(false);
+const syDialogRef = ref();
 const syFormRef = ref();
-const formState = ref({});
-watch(defVisible, () => {
-  emit('update:modelValue', defVisible.value);
+const formState = ref<any>({});
+// custom 插槽
+const customSlotes = props.formConfig.formItems.filter((item) => {
+  return item.type === 'custom';
 });
-
+watchEffect(() => {
+  visible.value = props.modelValue;
+});
+watchEffect(() => {
+  formState.value = toRaw(props.row);
+});
+watch(visible, () => {
+  emit('update:modelValue', visible.value);
+});
 const onSubmit = async () => {
   await syFormRef.value.formRef.validate();
   emit('onSubmit', formState.value);
@@ -47,9 +62,9 @@ const onClose = () => {
   loading.value = false;
   formState.value = {};
 };
-
 defineExpose({
-  loading
+  loading,
+  visible
 });
 </script>
 
