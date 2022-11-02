@@ -5,5 +5,6 @@ export enum User {
 }
 
 export enum ContentApis {
-  DASHBOARD = '/dashboard'
+  DASHBOARD = '/dashboard',
+  TABLE = '/table'
 }

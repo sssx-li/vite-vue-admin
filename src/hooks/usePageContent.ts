@@ -14,33 +14,12 @@ import { useMessage, useConfirm } from '@/hooks';
  *
  */
 export default function usePageContent(config: ITableConfig, pageQuery: any = {}) {
-  const { url, columns, showFooter } = config;
+  const { url, showFooter } = config;
   const confirm = useConfirm();
   const { success, error } = useMessage();
-
   const pageInfo = reactive<IPage>({ currentPage: 1, pageSize: 10, total: 0 });
   const dataSource = ref<any[]>([]);
-  const total = ref(0);
-
-  const tableState = reactive({
-    columns, // 表格字段
-    size: 'middle', // 表格大小
-    changeSize: (size: string) => {
-      // 表格间距
-      tableState.size = size;
-    },
-    changeColumns: (columns: any[]) => {
-      tableState.columns = columns;
-    }
-  });
-
   watch(pageInfo, () => getPageData());
-
-  // 改变页码
-  const handleSizeChange = (page: any) => {
-    Object.assign(pageInfo, page);
-  };
-
   /**
    *
    * @param query 用于覆盖原有参数值，通常用于通过ref调用该方法时传入
@@ -49,7 +28,8 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
     query = query ?? {};
     let params: any = {
       ...pageQuery,
-      ...pageInfo,
+      pageNo: pageInfo.currentPage,
+      pageSize: pageInfo.pageSize,
       ...query
     };
     if (!showFooter) {
@@ -67,12 +47,19 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
         data: { list, page }
       } = res;
       dataSource.value = list;
-      total.value = page.count;
+      pageInfo.total = page.count;
     } catch (err) {
       error('获取数据失败，请刷新重试');
     }
   };
-
+  // 改变页码
+  const currentChange = (val: number) => {
+    pageInfo.currentPage = val;
+  };
+  // 改变展示条数
+  const sizeChange = (val: number) => {
+    pageInfo.pageSize = val;
+  };
   // 编辑
   const handleEdit = async (data: any, id: string | number, curUrl?: string) => {
     try {
@@ -86,7 +73,6 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
       error('操作失败，请稍后再试');
     }
   };
-
   // 新增
   const handleCreate = async (data: any) => {
     try {
@@ -100,7 +86,6 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
       error('添加失败，请稍后再试');
     }
   };
-
   // 删除
   const handleDelete = (row: any, contentTip?: string) => {
     confirm({
@@ -121,21 +106,18 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
       })
       .catch(() => {});
   };
-
   // 刷新数据
   const refresh = () => {
     pageInfo.currentPage = 1;
     getPageData();
   };
-
   return {
     pageInfo,
     dataSource,
-    total,
-    tableState,
     getPageData,
     refresh,
-    handleSizeChange,
+    currentChange,
+    sizeChange,
     handleCreate,
     handleDelete,
     handleEdit

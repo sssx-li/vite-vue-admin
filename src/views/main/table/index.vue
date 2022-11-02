@@ -22,13 +22,24 @@
       </template>
     </SyTable>
   </SyCard>
+  <PageContent
+    :table-config="contentTableConfig"
+    title="组合组件-增删改查"
+    class="mt-14px"
+    @handleEdit="handleEdit"
+  >
+    <template #column-sex="scope">
+      {{ scope.row.sex === 1 ? '男' : '女' }}
+    </template>
+  </PageContent>
 </template>
 
 <script setup lang="ts" name="table">
 import { SyCard, SyTable } from '@/baseUI';
+import PageContent from '@/components/pageContent/index.vue';
 import { IPage } from '@/baseUI/syTable/types';
 import { useConfirm, useMessage } from '@/hooks';
-import { tableConfig } from './config/config.table';
+import { tableConfig, contentTableConfig } from './config/config.table';
 
 interface IUser {
   name: string;
@@ -36,6 +47,7 @@ interface IUser {
 }
 const { success } = useMessage();
 const confirm = useConfirm();
+// ------- 1.基础表格 --------
 const data = reactive<IUser[]>([
   {
     name: '张三',
@@ -67,6 +79,10 @@ const currentChange = (val: number) => {
 };
 const sizeChange = (val: number) => {
   pageInfo.pageSize = val;
+};
+// ------- 2.基础表格 --------
+const handleEdit = (row: IUser) => {
+  console.log('row', row);
 };
 </script>
 
