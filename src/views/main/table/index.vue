@@ -22,28 +22,47 @@
       </template>
     </SyTable>
   </SyCard>
+
   <PageContent
     :table-config="contentTableConfig"
-    title="组合组件-增删改查"
+    title="组合组件-增删改"
     class="mt-14px"
     @handleEdit="handleEdit"
+    ref="pageContentRef"
   >
     <template #sex="scope">
       {{ scope.row.sex === 1 ? '男' : '女' }}
     </template>
   </PageContent>
+  <DrawerForm
+    v-model="showDrawer"
+    :row="editForm"
+    :formConfig="formConfig"
+    title="drawerForm"
+    @on-submit="onSubmit"
+    ref="drawerFormRef"
+  >
+  </DrawerForm>
 </template>
 
 <script setup lang="ts" name="table">
 import { SyCard, SyTable } from '@/baseUI';
 import PageContent from '@/components/pageContent/index.vue';
+import DrawerForm from '@/components/drawerForm/index.vue';
 import { IPage } from '@/baseUI/syTable/types';
 import { useConfirm, useMessage } from '@/hooks';
 import { tableConfig, contentTableConfig } from './config/config.table';
-
+import { formConfig } from './config/config.form';
 interface IUser {
   name: string;
   age: number;
+}
+interface IEditForm {
+  id?: string | number;
+  name: string;
+  age: number | null;
+  sex: 0 | 1;
+  createTime: string;
 }
 const { success } = useMessage();
 const confirm = useConfirm();
@@ -80,9 +99,27 @@ const currentChange = (val: number) => {
 const sizeChange = (val: number) => {
   pageInfo.pageSize = val;
 };
-// ------- 2.基础表格 --------
-const handleEdit = (row: IUser) => {
-  console.log('row', row);
+// ------- 2.内容组件-增删改 --------
+const pageContentRef = ref<InstanceType<typeof PageContent>>();
+const handleEdit = (row: IEditForm) => {
+  editForm.value = row;
+  showDrawer.value = true;
+};
+// 编辑
+const showDrawer = ref(false);
+const drawerFormRef = ref();
+const editForm = ref<IEditForm>({
+  name: '',
+  age: null,
+  sex: 1,
+  createTime: ''
+});
+const onSubmit = async (data: IEditForm) => {
+  drawerFormRef.value.loading = true;
+  await pageContentRef.value?.handleEdit(data, data.id!);
+  await pageContentRef.value?.getPageData();
+  drawerFormRef.value.closeModal();
+  success('修改成功');
 };
 </script>
 

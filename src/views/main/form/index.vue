@@ -9,6 +9,7 @@
       </template>
     </SyForm>
   </SyCard>
+
   <SyCard title="表单-弹窗结合使用" class="mt-20px mb-20px">
     <el-button type="primary" @click="showDialog = true">dialog-form</el-button>
     <el-button type="primary" @click="showDrawer = true">drawer-form</el-button>
@@ -157,8 +158,8 @@ const onDrawerFormSubmit = (val: any) => {
   drawerFormRef.value.loading = true;
   // 这里发送请求
   setTimeout(() => {
-    drawerFormRef.value.loading = false;
-    drawerFormRef.value.visible = false;
+    drawerFormRef.value.closeModal();
+    success('成功!');
   }, 300);
 };
 const showDialogForm = ref(false);
@@ -171,8 +172,8 @@ const onDialogFormSubmit = (val: any) => {
   dialogFormRef.value.loading = true;
   // 这里发送请求
   setTimeout(() => {
-    dialogFormRef.value.loading = false;
-    dialogFormRef.value.visible = false;
+    dialogFormRef.value.closeModal();
+    success('成功!');
   }, 300);
 };
 </script>

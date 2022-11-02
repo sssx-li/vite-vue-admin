@@ -34,7 +34,7 @@ interface Props {
   row?: object;
 }
 const props = defineProps<Props>();
-const emit = defineEmits(['update:modelValue', 'onSubmit']);
+const emit = defineEmits(['update:modelValue', 'onSubmit', 'onClose']);
 
 const loading = ref(false);
 const visible = ref(false);
@@ -60,11 +60,15 @@ const onSubmit = async () => {
 };
 const onClose = () => {
   loading.value = false;
-  formState.value = {};
+  emit('onClose');
+};
+const closeModal = () => {
+  loading.value = false;
+  visible.value = false;
 };
 defineExpose({
   loading,
-  visible
+  closeModal
 });
 </script>
 
