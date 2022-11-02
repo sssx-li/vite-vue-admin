@@ -9,7 +9,7 @@
       </template>
     </SyForm>
   </SyCard>
-  <SyCard title="表单-弹窗结合使用" class="mt-20px">
+  <SyCard title="表单-弹窗结合使用" class="mt-20px mb-20px">
     <el-button type="primary" @click="showDialog = true">dialog-form</el-button>
     <el-button type="primary" @click="showDrawer = true">drawer-form</el-button>
   </SyCard>
@@ -55,10 +55,23 @@
       </template>
     </SyForm>
   </SyDrawer>
+
+  <SyCard title="drawerForm">
+    <el-button @click="changeDrawerForm">drawerForm</el-button>
+  </SyCard>
+  <DrawerForm
+    v-model="showDrawerForm"
+    :formConfig="formConfig"
+    title="drawerForm"
+    :row="editForm"
+    @on-submit="onDrawerFormSubmit"
+    ref="drawerFormRef"
+  ></DrawerForm>
 </template>
 
 <script setup lang="ts" name="form">
 import { SyCard, SyForm, SyDialog, SyDrawer } from '@/baseUI';
+import DrawerForm from '@/components/drawerForm/index.vue';
 import { useMessage } from '@/hooks';
 import { formConfig } from './config/config.form';
 const { success } = useMessage();
@@ -105,6 +118,23 @@ const onDrawerConfirm = async () => {
     loading.value = false;
     success('修改成功!');
     syDrawerRef.value.onClose();
+  }, 300);
+};
+
+// 3. drawerForm
+const showDrawerForm = ref(false);
+const editForm = ref({});
+const drawerFormRef = ref();
+const changeDrawerForm = () => {
+  showDrawerForm.value = true;
+  editForm.value = { name: '张三', password: '123456', canUse: 0, city: 'gy', sex: 1 };
+};
+const onDrawerFormSubmit = (val: any) => {
+  drawerFormRef.value.loading = true;
+  // 这里发送请求
+  setTimeout(() => {
+    drawerFormRef.value.loading = false;
+    drawerFormRef.value.visible = false;
   }, 300);
 };
 </script>

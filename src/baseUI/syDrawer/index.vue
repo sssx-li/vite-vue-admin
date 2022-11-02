@@ -3,6 +3,7 @@
     v-bind="options"
     :model-value="modelValue"
     :before-close="onClose"
+    @closed="emit('onClose')"
     modal-class="sy-drawer-container"
   >
     <template #header>
@@ -36,7 +37,7 @@ const props = withDefaults(defineProps<IProps>(), {
   }),
   showFooter: true
 });
-const emit = defineEmits(['update:modelValue', 'onConfirm']);
+const emit = defineEmits(['update:modelValue', 'onConfirm', 'onClose']);
 const onClose = () => {
   emit('update:modelValue', !props.modelValue);
 };
