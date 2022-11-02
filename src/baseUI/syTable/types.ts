@@ -25,7 +25,6 @@ export interface IOptions {
   tableLayout?: 'fixed' | 'aut0'; // 设置表格单元、行和列的布局方式
   scrollbarAlwaysOn?: boolean; // 总是显示滚动条
   flexible?: boolean; // 确保主轴的最小尺寸
-  style?: object; // 表格样式
 }
 
 export interface IColumn {
@@ -50,4 +49,22 @@ export interface ITableConfig<T = IColumn> {
   columns: T[]; // 表格数据配置项
   filterSlotNames?: string[]; //  需要过滤的slotName
   showFooter?: boolean; // 是否显示底部分页组件
+}
+
+export interface IPage {
+  currentPage: number; // 当前页数
+  pageSize: number; // 每页显示条目个数
+  pageSizes?: number[]; // 每页显示个数选择器的选项设置
+  small?: boolean; // 是否使用小型分页样式
+  background?: boolean; // 是否为分页按钮添加背景色
+  total?: number; // 总条目数
+  pageCount?: number; // 总页数
+  pagerCount?: number; // 设置最大页码按钮数。 页码按钮的数量，当总页数超过该值时会折叠
+  layout?: string; // 组件布局，子组件名用逗号分隔
+  prevText?: string; // 替代图标显示的上一页文字
+  nextText?: string; // 替代图标显示的下一页文字
+  disabled?: boolean; // 是否禁用分页
+  hideOnSinglePage?: boolean; // 只有一页时是否隐藏
+  defaultCurrentPage?: number; // 当前页数的初始值
+  defaultPageSize?: number; // 每页显示条目数的初始值
 }

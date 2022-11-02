@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    :width="width"
     v-bind="options"
     :model-value="modelValue"
     :before-close="onClose"
@@ -26,10 +27,11 @@ interface IProps {
   showFooter?: boolean; // 是否显示页脚
   loading?: boolean; // 加载状态
   options?: IOptions;
+  width?: number | string; // Dialog的宽度
 }
 const props = withDefaults(defineProps<IProps>(), {
+  width: 520,
   options: () => ({
-    width: 520,
     destroyOnClose: true
   }),
   showFooter: true

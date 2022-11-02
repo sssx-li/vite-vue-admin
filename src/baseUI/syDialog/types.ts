@@ -1,5 +1,4 @@
 export interface IOptions {
-  width?: number | string; // Dialog 的宽度
   fullscreen?: boolean; // 是否为全屏 Dialog
   top?: string; // Dialog CSS 中的 margin-top 值
   modal?: boolean; // 是否需要遮罩层

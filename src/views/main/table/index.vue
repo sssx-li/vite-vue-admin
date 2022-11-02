@@ -1,6 +1,12 @@
 <template>
   <SyCard title="基础表格">
-    <SyTable :data="data" v-bind="tableConfig">
+    <SyTable
+      :data="data"
+      v-bind="tableConfig"
+      :page-options="pageInfo"
+      @current-change="currentChange"
+      @size-change="sizeChange"
+    >
       <!-- 自定义表头 -->
       <template #header-age="scope">
         <el-tag>{{ scope.row.label }}</el-tag>
@@ -20,6 +26,7 @@
 
 <script setup lang="ts" name="table">
 import { SyCard, SyTable } from '@/baseUI';
+import { IPage } from '@/baseUI/syTable/types';
 import { useConfirm, useMessage } from '@/hooks';
 import { tableConfig } from './config/config.table';
 
@@ -39,6 +46,11 @@ const data = reactive<IUser[]>([
     age: 20
   }
 ]);
+const pageInfo = reactive<IPage>({
+  currentPage: 1,
+  pageSize: 10,
+  total: 100
+});
 const handlerEdit = (row: IUser) => {
   success('编辑成功');
 };
@@ -49,6 +61,12 @@ const handlerDelete = async (row: IUser) => {
     type: 'warning'
   });
   success('删除成功!');
+};
+const currentChange = (val: number) => {
+  pageInfo.currentPage = val;
+};
+const sizeChange = (val: number) => {
+  pageInfo.pageSize = val;
 };
 </script>
 
