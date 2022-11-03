@@ -1,11 +1,15 @@
 <template>
   <el-card class="box-card" :shadow="shadow" :bodyStyle="bodyStyle">
-    <template #header v-if="title">
+    <template #header v-if="showHeader">
       <div class="card-header flex justify-between items-center">
-        <slot name="left">
-          <span>{{ title }}</span>
-        </slot>
-        <slot name="right"></slot>
+        <span class="flex-1">
+          <slot name="left">
+            {{ title }}
+          </slot>
+        </span>
+        <span class="ml-10px">
+          <slot name="right"></slot>
+        </span>
       </div>
     </template>
     <div class="card-content">
@@ -15,7 +19,17 @@
 </template>
 
 <script setup lang="ts" name="syCard">
-defineProps<{ title?: string; shadow?: 'always' | 'hover' | 'never'; bodyStyle?: object }>();
+withDefaults(
+  defineProps<{
+    title?: string;
+    shadow?: 'always' | 'hover' | 'never';
+    bodyStyle?: object;
+    showHeader?: boolean;
+  }>(),
+  {
+    showHeader: true
+  }
+);
 </script>
 
 <style lang="scss" scoped></style>

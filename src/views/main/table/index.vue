@@ -28,6 +28,7 @@
     title="组合组件-增删改"
     class="mt-14px"
     @handleEdit="handleEdit"
+    @handle-create="handleEdit"
     ref="pageContentRef"
   >
     <template #sex="scope">
@@ -35,10 +36,10 @@
     </template>
   </PageContent>
   <DrawerForm
-    v-model="showDrawer"
+    v-model="drawerParams.visible"
     :row="editForm"
     :formConfig="formConfig"
-    title="drawerForm"
+    :title="drawerParams.type === 'create' ? '新增' : '编辑'"
     @on-submit="onSubmit"
     ref="drawerFormRef"
   >
@@ -102,11 +103,25 @@ const sizeChange = (val: number) => {
 // ------- 2.内容组件-增删改 --------
 const pageContentRef = ref<InstanceType<typeof PageContent>>();
 const handleEdit = (row: IEditForm) => {
-  editForm.value = row;
-  showDrawer.value = true;
+  if (!row) {
+    editForm.value = {
+      name: '',
+      age: null,
+      sex: 1,
+      createTime: ''
+    };
+    drawerParams.value.type = 'create';
+  } else {
+    editForm.value = row;
+    drawerParams.value.type = 'edit';
+  }
+  drawerParams.value.visible = true;
 };
 // 编辑
-const showDrawer = ref(false);
+const drawerParams = ref<{ visible: boolean; type: 'create' | 'edit' }>({
+  visible: false,
+  type: 'create'
+});
 const drawerFormRef = ref();
 const editForm = ref<IEditForm>({
   name: '',
@@ -116,10 +131,14 @@ const editForm = ref<IEditForm>({
 });
 const onSubmit = async (data: IEditForm) => {
   drawerFormRef.value.loading = true;
-  await pageContentRef.value?.handleEdit(data, data.id!);
+  if (drawerParams.value.type === 'create') {
+    await pageContentRef.value?.handleCreate(data);
+  } else {
+    await pageContentRef.value?.handleEdit(data, data.id!);
+    success('修改成功');
+  }
   await pageContentRef.value?.getPageData();
   drawerFormRef.value.closeModal();
-  success('修改成功');
 };
 </script>
 

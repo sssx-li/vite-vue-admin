@@ -1,6 +1,14 @@
 <template>
   <SyCard :title="title">
-    <template #left> {{ title }} </template>
+    <template #left>
+      <slot name="left">{{ title }}</slot>
+    </template>
+    <template #right>
+      <el-button v-if="handlerOption.showCreated" @click="handleToCreate">
+        <i class="i-ep-plus mr-4px"></i>
+        新增
+      </el-button>
+    </template>
     <SyTable
       v-bind="originTableConfig"
       :data="dataSource"
@@ -36,15 +44,24 @@ import { SyTable, SyCard } from '@/baseUI';
 import { IColumn, ITableConfig } from '@/baseUI/syTable/types';
 import { usePageContent } from '@/hooks';
 
+interface IHandlerOption {
+  showCreated?: boolean;
+  changeSize?: boolean;
+  changeCulomn?: boolean;
+}
 interface Props {
   tableConfig: ITableConfig;
   pageQuery?: object;
   title?: string;
+  handlerOption?: IHandlerOption;
 }
 const props = withDefaults(defineProps<Props>(), {
-  pageQuery: () => ({})
+  pageQuery: () => ({}),
+  handlerOption: () => ({
+    showCreated: true
+  })
 });
-const emit = defineEmits(['handleEdit']);
+const emit = defineEmits(['handleEdit', 'handleCreate']);
 const {
   pageInfo,
   dataSource,
@@ -76,6 +93,10 @@ if (originTableConfig.filterSlotNames) {
   delete originTableConfig.filterSlotNames;
 }
 getPageData();
+
+const handleToCreate = () => {
+  emit('handleCreate');
+};
 
 defineExpose({
   getPageData,
