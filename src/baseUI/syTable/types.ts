@@ -4,12 +4,15 @@ interface ISort {
   prop: string;
   order?: 'ascending' | 'descending';
 }
+
+export type TSize = 'large' | 'default' | 'small';
+
 export interface IOptions {
   height?: string | number;
   maxHeight?: string | number;
   stripe?: boolean; // 是否为斑马纹 table
   border?: boolean; // 是否带有纵向边框
-  size?: 'large' | 'default' | 'small'; // Table 的尺寸
+  size?: TSize; // Table 的尺寸
   fit?: boolean; // 列的宽度是否自撑开
   showHeader?: boolean; // 是否显示表头
   highlightCurrentRow?: boolean; // 是否要高亮当前行

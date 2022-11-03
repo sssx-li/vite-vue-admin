@@ -4,14 +4,20 @@
       <slot name="left">{{ title }}</slot>
     </template>
     <template #right>
-      <el-button v-if="handlerOption.showCreated" @click="handleToCreate">
-        <i class="i-ep-plus mr-4px"></i>
-        新增
-      </el-button>
+      <div class="flex items-center">
+        <el-button v-if="handlerOption.showCreated" @click="handleToCreate">
+          <i class="i-ep-plus mr-4px"></i>
+          新增
+        </el-button>
+        <span class="ml-10px h-20px" v-if="handlerOption.showSizeIcon">
+          <RowDensity @change-size="changeSize" />
+        </span>
+      </div>
     </template>
     <SyTable
       v-bind="originTableConfig"
       :data="dataSource"
+      :options="options"
       :page-options="pageInfo"
       @current-change="currentChange"
       @size-change="sizeChange"
@@ -41,13 +47,14 @@
 
 <script setup lang="ts" name="pageContent">
 import { SyTable, SyCard } from '@/baseUI';
-import { IColumn, ITableConfig } from '@/baseUI/syTable/types';
+import { IColumn, IOptions, ITableConfig, TSize } from '@/baseUI/syTable/types';
 import { usePageContent } from '@/hooks';
+import RowDensity from '@/components/rowDensity/index.vue';
 
 interface IHandlerOption {
   showCreated?: boolean;
-  changeSize?: boolean;
-  changeCulomn?: boolean;
+  showSizeIcon?: boolean;
+  showCulomnIcon?: boolean;
 }
 interface Props {
   tableConfig: ITableConfig;
@@ -58,7 +65,9 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   pageQuery: () => ({}),
   handlerOption: () => ({
-    showCreated: true
+    showCreated: true,
+    showSizeIcon: true,
+    showCulomnIcon: true
   })
 });
 const emit = defineEmits(['handleEdit', 'handleCreate']);
@@ -96,6 +105,13 @@ getPageData();
 
 const handleToCreate = () => {
   emit('handleCreate');
+};
+
+const options = ref<IOptions>({
+  size: 'default'
+});
+const changeSize = (type: TSize) => {
+  options.value.size = type;
 };
 
 defineExpose({
