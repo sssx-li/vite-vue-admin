@@ -46,12 +46,19 @@ export interface IColumn {
   headerAlign?: TAlign; // 表头对齐方式， 若不设置该项，则使用表格的对齐方式
 }
 
+interface IHandlerOption {
+  showCreated?: boolean; // 添加按鈕
+  showSizeIcon?: boolean; // 表格密度
+  showCulomnIcon?: boolean; // 表格列展示
+}
+
 export interface ITableConfig<T = IColumn> {
   url?: string;
   options?: IOptions; // 表格配置项
   columns: T[]; // 表格数据配置项
   filterSlotNames?: string[]; //  需要过滤的slotName
   showFooter?: boolean; // 是否显示底部分页组件
+  handlerOption?: IHandlerOption;
 }
 
 export interface IPage {

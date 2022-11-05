@@ -5,20 +5,30 @@
     </template>
     <template #right>
       <div class="flex items-center">
-        <el-button v-if="handlerOption.showCreated" @click="handleToCreate">
+        <el-button v-if="originTableConfig.handlerOption.showCreated" @click="handleToCreate">
           <i class="i-ep-plus mr-4px"></i>
           新增
         </el-button>
-        <span class="ml-10px h-20px" v-if="handlerOption.showSizeIcon">
-          <RowDensity @change-size="changeSize" />
+        <span class="ml-10px h-20px" v-if="originTableConfig.handlerOption.showSizeIcon">
+          <RowDensity @change-size="tableState.changeSize" />
         </span>
+        <el-tooltip
+          content="列表设置"
+          placement="top"
+          v-if="originTableConfig.handlerOption.showCulomnIcon"
+        >
+          <div class="w-22px h-22px ml-8px">
+            <FieldOrder @changeColumns="tableState.changeColumns" :columns="tableState.columns" />
+          </div>
+        </el-tooltip>
       </div>
     </template>
     <SyTable
-      v-bind="originTableConfig"
+      :columns="tableState.columns"
       :data="dataSource"
       :options="options"
       :page-options="pageInfo"
+      v-bind="originTableConfig"
       @current-change="currentChange"
       @size-change="sizeChange"
     >
@@ -50,30 +60,21 @@ import { SyTable, SyCard } from '@/baseUI';
 import { IColumn, IOptions, ITableConfig, TSize } from '@/baseUI/syTable/types';
 import { usePageContent } from '@/hooks';
 import RowDensity from '@/components/rowDensity/index.vue';
+import FieldOrder from '@/components/fieldOrder/index.vue';
 
-interface IHandlerOption {
-  showCreated?: boolean;
-  showSizeIcon?: boolean;
-  showCulomnIcon?: boolean;
-}
 interface Props {
   tableConfig: ITableConfig;
   pageQuery?: object;
   title?: string;
-  handlerOption?: IHandlerOption;
 }
 const props = withDefaults(defineProps<Props>(), {
-  pageQuery: () => ({}),
-  handlerOption: () => ({
-    showCreated: true,
-    showSizeIcon: true,
-    showCulomnIcon: true
-  })
+  pageQuery: () => ({})
 });
 const emit = defineEmits(['handleEdit', 'handleCreate']);
 const {
   pageInfo,
   dataSource,
+  tableState,
   getPageData,
   refresh,
   currentChange,
@@ -101,18 +102,20 @@ if (originTableConfig.url) {
 if (originTableConfig.filterSlotNames) {
   delete originTableConfig.filterSlotNames;
 }
+if (props.tableConfig.handlerOption?.showCulomnIcon) {
+  delete originTableConfig.columns;
+}
 getPageData();
 
 const handleToCreate = () => {
   emit('handleCreate');
 };
 
-const options = ref<IOptions>({
-  size: 'default'
+const options = ref<IOptions>({ size: 'default' });
+
+watchEffect(() => {
+  options.value.size = tableState.size;
 });
-const changeSize = (type: TSize) => {
-  options.value.size = type;
-};
 
 defineExpose({
   getPageData,

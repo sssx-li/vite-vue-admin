@@ -1,6 +1,12 @@
 <template>
-  <el-table :style="style" :data="data" v-bind="options" @selection-change="handleSelectionChange">
-    <template v-for="column in columns" :key="column.prop">
+  <el-table
+    :style="style"
+    :data="data"
+    v-bind="options"
+    @selection-change="handleSelectionChange"
+    ref="tableRef"
+  >
+    <template v-for="(column, index) in columns" :key="column.prop + index">
       <el-table-column v-bind="column">
         <template #header>
           <slot :name="`header-${column.prop}`" :row="column">

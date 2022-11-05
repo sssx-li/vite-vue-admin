@@ -71,5 +71,10 @@ export const contentTableConfig: ITableConfig = {
       prop: 'handler'
     }
   ],
-  filterSlotNames: ['createTime']
+  filterSlotNames: ['createTime'],
+  handlerOption: {
+    showCreated: true,
+    showSizeIcon: true,
+    showCulomnIcon: true
+  }
 };

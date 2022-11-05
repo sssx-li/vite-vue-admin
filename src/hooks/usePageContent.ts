@@ -1,8 +1,14 @@
 import Request from '@/service';
 import { IDataModel } from '@/service/types/axios';
 import { ITableList } from '@/service/types/table';
-import { IPage, ITableConfig } from '@/baseUI/syTable/types';
+import { IColumn, IPage, ITableConfig, TSize } from '@/baseUI/syTable/types';
 import { useMessage, useConfirm } from '@/hooks';
+interface ITableState {
+  size: TSize;
+  columns: IColumn[];
+  changeSize: (size: TSize) => void;
+  changeColumns: (columns: IColumn[]) => void;
+}
 
 /**
  *
@@ -14,12 +20,24 @@ import { useMessage, useConfirm } from '@/hooks';
  *
  */
 export default function usePageContent(config: ITableConfig, pageQuery: any = {}) {
-  const { url, showFooter } = config;
+  const { url, showFooter, columns } = config;
   const confirm = useConfirm();
   const { success, error } = useMessage();
   const pageInfo = reactive<IPage>({ currentPage: 1, pageSize: 10, total: 0 });
   const dataSource = ref<any[]>([]);
   watch(pageInfo, () => getPageData());
+
+  const tableState = reactive<ITableState>({
+    columns, // 表格列
+    size: 'default', // 表格间距
+    changeSize: (size: TSize) => {
+      tableState.size = size;
+    },
+    changeColumns: (columns: IColumn[]) => {
+      tableState.columns = columns;
+    }
+  });
+
   /**
    *
    * @param query 用于覆盖原有参数值，通常用于通过ref调用该方法时传入
@@ -114,6 +132,7 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
   return {
     pageInfo,
     dataSource,
+    tableState,
     getPageData,
     refresh,
     currentChange,
