@@ -84,6 +84,7 @@ const pageInfo = reactive<IPage>({
   total: 100
 });
 const handlerEdit = (row: IUser) => {
+  console.log('handlerEdit', row);
   success('编辑成功');
 };
 const handlerDelete = async (row: IUser) => {

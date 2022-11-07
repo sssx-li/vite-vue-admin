@@ -1,6 +1,6 @@
 <template>
   <div class="h-100% flex items-center justify-center">
-    <div class="b-1px b-#ccc b-rd-14px box-border w-500px p-40px flex-col">
+    <div class="b-1px b-#ccc b-rd-14px box-border w-500px p-40px">
       <h2 class="mb-30px text-center">后台管理系统</h2>
       <el-form :model="loginForm" :rules="rules" size="large" ref="loginRuleFormRef">
         <el-form-item prop="username">

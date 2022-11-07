@@ -16,7 +16,7 @@ export interface IOptions {
   fit?: boolean; // 列的宽度是否自撑开
   showHeader?: boolean; // 是否显示表头
   highlightCurrentRow?: boolean; // 是否要高亮当前行
-  rowKey?: Function | string; // 行数据的 Key，用来优化 Table 的渲染
+  rowKey?: (() => any) | string; // 行数据的 Key，用来优化 Table 的渲染
   emptyText?: string; // 空数据时显示的文本内容
   defaultExpandAll?: boolean; // 是否默认展开所有行
   expandRowKeys?: any[]; // 可以通过该属性设置 Table 目前的展开行，需要设置 row-key 属性才能使用，该属性为展开行的 keys 数组
@@ -32,7 +32,7 @@ export interface IOptions {
 
 export interface IColumn {
   type?: 'selection' | 'index' | 'expand';
-  index?: number | Function; // 如果设置了 type=index，可以通过传递 index 属性来自定义索引
+  index?: number | (() => any); // 如果设置了 type=index，可以通过传递 index 属性来自定义索引
   label?: string; // column 的 key，如果需要使用 filter-change 事件，则需要此属性标识是哪个 column 的筛选条件
   columnKey?: string; // column 的 key， column 的 key， 如果需要使用 filter-change 事件，则需要此属性标识是哪个 column 的筛选条件
   prop: string; // 字段名称 对应列内容的字段名
