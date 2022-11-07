@@ -154,7 +154,8 @@ const changeDrawerForm = () => {
   showDrawerForm.value = true;
   editForm.value = { name: '张三', password: '123456', canUse: 0, city: 'gy', sex: 1 };
 };
-const onDrawerFormSubmit = (val: any) => {
+const onDrawerFormSubmit = (form: any) => {
+  console.log('form', form);
   drawerFormRef.value.loading = true;
   // 这里发送请求
   setTimeout(() => {
@@ -168,7 +169,8 @@ const changeDialogForm = () => {
   showDialogForm.value = true;
   editForm.value = { name: '张三', password: '123456', canUse: 0, city: 'gy', sex: 1 };
 };
-const onDialogFormSubmit = (val: any) => {
+const onDialogFormSubmit = (form: any) => {
+  console.log('form', form);
   dialogFormRef.value.loading = true;
   // 这里发送请求
   setTimeout(() => {

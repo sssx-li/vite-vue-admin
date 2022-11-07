@@ -14,7 +14,7 @@
         @dragstart="dragStart($event, index)"
         @dragenter="dragenter($event, index)"
         @dragover.prevent="dragover($event)"
-        @dragend="dragend($event)"
+        @dragend="dragend"
         :class="{
           status: state.dropStatus && state.dropIndex === index
         }"
@@ -68,7 +68,7 @@ const dragover = (ev: DragEvent) => {
   ev.preventDefault();
 };
 // 4. 放开拖动元素时触发，作用于目标元素
-const dragend = (ev: DragEvent) => {
+const dragend = () => {
   state.dropStatus = false;
 };
 const changeChecked = () => {

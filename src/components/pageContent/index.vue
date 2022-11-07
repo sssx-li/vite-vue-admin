@@ -57,7 +57,7 @@
 
 <script setup lang="ts" name="pageContent">
 import { SyTable, SyCard } from '@/baseUI';
-import { IColumn, IOptions, ITableConfig, TSize } from '@/baseUI/syTable/types';
+import { IColumn, IOptions, ITableConfig } from '@/baseUI/syTable/types';
 import { usePageContent } from '@/hooks';
 import RowDensity from '@/components/rowDensity/index.vue';
 import FieldOrder from '@/components/fieldOrder/index.vue';
