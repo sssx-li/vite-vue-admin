@@ -84,7 +84,7 @@ const pageInfo = reactive<IPage>({
   total: 100
 });
 const handlerEdit = (row: IUser) => {
-  success('编辑成功');
+  console.log('row', row);
 };
 const handlerDelete = async (row: IUser) => {
   await confirm({
@@ -92,7 +92,6 @@ const handlerDelete = async (row: IUser) => {
     content: `确定要删除${row.name}吗?`,
     type: 'warning'
   });
-  success('删除成功!');
 };
 const currentChange = (val: number) => {
   pageInfo.currentPage = val;
@@ -135,7 +134,6 @@ const onSubmit = async (data: IEditForm) => {
     await pageContentRef.value?.handleCreate(data);
   } else {
     await pageContentRef.value?.handleEdit(data, data.id!);
-    success('修改成功');
   }
   await pageContentRef.value?.getPageData();
   drawerFormRef.value.closeModal();
