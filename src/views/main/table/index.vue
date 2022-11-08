@@ -84,7 +84,7 @@ const pageInfo = reactive<IPage>({
   total: 100
 });
 const handlerEdit = (row: IUser) => {
-  console.log('row', row);
+  console.log('handlerEdit', row);
 };
 const handlerDelete = async (row: IUser) => {
   await confirm({

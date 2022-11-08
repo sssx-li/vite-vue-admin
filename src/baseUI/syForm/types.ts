@@ -41,14 +41,14 @@ interface IDatePicker {
   rangeSeparator?: string; // 选择范围时的分隔符
   defaultTime?: Date | [Date, Date]; // 选择日期后的默认时间值
   valueFormat?: string; // 绑定值的格式。 不指定则绑定值为 Date 对象
-  shortcuts?: Array<{ text: string; value: Date | Function }>; // 设置快捷选项，需要传入数组对象
+  shortcuts?: Array<{ text: string; value: Date | (() => any) }>; // 设置快捷选项，需要传入数组对象
 }
 interface ITimePicker {
   isRange?: boolean; // 是否为时间范围选择
   arrowControl?: boolean; // 是否使用箭头进行时间选择
-  disabledHours?: Function; // 禁止选择部分小时选项
-  disabledMinutes?: Function; // 禁止选择部分分钟选项
-  disabledSeconds?: Function; // 禁止选择部分秒选项
+  disabledHours?: () => any; // 禁止选择部分小时选项
+  disabledMinutes?: () => any; // 禁止选择部分分钟选项
+  disabledSeconds?: () => any; // 禁止选择部分秒选项
   format?: string; // 显示在输入框中的格式
   rangeSeparator?: string; // 选择范围时的分隔符
 }

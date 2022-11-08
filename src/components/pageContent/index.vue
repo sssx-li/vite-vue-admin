@@ -5,17 +5,17 @@
     </template>
     <template #right>
       <div class="flex items-center">
-        <el-button v-if="originTableConfig.handlerOption.showCreated" @click="handleToCreate">
+        <el-button v-if="tableConfig.handlerOption?.showCreated" @click="handleToCreate">
           <i class="i-ep-plus mr-4px"></i>
           新增
         </el-button>
-        <span class="ml-10px h-20px" v-if="originTableConfig.handlerOption.showSizeIcon">
+        <span class="ml-10px h-20px" v-if="tableConfig.handlerOption?.showSizeIcon">
           <RowDensity @change-size="tableState.changeSize" />
         </span>
         <el-tooltip
           content="列表设置"
           placement="top"
-          v-if="originTableConfig.handlerOption.showCulomnIcon"
+          v-if="tableConfig.handlerOption?.showCulomnIcon"
         >
           <div class="w-22px h-22px ml-8px">
             <FieldOrder @changeColumns="tableState.changeColumns" :columns="tableState.columns" />
@@ -104,6 +104,9 @@ if (originTableConfig.filterSlotNames) {
 }
 if (props.tableConfig.handlerOption?.showCulomnIcon) {
   delete originTableConfig.columns;
+}
+if (originTableConfig.handlerOption) {
+  delete originTableConfig.handlerOption;
 }
 getPageData();
 
