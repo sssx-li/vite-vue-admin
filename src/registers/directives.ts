@@ -1,12 +1,5 @@
 import type { App } from 'vue';
-import { focus } from '@/directives';
-
-const directiveList = [
-  {
-    name: 'focus',
-    directive: focus
-  }
-];
+import directiveList from '@/directives';
 
 export default function directives(app: App): void {
   for (const direct of directiveList) {
