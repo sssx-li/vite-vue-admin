@@ -1,9 +1,9 @@
 <template>
-  <a-layout class="main-container">
+  <a-layout class="main-container h-100%">
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <div class="logo-box">
-        <img :src="logo" alt="log" :class="[collapsed ? 'small-logo' : 'logo']" />
-        <h2 class="title" v-show="!collapsed">后台管理系统</h2>
+        <img :src="logo" alt="log" :class="[collapsed ? 'h-30px' : 'h-50px']" />
+        <h2 class="mt-14px mb-20px text-18px c-#fff" v-show="!collapsed">后台管理系统</h2>
       </div>
       <LayoutMenu />
     </a-layout-sider>
@@ -40,17 +40,6 @@ const collapsed = ref(false);
     display: flex;
     flex-direction: column;
     align-items: center;
-    .logo {
-      height: 50px;
-    }
-    .small-logo {
-      height: 30px;
-    }
-    .title {
-      margin: 14px 0 20px;
-      font-size: 18px;
-      color: #fff !important;
-    }
   }
   .ant-layout-content {
     padding: 20px;

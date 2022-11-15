@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container h-100% flex items-center justify-center">
     <SyCard class="login-card">
       <h2 class="login-title">后台管理系统</h2>
       <SyForm
@@ -8,13 +8,7 @@
         v-model="loginForm"
         ref="loginFormRef"
       />
-      <a-button
-        @click="handleLogin"
-        class="submit-btn"
-        size="large"
-        type="primary"
-        :loading="loading"
-      >
+      <a-button @click="handleLogin" class="w-100%" size="large" type="primary" :loading="loading">
         登录
       </a-button>
     </SyCard>
@@ -44,10 +38,6 @@ const handleLogin = async () => {
 
 <style lang="less" scoped>
 .login-container {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: #f0f2f5;
   .login-card {
     padding: 20px 40px;
@@ -57,9 +47,6 @@ const handleLogin = async () => {
       font-size: 28px;
       margin-bottom: 50px;
     }
-  }
-  .submit-btn {
-    width: 100%;
   }
 }
 </style>
