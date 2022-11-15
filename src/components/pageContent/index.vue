@@ -65,6 +65,7 @@ import { SyTable, SyCard } from '@/baseUI';
 import FieldOrder from '@/components/fieldOrder/index.vue';
 import RowDensity from '@/components/rowDensity/index.vue';
 import { ITableConfig } from '@/baseUI/syTable/types';
+import { usePageContent } from '@/hooks';
 
 interface Props {
   contentTableConfig: ITableConfig;

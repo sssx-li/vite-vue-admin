@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import { SyModal, SyDrawer, SyCard } from '@/baseUI';
+import { useConfirm, useMessage } from '@/hooks';
 
 const { success } = useMessage();
 const handleMessage = () => {

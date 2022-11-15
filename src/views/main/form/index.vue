@@ -39,6 +39,7 @@ import { SyForm, SyCard } from '@/baseUI';
 import ModalForm from '@/components/modalForm/index.vue';
 import DrawerForm from '@/components/drawerForm/index.vue';
 import { formConfig } from './config/config.form';
+import { useMessage } from '@/hooks';
 
 const { success } = useMessage();
 // 基础表单

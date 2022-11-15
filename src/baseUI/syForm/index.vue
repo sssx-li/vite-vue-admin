@@ -153,6 +153,7 @@
   </a-form>
 </template>
 <script setup lang="ts" name="syForm">
+import { useFormValidate } from '@/hooks';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { IFormItem } from './types';

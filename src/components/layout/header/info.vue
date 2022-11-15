@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import localCache from '@/utils/localCache';
 import { useUserStore } from '@/store/user';
+import { useConfirm, useMessage } from '@/hooks';
 
 const { info } = useMessage();
 const store = useUserStore();

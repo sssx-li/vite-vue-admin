@@ -49,6 +49,7 @@
 <script setup lang="ts" name="tableExample">
 import { SyTable, SyForm, SyCard } from '@/baseUI';
 import PageContent from '@/components/pageContent/index.vue';
+import { useConfirm, useMessage } from '@/hooks';
 import { contentTableConfig } from './config/config.content';
 import { formConfig, searchFormConfig } from './config/config.form';
 

@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts" name="syEchart">
+import { useEcharts } from '@/hooks';
 import { EChartsOption } from 'echarts';
 interface Props {
   options: EChartsOption;
