@@ -32,14 +32,21 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to) => {
-  NProgress.start();
+router.beforeEach((to, from, next) => {
   const token = localCache.getCache(tokenKey);
   const isToLogin = to.path === '/login';
   if (token) {
-    isToLogin && router.push('/');
+    if (isToLogin) {
+      next({ path: '/' });
+    } else {
+      next();
+    }
   } else {
-    !isToLogin && router.push('/login');
+    if (!isToLogin) {
+      next({ path: '/login' });
+    } else {
+      next();
+    }
   }
 });
 
