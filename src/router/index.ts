@@ -45,18 +45,24 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to) => {
+router.beforeEach((to, from, next) => {
   const token = localCache.getCache(tokenKey);
   const isToLogin = to.path === '/login';
   if (token) {
-    isToLogin && router.push('/');
+    if (isToLogin) {
+      next({ path: '/' });
+    } else if (to.path === '/main') {
+      const store = useUserStore();
+      next({ path: store.firstMenuPath });
+    } else {
+      next();
+    }
   } else {
-    !isToLogin && router.push('/login');
-  }
-
-  if (to.path === '/main') {
-    const store = useUserStore();
-    return store.firstMenuPath;
+    if (!isToLogin) {
+      next({ path: '/login' });
+    } else {
+      next();
+    }
   }
 });
 
