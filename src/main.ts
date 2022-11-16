@@ -4,7 +4,6 @@ import 'uno.css';
 import 'default-passive-events';
 
 import './assets/styles/style.css';
-import 'uno.css';
 import store from './store';
 import router from './router';
 import { setupMock } from './mock';
