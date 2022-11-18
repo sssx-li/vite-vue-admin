@@ -1,7 +1,5 @@
 <template>
-  <div class="sy-echarts">
-    <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
-  </div>
+  <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
 </template>
 
 <script setup lang="ts" name="syEcharts">
