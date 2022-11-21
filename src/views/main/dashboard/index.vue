@@ -2,6 +2,9 @@
   <el-button @click="openMessage">确认弹窗</el-button>
   <el-button @click="showDrawer = true">drawer弹窗</el-button>
   <el-button @click="showDialog = true">dialog弹窗</el-button>
+  <SyCard :show-header="false">
+    <SyEcharts :options="barOptions" ref="barRef" />
+  </SyCard>
   <SyDrawer
     title="这是一个drawer标题"
     :options="{ direction: 'ltr' }"
@@ -24,7 +27,8 @@
 </template>
 
 <script setup lang="ts" name="dashboard">
-import { SyDrawer, SyDialog } from '@/baseUI';
+import { EChartsOption, SeriesOption } from 'echarts';
+import { SyDrawer, SyDialog, SyCard, SyEcharts } from '@/baseUI';
 import { useConfirm, useMessage } from '@/hooks';
 
 const confirm = useConfirm();
@@ -53,6 +57,38 @@ const onConfirm = () => {
   loading.value = false;
   success('成功');
 };
+
+// ------------- echarts --------------
+const barRef = ref<InstanceType<typeof SyEcharts>>();
+const barOptions = {
+  title: {
+    text: '这是一个标题'
+  },
+  xAxis: {
+    type: 'category',
+    data: [1, 2, 3, 4, 5, 6]
+  },
+  yAxis: {
+    type: 'value'
+  },
+  tooltip: {
+    show: true
+  },
+  series: [
+    {
+      type: 'bar',
+      data: [10, 15, 30, 45, 80, 150, 200]
+    }
+  ]
+} as EChartsOption;
+setTimeout(() => {
+  barRef.value?.update!([
+    {
+      type: 'bar',
+      data: [1, 5, 10, 20, 50, 30, 25]
+    }
+  ] as SeriesOption);
+}, 3000);
 </script>
 
 <style lang="scss" scoped></style>
