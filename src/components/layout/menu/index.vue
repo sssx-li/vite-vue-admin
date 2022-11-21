@@ -22,13 +22,13 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '@/store/user';
+import { useStore } from '@/store';
 import SubMenu from './subMenu.vue';
 
 const route = useRoute();
 const router = useRouter();
-const store = useUserStore();
-const menuInfo: any = computed(() => store.userMenus);
+const store = useStore();
+const menuInfo: any = computed(() => store.user.userMenus);
 const openKeys = ref<any[]>([]);
 const selectedKeys = ref<any[]>([]);
 watch(

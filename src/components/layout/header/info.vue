@@ -18,13 +18,13 @@
 
 <script setup lang="ts">
 import localCache from '@/utils/localCache';
-import { useUserStore } from '@/store/user';
 import { useConfirm, useMessage } from '@/hooks';
+import { useStore } from '@/store';
 
 const { info } = useMessage();
-const store = useUserStore();
+const store = useStore();
 const confirm = useConfirm();
-const userInfo = computed(() => store.userInfo);
+const userInfo = computed(() => store.user.userInfo);
 const onClick = (obj: any) => {
   const { key } = obj;
   if (key === 'logout') {
