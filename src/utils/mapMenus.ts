@@ -1,5 +1,5 @@
 import mainStaticRoute from '@/router/modules';
-import { useUserStore } from '@/store/user';
+import { useStore } from '@/store';
 
 import { RouteRecord } from 'vue-router';
 
@@ -34,8 +34,8 @@ export async function mapMenusToRoutes(userMenus: any[]): Promise<RouteRecord[]>
   Object.assign(routes, [...mainStaticRoute, ...permissionRoutes]);
   routes.sort((a, b) => a.meta.sort - b.meta.sort);
   if (routes && routes.length > 0) {
-    const store = useUserStore();
-    store.firstMenuPath = routes[0].redirect ?? routes[0].path;
+    const store = useStore();
+    store.user.firstMenuPath = routes[0].redirect ?? routes[0].path;
   }
   return routes;
 }

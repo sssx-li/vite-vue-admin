@@ -1,23 +1,24 @@
-import { createApp } from 'vue';
 import 'normalize.css';
 import 'uno.css';
-import 'default-passive-events';
+import { createPinia } from 'pinia';
 
 import './assets/styles/style.css';
-import store from './store';
-import router from './router';
-import { setupMock } from './mock';
-import { globalRegister } from '@/registers/index';
-
 import App from './App.vue';
-import { useUserStore } from './store/user';
+const pinia = createPinia();
+import router from './router';
+import { useStore } from './store';
+import { setupMock } from './mock';
+import { globalRegister } from './registers';
 
 const app = createApp(App);
 if (import.meta.env.VITE_USE_MOCK === 'true') {
   setupMock();
 }
-app.use(store);
-const userStore = useUserStore();
-await userStore.loadLocalLogin();
 
-app.use(router).use(globalRegister).mount('#app');
+app.use(pinia);
+const userStore = useStore();
+await userStore.user.loadLocalLogin();
+app.use(globalRegister);
+app.use(router);
+
+app.mount('#app');

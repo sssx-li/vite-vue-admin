@@ -28,16 +28,16 @@
 
 <script setup lang="ts">
 import SubMenu from './subMenu.vue';
-import { useUserStore } from '@/store/user';
 import type { RouteRecord } from 'vue-router';
+import { useStore } from '@/store';
 
 defineProps<{ isCollapse: boolean }>();
 
-const store = useUserStore();
+const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const defaultActive = computed(() => route.path);
-const menuList: any = computed(() => store.userMenus);
+const menuList: any = computed(() => store.user.userMenus);
 const handleClickMenu = (menu: RouteRecord) => {
   router.push({ path: menu.path });
 };

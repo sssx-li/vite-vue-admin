@@ -4,9 +4,9 @@ import 'nprogress/nprogress.css';
 NProgress.configure({ showSpinner: false });
 import { tokenKey } from '@/common';
 import localCache from '@/utils/localCache';
-import { useUserStore } from '@/store/user';
 
 import dashboardRoute from './modules';
+import { useStore } from '@/store';
 
 interface IMeta extends RouteMeta {
   isHidden: boolean;
@@ -56,8 +56,8 @@ router.beforeEach((to, from, next) => {
     if (isToLogin) {
       next({ path: '/' });
     } else if (to.path === '/main') {
-      const store = useUserStore();
-      next({ path: store.firstMenuPath });
+      const store = useStore();
+      next({ path: store.user.firstMenuPath });
     } else {
       next();
     }

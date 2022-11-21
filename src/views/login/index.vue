@@ -27,9 +27,9 @@
 
 <script setup lang="ts" name="login">
 import type { FormInstance, FormRules } from 'element-plus';
-import { useUserStore } from '@/store/user';
 import { IAccount } from '@/service/types/user';
 import { globalConfig } from '@/config';
+import { useStore } from '@/store';
 
 const rules = reactive<FormRules>({
   username: [
@@ -48,7 +48,7 @@ const rules = reactive<FormRules>({
     }
   ]
 });
-const store = useUserStore();
+const store = useStore();
 const loading = ref(false);
 const loginForm = ref<IAccount>({
   username: '',
@@ -58,7 +58,7 @@ const loginRuleFormRef = ref<FormInstance>();
 const handleLogin = async () => {
   await loginRuleFormRef.value?.validate();
   loading.value = true;
-  await store.loginAction(loginForm.value);
+  await store.user.loginAction(loginForm.value);
   loading.value = false;
 };
 </script>
