@@ -1,4 +1,3 @@
-import { createApp } from 'vue';
 import 'normalize.css';
 import { createPinia } from 'pinia';
 
