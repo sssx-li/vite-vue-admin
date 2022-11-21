@@ -5,6 +5,9 @@
     <a-button @click="handleOpenkDialog('modal')"> Modal弹窗 </a-button>
     <a-button @click="handleOpenkDialog('drawer')">Drawer弹窗</a-button>
   </SyCard>
+  <SyCard>
+    <SyEcharts :options="barOptions" ref="barRef" />
+  </SyCard>
   <!-- 基础弹窗 -->
   <SyModal
     v-model:visible="modalParams.visible"
@@ -25,7 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import { SyModal, SyDrawer, SyCard } from '@/baseUI';
+import { EChartsOption, SeriesOption } from 'echarts';
+import { SyModal, SyDrawer, SyCard, SyEcharts } from '@/baseUI';
 import { useConfirm, useMessage } from '@/hooks';
 
 const { success } = useMessage();
@@ -60,6 +64,38 @@ const onSubmitFromModal = () => {
 const onSubmitFromDrawer = () => {
   syDrawerRef.value.onClose();
 };
+
+// ------------- echarts --------------
+const barRef = ref<InstanceType<typeof SyEcharts>>();
+const barOptions = {
+  title: {
+    text: '这是一个标题'
+  },
+  xAxis: {
+    type: 'category',
+    data: [1, 2, 3, 4, 5, 6]
+  },
+  yAxis: {
+    type: 'value'
+  },
+  tooltip: {
+    show: true
+  },
+  series: [
+    {
+      type: 'bar',
+      data: [10, 15, 30, 45, 80, 150, 200]
+    }
+  ]
+} as EChartsOption;
+setTimeout(() => {
+  barRef.value?.update!([
+    {
+      type: 'bar',
+      data: [1, 5, 10, 20, 50, 30, 25]
+    }
+  ] as SeriesOption);
+}, 3000);
 </script>
 
 <style lang="less" scoped>
