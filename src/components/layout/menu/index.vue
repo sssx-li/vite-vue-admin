@@ -8,9 +8,7 @@
     text-color="#b7bdc3"
   >
     <div class="flex justify-center text-center p-10px text-center">
-      <el-icon :size="isCollapse ? 30 : 40">
-        <i-sy-vue />
-      </el-icon>
+      <i-sy-vue :style="{ fontSize: isCollapse ? '24px' : '30px' }" />
     </div>
     <template v-for="menu in menuList" :key="menu.path">
       <el-menu-item

@@ -2,9 +2,6 @@
   <el-button @click="openMessage">确认弹窗</el-button>
   <el-button @click="showDrawer = true">drawer弹窗</el-button>
   <el-button @click="showDialog = true">dialog弹窗</el-button>
-  <SyCard :show-header="false">
-    <SyEcharts :options="barOptions" ref="barRef" />
-  </SyCard>
   <SyDrawer
     title="这是一个drawer标题"
     :options="{ direction: 'ltr' }"
@@ -24,12 +21,15 @@
   >
     drawer弹窗内容
   </SyDialog>
+  <SyCard :showHeader="false" class="mt-14px">
+    <SyEcharts :options="barOptions" ref="barRef" />
+  </SyCard>
 </template>
 
 <script setup lang="ts" name="dashboard">
-import { EChartsOption, SeriesOption } from 'echarts';
 import { SyDrawer, SyDialog, SyCard, SyEcharts } from '@/baseUI';
 import { useConfirm, useMessage } from '@/hooks';
+import { EChartsOption, SeriesOption } from 'echarts';
 
 const confirm = useConfirm();
 const { success } = useMessage();
