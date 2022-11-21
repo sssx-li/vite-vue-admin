@@ -1,5 +1,9 @@
-import { createPinia } from 'pinia';
+import useUserStore from './user';
 
-const pinia = createPinia();
+const useStore = () => {
+  return {
+    user: useUserStore()
+  };
+};
 
-export default pinia;
+export { useStore };

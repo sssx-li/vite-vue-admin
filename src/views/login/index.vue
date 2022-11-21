@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '@/store/user';
-const store = useUserStore();
+import { useStore } from '@/store';
+const store = useStore();
 
 const handleLogin = async () => {
-  await store.loginAction({ username: 'admin', password: 'admin' });
+  await store.user.loginAction({ username: 'admin', password: 'admin' });
 };
 </script>
 

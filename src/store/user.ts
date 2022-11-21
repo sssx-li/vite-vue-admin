@@ -5,7 +5,7 @@ import { IAccount } from '@/service/types/user';
 import localCache from '@/utils/localCache';
 import router from '@/router';
 
-export const useUserStore = defineStore('user', {
+const useUserStore = defineStore('user', {
   state: () => {
     return {
       token: '',
@@ -30,3 +30,5 @@ export const useUserStore = defineStore('user', {
     }
   }
 });
+
+export default useUserStore;
