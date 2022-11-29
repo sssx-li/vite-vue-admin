@@ -25,16 +25,12 @@ export default [
     response: ({ query }: any) => {
       const { name } = query;
       let resData = {
-        ...tableData,
-        page: {
-          count: tableData.list.length,
-          currentPage: 1,
-          pageSize: query.pageSize
-        }
+        list: tableData.list,
+        count: tableData.list.length
       };
       if (name) {
         resData.list = tableData.list.filter((item: any) => item.name.indexOf(name) !== -1);
-        resData.page.count = resData.list.length;
+        resData.count = resData.list.length;
       }
       console.log(`GET::${ContentApis.TABLE}`, query);
       return {

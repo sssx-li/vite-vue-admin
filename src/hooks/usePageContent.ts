@@ -124,7 +124,7 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
       .then(async () => {
         try {
           const { code } = await Request.delete({
-            url: `${url}/${id}`
+            url: `${url}?id=${id}`
           });
           if (code === 0) {
             success('删除成功');
@@ -138,7 +138,11 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
   };
   // 刷新数据
   const refresh = () => {
-    pageInfo.currentPage = 1;
+    if (pageInfo.currentPage === 1) {
+      getPageData();
+    } else {
+      pageInfo.currentPage = 1;
+    }
   };
   return {
     pageInfo,
