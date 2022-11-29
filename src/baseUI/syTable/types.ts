@@ -50,6 +50,7 @@ interface IHandlerOption {
   showCreated?: boolean; // 添加按鈕
   showSizeIcon?: boolean; // 表格密度
   showCulomnIcon?: boolean; // 表格列展示
+  showRefreshIcon?: boolean; // 显示刷新按钮
 }
 
 export interface ITableConfig<T = IColumn> {

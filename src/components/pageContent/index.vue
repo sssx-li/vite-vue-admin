@@ -13,6 +13,18 @@
           <RowDensity @change-size="tableState.changeSize" />
         </span>
         <el-tooltip
+          content="刷新"
+          placement="top"
+          v-if="tableConfig.handlerOption?.showRefreshIcon"
+        >
+          <i-sy-refresh
+            width="20px"
+            height="20px"
+            :class="['refresh-btn', refreshStatus && 'active']"
+            @click="handleRefresh"
+          />
+        </el-tooltip>
+        <el-tooltip
           content="列表设置"
           placement="top"
           v-if="tableConfig.handlerOption?.showCulomnIcon"
@@ -27,7 +39,7 @@
       :columns="tableState.columns"
       :data="dataSource"
       :options="options"
-      :page-options="pageInfo"
+      :page-options="{ ...pageInfo, total }"
       v-bind="originTableConfig"
       @current-change="currentChange"
       @size-change="sizeChange"
@@ -37,7 +49,7 @@
       </template>
       <template #handler="scope">
         <el-button type="primary" link @click="emit('handleEdit', scope.row)">编辑</el-button>
-        <el-button type="danger" link @click="handleDelete(scope.row)">删除</el-button>
+        <el-button type="danger" link @click="handleDelete(scope.row.id)">删除</el-button>
       </template>
       <!-- header 插槽 -->
       <template
@@ -71,7 +83,9 @@ const props = withDefaults(defineProps<Props>(), {
   pageQuery: () => ({})
 });
 const emit = defineEmits(['handleEdit', 'handleCreate']);
+const refreshStatus = ref(false);
 const {
+  total,
   pageInfo,
   dataSource,
   tableState,
@@ -113,6 +127,11 @@ getPageData();
 const handleToCreate = () => {
   emit('handleCreate');
 };
+const handleRefresh = async () => {
+  refreshStatus.value = true;
+  await getPageData();
+  refreshStatus.value = false;
+};
 
 const options = ref<IOptions>({ size: 'default' });
 
@@ -129,4 +148,21 @@ defineExpose({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@keyframes btnRound {
+  to {
+    transform: rotate(0);
+  }
+  from {
+    transform: rotate(360deg);
+  }
+}
+.refresh-btn {
+  margin-left: 8px;
+  cursor: pointer;
+  outline: none;
+  &.active {
+    animation: btnRound 1s infinite reverse linear;
+  }
+}
+</style>

@@ -75,6 +75,7 @@ export const contentTableConfig: ITableConfig = {
   handlerOption: {
     showCreated: true,
     showSizeIcon: true,
-    showCulomnIcon: true
+    showCulomnIcon: true,
+    showRefreshIcon: true
   }
 };
