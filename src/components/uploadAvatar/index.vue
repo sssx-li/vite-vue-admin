@@ -95,8 +95,8 @@ const removeImg = () => {
 </script>
 
 <style lang="scss" scoped>
-:deep(.ant-upload-picture-card-wrapper) {
-  .ant-upload {
+.ant-upload-picture-card-wrapper {
+  :deep(.ant-upload) {
     position: relative;
     .close-icon {
       position: absolute;
