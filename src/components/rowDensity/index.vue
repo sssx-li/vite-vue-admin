@@ -1,11 +1,11 @@
 <template>
   <el-tooltip content="密度" placement="top">
     <el-dropdown trigger="click" @command="handleCommand">
-      <el-icon :size="20">
+      <el-icon :size="22">
         <i-sy-density class="cursor" />
       </el-icon>
       <template #dropdown>
-        <el-dropdown-menu>
+        <el-dropdown-menu class="row-density">
           <el-dropdown-item
             :style="{
               background: size.value === selectedSize ? '#ecf5ff' : '',
@@ -46,4 +46,14 @@ const handleCommand = (command: string) => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cursor {
+  margin-left: 4px;
+  cursor: pointer;
+}
+.row-density {
+  &.el-dropdown-menu {
+    width: 160px;
+  }
+}
+</style>

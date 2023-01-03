@@ -1,168 +1,162 @@
 <template>
-  <SyCard :title="title">
-    <template #left>
-      <slot name="left">{{ title }}</slot>
-    </template>
-    <template #right>
-      <div class="flex items-center">
-        <el-button v-if="tableConfig.handlerOption?.showCreated" @click="handleToCreate">
-          <i class="i-ep-plus mr-4px"></i>
-          新增
-        </el-button>
-        <span class="ml-10px h-20px" v-if="tableConfig.handlerOption?.showSizeIcon">
-          <RowDensity @change-size="tableState.changeSize" />
-        </span>
-        <el-tooltip
-          content="刷新"
-          placement="top"
-          v-if="tableConfig.handlerOption?.showRefreshIcon"
-        >
-          <i-sy-refresh
-            width="20px"
-            height="20px"
-            :class="['refresh-btn', refreshStatus && 'active']"
-            @click="handleRefresh"
-          />
-        </el-tooltip>
-        <el-tooltip
-          content="列表设置"
-          placement="top"
-          v-if="tableConfig.handlerOption?.showCulomnIcon"
-        >
-          <div class="w-22px h-22px ml-8px">
-            <FieldOrder @changeColumns="tableState.changeColumns" :columns="tableState.columns" />
-          </div>
-        </el-tooltip>
-      </div>
-    </template>
+  <div class="page-content" ref="pageContent">
+    <div class="sy-table-header">
+      <span class="table-header table-header-title">
+        <slot name="tableTitle">{{ title }}</slot>
+      </span>
+      <span class="table-header table-header-right">
+        <slot name="tableRight"></slot>
+        <RowDensity @change-size="tableState.changeSize" v-if="handlerOption?.showSizeIcon" />
+        <Refresh
+          @refresh="emit('refresh')"
+          :loading="loading"
+          v-if="handlerOption?.showRefreshIcon"
+        />
+        <FieldOrder
+          @changeColumns="tableState.changeColumns"
+          v-if="handlerOption?.showCulomnIcon"
+          :columns="tableState.columns"
+        />
+      </span>
+    </div>
     <SyTable
+      v-bind="options"
+      :data="data"
       :columns="tableState.columns"
-      :data="dataSource"
-      :options="options"
-      :page-options="{ ...pageInfo, total }"
-      v-bind="originTableConfig"
-      @current-change="currentChange"
-      @size-change="sizeChange"
+      :loading="loading"
+      :size="tableState.size"
+      @selectionChange="emit('selectionChange')"
     >
       <template #createTime="scope">
         {{ $filters.formatTime(scope.row.createTime) }}
       </template>
-      <template #handler="scope">
-        <el-button type="primary" link @click="emit('handleEdit', scope.row)">编辑</el-button>
-        <el-button type="danger" link @click="handleDelete(scope.row.id)">删除</el-button>
+      <template #updateTime="scope">
+        {{ $filters.formatTime(scope.row.updateTime) }}
       </template>
       <!-- header 插槽 -->
       <template
-        v-for="item in otherPropSlots"
+        v-for="item in columns"
         :key="`header-${item.prop}`"
         #[`header-${item.prop}`]="scope"
       >
         <slot :name="`header-${item.prop}`" :row="scope.row"></slot>
       </template>
-      <!-- column 插槽 -->
+      <!-- body 插槽 -->
       <template v-for="item in otherPropSlots" :key="item.prop" #[item.prop]="scope">
         <slot :name="item.prop" :row="scope.row"></slot>
       </template>
     </SyTable>
-  </SyCard>
+    <div v-if="showFooter" class="footer-box">
+      <el-pagination
+        v-bind="pageOption"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageInfo?.currentPage"
+        :page-size="pageInfo?.pageSize"
+        :total="total"
+      />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts" name="pageContent">
-import { SyTable, SyCard } from '@/baseUI';
-import { IColumn, IOptions, ITableConfig } from '@/baseUI/syTable/types';
-import { usePageContent } from '@/hooks';
-import RowDensity from '@/components/rowDensity/index.vue';
-import FieldOrder from '@/components/fieldOrder/index.vue';
-
+import { SyTable } from '@/baseUI';
+import {
+  IColumn,
+  ITableState,
+  IHandlerOption,
+  IOptions,
+  IPage,
+  TSize
+} from '@/baseUI/syTable/types';
+import { Refresh, RowDensity, FieldOrder } from '@/components';
 interface Props {
-  tableConfig: ITableConfig;
-  pageQuery?: object;
-  title?: string;
+  data: any[]; // 接口数据
+  columns: IColumn[]; // 表格内容
+  title?: string; // 标题
+  options?: IOptions; // 表格配置项
+  filterSlotNames?: string[]; // 需要过滤的插槽名
+  loading?: boolean; // 加载状态
+  handlerOption?: IHandlerOption;
+  showFooter?: boolean; // 是否展示分页
+  pageInfo?: { currentPage: number; pageSize: number };
+  pageOption?: IPage;
+  total?: number;
+  size?: TSize;
 }
 const props = withDefaults(defineProps<Props>(), {
-  pageQuery: () => ({})
+  handlerOption: () => ({
+    showCulomnIcon: true,
+    showRefreshIcon: true,
+    showSizeIcon: true
+  }),
+  total: 0,
+  pageOption: () => ({
+    pageSizes: [5, 10, 20, 50, 100],
+    layout: 'total, sizes, prev, pager, next, jumper'
+  }),
+  showFooter: true
 });
-const emit = defineEmits(['handleEdit', 'handleCreate']);
-const refreshStatus = ref(false);
-const {
-  total,
-  pageInfo,
-  dataSource,
-  tableState,
-  getPageData,
-  refresh,
-  currentChange,
-  sizeChange,
-  handleDelete,
-  handleEdit,
-  handleCreate
-} = usePageContent(props.tableConfig, props.pageQuery);
-const originTableConfig = Object.assign({
-  ...props.tableConfig
-});
+const emit = defineEmits(['refresh', 'sizeChange', 'currentChange', 'selectionChange']);
 
+const tableState = reactive<ITableState>({
+  columns: deepClone(props.columns), // 表格列
+  size: props.size || 'default', // 表格间距
+  changeSize: (size) => {
+    tableState.size = size;
+  },
+  changeColumns: (columns) => {
+    tableState.columns = columns;
+  }
+});
+function deepClone(arr: IColumn[]) {
+  const columns: IColumn[] = [];
+  for (let i = 0; i < arr.length; i++) {
+    columns.push({ ...arr[i] });
+  }
+  return columns;
+}
 // 获取其他的动态插槽名称
 const otherPropSlots = ref<IColumn[]>([]);
-let filterSlotNames = props.tableConfig?.filterSlotNames || [];
-filterSlotNames = filterSlotNames.concat(['handler']);
-otherPropSlots.value = props.tableConfig?.columns.filter((item) => {
+const filterSlotNames = props.filterSlotNames || [];
+otherPropSlots.value = props.columns.filter((item) => {
   if (filterSlotNames.includes(item.prop)) return false;
   return item.prop;
 });
-
-if (originTableConfig.url) {
-  delete originTableConfig.url;
-}
-if (originTableConfig.filterSlotNames) {
-  delete originTableConfig.filterSlotNames;
-}
-if (props.tableConfig.handlerOption?.showCulomnIcon) {
-  delete originTableConfig.columns;
-}
-if (originTableConfig.handlerOption) {
-  delete originTableConfig.handlerOption;
-}
-getPageData();
-
-const handleToCreate = () => {
-  emit('handleCreate');
+const handleSizeChange = (val: number) => {
+  emit('sizeChange', val);
 };
-const handleRefresh = async () => {
-  refreshStatus.value = true;
-  await getPageData();
-  refreshStatus.value = false;
+const handleCurrentChange = (val: number) => {
+  emit('currentChange', val);
 };
-
-const options = ref<IOptions>({ size: 'default' });
-
-watchEffect(() => {
-  options.value.size = tableState.size;
-});
-
-defineExpose({
-  getPageData,
-  refresh,
-  handleEdit,
-  handleDelete,
-  handleCreate
-});
 </script>
 
 <style lang="scss" scoped>
-@keyframes btnRound {
-  to {
-    transform: rotate(0);
-  }
-  from {
-    transform: rotate(360deg);
+.page-content {
+  padding: 16px;
+  border-radius: 6px;
+  background-color: #fff;
+  .sy-table-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    .table-header {
+      display: flex;
+    }
+    .table-header-title {
+      font-size: 16px;
+      color: #000000;
+    }
+    .table-header-right {
+      align-items: center;
+      flex-wrap: nowrap;
+      height: 32px;
+    }
   }
 }
-.refresh-btn {
-  margin-left: 8px;
-  cursor: pointer;
-  outline: none;
-  &.active {
-    animation: btnRound 1s infinite reverse linear;
-  }
+.footer-box {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
 }
 </style>

@@ -1,33 +1,41 @@
 <template>
-  <el-popover placement="bottom" :width="200" trigger="click">
-    <template #reference>
-      <i class="i-ep-setting text-22px block cursor"></i>
-    </template>
-    <div class="flex justify-between mb-10px">
-      <el-checkbox @change="clickCheckedAll" v-model="allChecked">列展示</el-checkbox>
-      <el-button class="reset-btn" @click="handleReset">重置</el-button>
-    </div>
-    <ul class="field-list">
-      <li
-        v-for="(item, index) in state.copyColumns"
-        draggable="true"
-        @dragstart="dragStart($event, index)"
-        @dragenter="dragenter($event, index)"
-        @dragover.prevent="dragover($event)"
-        @dragend="dragend"
-        :class="{
-          status: state.dropStatus && state.dropIndex === index
-        }"
-        :key="item.prop"
-      >
-        <el-checkbox @change="changeChecked" v-model="item.isChecked">{{ item.label }}</el-checkbox>
-      </li>
-    </ul>
-  </el-popover>
+  <el-tooltip content="列表设置" placement="top">
+    <!-- 这里必须用html标签包裹，否则tooltip无法正常显示 -->
+    <span>
+      <el-popover placement="bottom" :width="200" trigger="click">
+        <template #reference>
+          <el-icon class="icon-box"><Setting /></el-icon>
+        </template>
+        <div class="text-box">
+          <el-checkbox @change="clickCheckedAll" v-model="allChecked">列展示</el-checkbox>
+          <el-button class="reset-btn" @click="handleReset">重置</el-button>
+        </div>
+        <ul class="field-list">
+          <li
+            v-for="(item, index) in state.copyColumns"
+            draggable="true"
+            @dragstart="dragStart($event, index)"
+            @dragenter="dragenter($event, index)"
+            @dragover.prevent="dragover($event)"
+            @dragend="dragend"
+            :class="{
+              status: state.dropStatus && state.dropIndex === index
+            }"
+            :key="item.prop"
+          >
+            <el-checkbox @change="changeChecked" v-model="item.isChecked" v-if="item.label">{{
+              item.label
+            }}</el-checkbox>
+          </li>
+        </ul>
+      </el-popover>
+    </span>
+  </el-tooltip>
 </template>
 
 <script setup lang="ts" name="config">
 import { IColumn } from '@/baseUI/syTable/types';
+import { Setting } from '@element-plus/icons-vue';
 
 const props = defineProps<{ columns: IColumn[] }>();
 const emit = defineEmits(['changeColumns']);
@@ -96,6 +104,17 @@ const handleReset = () => {
 </script>
 
 <style lang="scss" scoped>
+.icon-box {
+  font-size: 20px;
+  display: block;
+  cursor: pointer;
+  margin-left: 4px;
+}
+.text-box {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 .field-list {
   width: 100%;
   list-style: none;

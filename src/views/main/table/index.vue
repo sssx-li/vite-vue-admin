@@ -1,38 +1,25 @@
 <template>
-  <SyCard title="基础表格">
-    <SyTable
-      :data="data"
-      v-bind="tableConfig"
-      :page-options="pageInfo"
-      @current-change="currentChange"
-      @size-change="sizeChange"
-    >
-      <!-- 自定义表头 -->
-      <template #header-age="scope">
-        <el-tag>{{ scope.row.label }}</el-tag>
-      </template>
-      <!-- 自定义列 -->
-      <template #name="scope">
-        <el-tag>{{ scope.row.name }}</el-tag>
-      </template>
-      <!-- 操作 -->
-      <template #handler="scope">
-        <el-button type="primary" link @click="handlerEdit(scope.row)">编辑</el-button>
-        <el-button type="danger" link @click="handlerDelete(scope.row)">删除</el-button>
-      </template>
-    </SyTable>
-  </SyCard>
-
   <PageContent
-    :table-config="contentTableConfig"
-    title="组合组件-增删改"
-    class="mt-14px"
-    @handleEdit="handleEdit"
-    @handle-create="handleEdit"
-    ref="pageContentRef"
+    v-bind="contentTableConfig"
+    :title="'这是一个列表'"
+    :data="dataSource"
+    :loading="loading"
+    :total="total"
+    :pageInfo="pageInfo"
+    @refresh="refresh"
+    @current-change="currentChange"
+    @size-change="sizeChange"
   >
+    <template #tableRight>
+      <el-button type="primary">新增</el-button>
+      <el-button type="danger">删除</el-button>
+    </template>
     <template #sex="scope">
       {{ scope.row.sex === 1 ? '男' : '女' }}
+    </template>
+    <template #handler="scope">
+      <el-button type="primary" link @click="handleToEdit(scope.row)">编辑</el-button>
+      <el-button type="danger" link @click="handleDelete({ id: scope.row.id })">删除</el-button>
     </template>
   </PageContent>
   <DrawerForm
@@ -47,17 +34,13 @@
 </template>
 
 <script setup lang="ts" name="table">
-import { SyCard, SyTable } from '@/baseUI';
-import PageContent from '@/components/pageContent/index.vue';
+import { PageContent } from '@/components';
 import DrawerForm from '@/components/drawerForm/index.vue';
-import { IPage } from '@/baseUI/syTable/types';
-import { useConfirm, useMessage } from '@/hooks';
-import { tableConfig, contentTableConfig } from './config/config.table';
+import { contentTableConfig } from './config/config.table';
 import { formConfig } from './config/config.form';
-interface IUser {
-  name: string;
-  age: number;
-}
+import { usePageing } from '@/hooks';
+import { ContentApis } from '@/service/api';
+
 interface IEditForm {
   id?: string | number;
   name: string;
@@ -65,79 +48,48 @@ interface IEditForm {
   sex: 0 | 1;
   createTime: string;
 }
-const { success } = useMessage();
-const confirm = useConfirm();
 // ------- 1.基础表格 --------
-const data = reactive<IUser[]>([
-  {
-    name: '张三',
-    age: 18
-  },
-  {
-    name: '李四',
-    age: 20
-  }
-]);
-const pageInfo = reactive<IPage>({
-  currentPage: 1,
-  pageSize: 10,
-  total: 100
+const searchForm = ref({
+  name: '',
+  age: '',
+  sex: ''
 });
-const handlerEdit = (row: IUser) => {
-  console.log('handlerEdit', row);
-};
-const handlerDelete = async (row: IUser) => {
-  await confirm({
-    title: '删除',
-    content: `确定要删除${row.name}吗?`,
-    type: 'warning'
-  });
-};
-const currentChange = (val: number) => {
-  pageInfo.currentPage = val;
-};
-const sizeChange = (val: number) => {
-  pageInfo.pageSize = val;
-};
-// ------- 2.内容组件-增删改 --------
-const pageContentRef = ref<InstanceType<typeof PageContent>>();
-const handleEdit = (row: IEditForm) => {
-  if (!row) {
-    editForm.value = {
-      name: '',
-      age: null,
-      sex: 1,
-      createTime: ''
-    };
-    drawerParams.value.type = 'create';
-  } else {
-    editForm.value = row;
-    drawerParams.value.type = 'edit';
-  }
-  drawerParams.value.visible = true;
-};
+const {
+  dataSource,
+  total,
+  loading,
+  pageInfo,
+  refresh,
+  getPageData,
+  handleEdit,
+  handleDelete,
+  currentChange,
+  sizeChange
+} = usePageing(ContentApis.TABLE, searchForm);
 // 编辑
-const drawerParams = ref<{ visible: boolean; type: 'create' | 'edit' }>({
+const drawerFormRef = ref();
+const drawerParams = reactive<{ visible: boolean; type: 'create' | 'edit' }>({
   visible: false,
   type: 'create'
 });
-const drawerFormRef = ref();
 const editForm = ref<IEditForm>({
   name: '',
   age: null,
   sex: 1,
   createTime: ''
 });
+const handleToEdit = (row: IEditForm) => {
+  editForm.value = row;
+  drawerParams.visible = true;
+  drawerParams.type = 'edit';
+};
+
 const onSubmit = async (data: IEditForm) => {
   drawerFormRef.value.loading = true;
-  if (drawerParams.value.type === 'create') {
-    await pageContentRef.value?.handleCreate(data);
-  } else {
-    await pageContentRef.value?.handleEdit(data, data.id!);
-  }
-  await pageContentRef.value?.getPageData();
+  await handleEdit({ id: data.id!, data });
   drawerFormRef.value.closeModal();
 };
+getPageData();
 </script>
 
 <style lang="scss" scoped></style>

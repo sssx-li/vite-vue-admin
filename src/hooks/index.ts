@@ -1,6 +1,6 @@
 import useConfirm from './useConfirm';
 import useMessage from './useMessage';
-import usePageContent from './usePageContent';
+import usePageing from './usePageing';
 import useEcharts from './useEcharts';
 
-export { useConfirm, useMessage, usePageContent, useEcharts };
+export { useConfirm, useMessage, usePageing, useEcharts };

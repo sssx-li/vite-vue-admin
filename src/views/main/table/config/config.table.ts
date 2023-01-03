@@ -1,79 +1,42 @@
 import { ITableConfig } from '@/baseUI/syTable/types';
-import { ContentApis } from '@/service/api';
-export const tableConfig: ITableConfig = {
-  options: {
-    border: true,
-    stripe: true,
-    defaultSort: { prop: 'age', order: 'descending' }
-  },
+export const contentTableConfig: ITableConfig = {
   columns: [
-    {
-      type: 'selection',
-      prop: 'selection',
-      width: '55px',
-      align: 'center'
-    },
     {
       type: 'index',
       prop: 'index',
       label: '序号',
-      width: '80px',
-      align: 'center'
+      align: 'center',
+      width: 80
     },
     {
       label: '姓名',
       prop: 'name',
-      align: 'left'
+      align: 'left',
+      minWidth: 100
+    },
+    {
+      label: '性别',
+      prop: 'sex',
+      minWidth: 100
     },
     {
       label: '年龄',
       prop: 'age',
-      sortable: true,
-      align: 'center'
+      minWidth: 100
+    },
+    {
+      label: '创建时间',
+      prop: 'dateTime',
+      minWidth: 160
     },
     {
       label: '操作',
       prop: 'handler',
-      align: 'center'
-    }
-  ]
-};
-
-export const contentTableConfig: ITableConfig = {
-  url: ContentApis.TABLE,
-  columns: [
-    {
-      type: 'index',
-      prop: 'index',
-      label: '序号',
-      width: '55px',
-      align: 'center'
-    },
-    {
-      label: '姓名',
-      prop: 'name',
-      align: 'left'
-    },
-    {
-      label: '性别',
-      prop: 'sex'
-    },
-    {
-      label: '年龄',
-      prop: 'age'
-    },
-    {
-      label: '创建时间',
-      prop: 'createTime'
-    },
-    {
-      label: '操作',
-      prop: 'handler'
+      fixed: 'right',
+      minWidth: 160
     }
   ],
-  filterSlotNames: ['createTime'],
   handlerOption: {
-    showCreated: true,
     showSizeIcon: true,
     showCulomnIcon: true,
     showRefreshIcon: true

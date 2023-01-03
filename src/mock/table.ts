@@ -26,11 +26,13 @@ export default [
       const { name } = query;
       let resData = {
         list: tableData.list,
-        count: tableData.list.length
+        page: {
+          count: tableData.list.length
+        }
       };
       if (name) {
         resData.list = tableData.list.filter((item: any) => item.name.indexOf(name) !== -1);
-        resData.count = resData.list.length;
+        resData.page.count = resData.list.length;
       }
       console.log(`GET::${ContentApis.TABLE}`, query);
       return {
@@ -56,9 +58,10 @@ export default [
   {
     url: `/api${ContentApis.TABLE}`,
     method: 'put',
-    response: ({ body, query }: any) => {
+    response: ({ body }: any) => {
       console.log(`PUT::${ContentApis.TABLE}`, body);
-      const index = tableData.list.findIndex((item: any) => item.id === parseInt(query.id));
+      const index = tableData.list.findIndex((item: any) => item.id === parseInt(body.id));
+      console.log(tableData.list, 'index', index);
       tableData.list[index] = body;
       return {
         code: 0,

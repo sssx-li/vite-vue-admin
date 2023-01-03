@@ -6,7 +6,12 @@ interface ISort {
 }
 
 export type TSize = 'large' | 'default' | 'small';
-
+export interface ITableState {
+  size: TSize;
+  columns: IColumn[];
+  changeSize: (size: TSize) => void;
+  changeColumns: (columns: IColumn[]) => void;
+}
 export interface IOptions {
   height?: string | number;
   maxHeight?: string | number;
@@ -46,15 +51,13 @@ export interface IColumn {
   headerAlign?: TAlign; // 表头对齐方式， 若不设置该项，则使用表格的对齐方式
 }
 
-interface IHandlerOption {
-  showCreated?: boolean; // 添加按鈕
+export interface IHandlerOption {
   showSizeIcon?: boolean; // 表格密度
   showCulomnIcon?: boolean; // 表格列展示
-  showRefreshIcon?: boolean; // 显示刷新按钮
+  showRefreshIcon?: boolean; // 是否展示刷新按钮
 }
 
 export interface ITableConfig<T = IColumn> {
-  url?: string;
   options?: IOptions; // 表格配置项
   columns: T[]; // 表格数据配置项
   filterSlotNames?: string[]; //  需要过滤的slotName
@@ -63,8 +66,6 @@ export interface ITableConfig<T = IColumn> {
 }
 
 export interface IPage {
-  currentPage: number; // 当前页数
-  pageSize: number; // 每页显示条目个数
   pageSizes?: number[]; // 每页显示个数选择器的选项设置
   small?: boolean; // 是否使用小型分页样式
   background?: boolean; // 是否为分页按钮添加背景色
