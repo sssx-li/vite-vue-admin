@@ -41,10 +41,10 @@
 </template>
 
 <script setup lang="ts" name="fieldOrder">
-import { SettingOutlined } from '@ant-design/icons-vue';
-
+/* eslint-disable */
 const props = defineProps<{ columns: any[] }>();
 const emit = defineEmits(['changeColumns']);
+
 const allChecked = ref(true);
 const visible = ref(false);
 const initColumns = JSON.parse(JSON.stringify(props.columns));
@@ -112,7 +112,8 @@ const handleReset = () => {
 
 <style lang="less" scoped>
 .icon {
-  font-size: 1.2rem;
+  font-size: 18px;
+  margin-left: 6px;
   color: rgba(0, 0, 0, 0.75);
 }
 .top {

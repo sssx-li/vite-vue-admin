@@ -2,6 +2,6 @@ import useConfirm from './useConfirm';
 import useEcharts from './useEcharts';
 import useFormValidate from './useFormValidate';
 import useMessage from './useMessage';
-import usePageContent from './usePageContent';
+import usePageing from './usePageing';
 
-export { useMessage, useConfirm, useEcharts, useFormValidate, usePageContent };
+export { useMessage, useConfirm, useEcharts, useFormValidate, usePageing };

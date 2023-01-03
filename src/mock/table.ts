@@ -60,9 +60,9 @@ export default [
   {
     url: `/api${ContentApis.TABLE}`,
     method: 'put',
-    response: ({ body, query }: any) => {
+    response: ({ body }: any) => {
       console.log(`PUT::${ContentApis.TABLE}`, body);
-      const index = tableData.list.findIndex((item: any) => item.id === parseInt(query.id));
+      const index = tableData.list.findIndex((item: any) => item.id === parseInt(body.id));
       tableData.list[index] = body;
       return {
         code: 0,

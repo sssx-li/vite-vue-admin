@@ -153,10 +153,10 @@
   </a-form>
 </template>
 <script setup lang="ts" name="syForm">
-import { useFormValidate } from '@/hooks';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { IFormItem } from './types';
+import { useFormValidate } from '@/hooks';
 
 const dateType = ['datepicker', 'monthpicker', 'rangepicker', 'weekpicker'];
 interface Props {
@@ -213,8 +213,7 @@ watch(
           case 'weekpicker':
             dayjs.extend(weekOfYear);
             week = parseInt(dateValue.split('-')[1]);
-            // 这里年份转换的时候需要+1
-            formatValue = dayjs((parseInt(dateValue.split('-')[0]) + 1).toString()).week(week);
+            formatValue = dayjs(dateValue.split('-')[0]).week(week);
             break;
         }
         dateValues[field] = formatValue;
@@ -256,6 +255,7 @@ const onSubmit = () => {
     .catch(() => {});
 };
 const onCancel = () => {
+  emit('update:modelValue', {});
   emit('onCancel');
 };
 const handleValueChange = (event: any, item: any, other?: any) => {

@@ -10,7 +10,7 @@
   >
     <close-outlined class="close-icon" v-if="imgUrl" @click.stop="removeImg" />
     <img :src="imgUrl" alt="" v-if="imgUrl" v-bind="imgWH" />
-    <icon-eps-upload-image v-bind="iconWH" v-else />
+    <i-sy-upload-image v-bind="iconWH" v-else />
   </a-upload>
   <slot>
     <div class="tip">{{ `${tip}, 且不超过${maxSize}M` }}</div>
@@ -94,7 +94,7 @@ const removeImg = () => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .ant-upload-picture-card-wrapper {
   :deep(.ant-upload) {
     position: relative;

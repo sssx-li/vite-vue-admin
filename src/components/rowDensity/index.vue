@@ -18,7 +18,8 @@
 
 <script setup lang="ts" name="rowDensity">
 const emit = defineEmits(['change']);
-const selectedKeys = ref(['middle']);
+
+const selectedKeys = ref(['default']);
 const sizes = ref([
   {
     name: '默认',
@@ -41,9 +42,10 @@ const clickItem = (size: string) => {
 
 <style lang="less" scoped>
 .icon {
-  font-size: 1.21rem;
+  font-size: 18px;
   outline: medium;
   cursor: pointer;
+  margin-left: 6px;
   color: rgba(0, 0, 0, 0.75);
 }
 :deep(.ant-dropdown-menu-item) {
