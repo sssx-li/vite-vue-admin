@@ -1,4 +1,8 @@
 import { createRouter, createWebHistory, RouteMeta, RouteRecordRaw } from 'vue-router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+NProgress.configure({ showSpinner: false });
+
 import { tokenKey } from '@/common';
 import localCache from '@/utils/localCache';
 
@@ -46,6 +50,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  NProgress.start();
   const token = localCache.getCache(tokenKey);
   const isToLogin = to.path === '/login';
   if (token) {
@@ -64,6 +69,10 @@ router.beforeEach((to, from, next) => {
       next();
     }
   }
+});
+
+router.beforeEach(() => {
+  NProgress.done();
 });
 
 export default router;
