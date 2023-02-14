@@ -58,6 +58,11 @@ export default defineConfig(({ command }) => {
         }
       })
     ],
+    esbuild: {
+      supported: {
+        'top-level-await': true
+      }
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src')

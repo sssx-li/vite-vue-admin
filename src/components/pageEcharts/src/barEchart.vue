@@ -1,12 +1,12 @@
 <template>
   <div class="bar-echart-container">
-    <SyEchart :options="options" />
+    <SyEcharts :options="options" />
   </div>
 </template>
 
 <script setup lang="ts" name="barEchart">
 import type { XAXisComponentOption, YAXisComponentOption, EChartsOption } from 'echarts';
-import { SyEchart } from '@/baseUI';
+import { SyEcharts } from '@/baseUI';
 
 const props = defineProps<{
   xAxis: XAXisComponentOption | XAXisComponentOption[];
