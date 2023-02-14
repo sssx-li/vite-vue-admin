@@ -2,6 +2,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { viteMockServe } from 'vite-plugin-mock';
+import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 
 import Components from 'unplugin-vue-components/vite';
 import Icons from 'unplugin-icons/vite';
@@ -19,6 +20,7 @@ export default defineConfig(({ command }) => {
   return {
     plugins: [
       vue(),
+      vueSetupExtend(),
       viteMockServe({
         mockPath: 'mock',
         localEnabled: command === 'serve', // 开发环境启用
