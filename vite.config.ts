@@ -60,6 +60,11 @@ export default defineConfig(({ command }) => {
         rules: [['cursor', { cursor: 'pointer' }]]
       })
     ],
+    esbuild: {
+      supported: {
+        'top-level-await': true
+      }
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src')
